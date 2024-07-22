@@ -1,0 +1,20 @@
+a,
+.la-line-scale,
+#nav .nav-list a.active,
+#nav .nav-list a:hover,
+.main-color {
+  color: #d8321f; }
+
+.main-bg-color {
+  background-color: #d8321f; }
+
+.main-border-color {
+  border-color: #d8321f; }
+
+
+/*# sourceMappingURL=color.css.map */
+
+.logo{
+  width: 240;
+  height: 100;
+}
