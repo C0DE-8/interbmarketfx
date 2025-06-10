@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyrequi | Notices & Announcements</title>
+<!-- Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            /* Colors */
+            --bg-primary: #1a1f2e;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #2d2d2d;
+            --accent-primary: #6366f1;
+            --accent-secondary: #818cf8;
+            --accent-tertiary: #6366f1;
+            --text-primary: #f9fafb;
+            --text-secondary: #e5e7eb;
+            --text-tertiary: #9ca3af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #60a5fa;
+            --card-bg: rgba(31, 41, 55, 0.7);
+            --modal-bg: rgba(17, 24, 39, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+
+            /* Gradients */
+            --gradient-blue: linear-gradient(135deg, #3b82f6, #6366f1);
+            --gradient-green: linear-gradient(135deg, #10b981, #059669);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6, #6366f1);
+            --gradient-pink: linear-gradient(135deg, #ec4899, #d946ef);
+            --gradient-orange: linear-gradient(135deg, #f59e0b, #f97316);
+            --gradient-red: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.1), transparent 60%);
+        }
+
+        button, input, select {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ===== LAYOUT ===== */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        /* ===== SIDEBAR ===== */
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) var(--bg-secondary);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--accent-primary);
+    border-radius: 6px;
+  }
+
+  .sidebar-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--accent-primary), var(--accent-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+        }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  .toggle-sidebar {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .toggle-sidebar:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  .sidebar-content {
+    padding: 1.5rem 0;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-section-title {
+    padding: 0 1.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .nav-list {
+    list-style: none;
+  }
+
+  .nav-item {
+    margin-bottom: 0.25rem;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-secondary);
+    border-left: 3px solid transparent;
+    transition: var(--transition);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-left-color: var(--accent-primary);
+  }
+
+  .nav-link.active {
+    font-weight: 500;
+  }
+
+  .nav-icon {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-text {
+    flex: 1;
+  }
+
+  .nav-badge {
+    background-color: var(--accent-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            padding: 24px;
+            margin-left: 240px;
+            width: calc(100% - 240px);
+            transition: margin-left var(--transition-normal), width var(--transition-normal);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            font-size: 16px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* ===== NOTICE FILTERS ===== */
+        .notice-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .filter-select {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: border-color var(--transition-fast);
+            min-width: 120px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .filter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+            gap: 8px;
+        }
+
+        .filter-btn-primary {
+            background: var(--gradient-blue);
+            color: white;
+        }
+
+        .filter-btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-btn-secondary {
+            background-color: var(--glass-highlight);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .filter-btn-secondary:hover {
+            background-color: var(--glass-border);
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 8px 12px 8px 36px;
+            color: var(--text-primary);
+            font-size: 14px;
+            width: 100%;
+            transition: border-color var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 16px;
+        }
+
+        /* ===== NOTICE CARDS ===== */
+        .notice-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .notice-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .notice-card.unread::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-blue);
+        }
+
+        .notice-priority {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 40px 0;
+            z-index: 1;
+        }
+
+        .priority-critical {
+            border-color: transparent var(--danger) transparent transparent;
+        }
+
+        .priority-important {
+            border-color: transparent var(--warning) transparent transparent;
+        }
+
+        .priority-info {
+            border-color: transparent var(--info) transparent transparent;
+        }
+
+        .notice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding-right: 24px;
+        }
+
+        .notice-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .notice-category {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .category-system {
+            background-color: rgba(99, 102, 241, 0.1);
+            color: var(--accent-tertiary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .category-maintenance {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .category-security {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .category-announcement {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .notice-date {
+            white-space: nowrap;
+        }
+
+        .notice-content {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .notice-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .notice-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .notice-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+            gap: 6px;
+        }
+
+        .notice-btn-primary {
+            background: var(--gradient-blue);
+            color: white;
+        }
+
+        .notice-btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .notice-btn-secondary {
+            background-color: var(--glass-highlight);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .notice-btn-secondary:hover {
+            background-color: var(--glass-border);
+        }
+
+        .notice-status {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+
+        .pagination-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+        }
+
+        .pagination-btn-page {
+            background-color: var(--glass-highlight);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .pagination-btn-page:hover {
+            background-color: var(--glass-border);
+        }
+
+        .pagination-btn-page.active {
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+        }
+
+        .pagination-btn-nav {
+            background-color: var(--glass-highlight);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .pagination-btn-nav:hover {
+            background-color: var(--glass-border);
+        }
+
+        .pagination-btn-nav.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 1024px) {
+            .notice-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-container {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                z-index: 20;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .notice-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .notice-meta {
+                flex-wrap: wrap;
+            }
+            
+            .notice-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .notice-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* ===== OVERLAY ===== */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 15;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        .notice-title-link {
+  text-decoration: none;
+  color: #007bff;
+}
+.notice-title-link:hover {
+  text-decoration: underline;
+}
+
+        /* ===== MODAL ===== */
+ .custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 24, 39, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.custom-modal-content {
+  background: var(--modal-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-message {
+  color: var(--text-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.modal-btn-cancel {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.modal-btn-cancel:hover {
+  background: var(--bg-tertiary);
+}
+
+.modal-btn-confirm {
+  background: var(--danger);
+  color: white;
+}
+
+.modal-btn-confirm:hover {
+  background: #b91c1c;
+}
+
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+              <div class="logo">
+                <div class="logo-icon">Z</div>
+                <span>Dainterbfx</span>
+              </div>
+            </div>
+            <div class="sidebar-content">
+              <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Main</h3>
+                <ul class="nav-list">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="window.location.href='dashboard.html'; return false;">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf015;</i>
+                      </div>
+                      <span class="nav-text">Dashboard</span>
+                    </a>
+                  </li>
+                    <li class="nav-item"></li>
+                    <a href="profile.html" class="nav-link" onclick="window.location.href='profile.html'; return false;">
+                      <div class="nav-icon">
+                      <i class="fas">&#xf007;</i>
+                      </div>
+                      <span class="nav-text">Profile</span>
+                    </a>
+                    </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="window.location.href='notices-page.html'; return false;">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf0a1;</i>
+                      </div>
+                      <span class="nav-text">Notice Board</span>
+                      <span class="nav-badge">0</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Transactions</h3>
+                <ul class="nav-list">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf362;</i>
+                      </div>
+                      <span class="nav-text">Transfer</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf0ec;</i>
+                      </div>
+                      <span class="nav-text">Convert</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Earn</h3>
+                <ul class="nav-list">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="window.location.href='academy.html'; return false;">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf19d;</i>
+                      </div>
+                      <span class="nav-text">Academy</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf0c0;</i>
+                      </div>
+                      <span class="nav-text">Community</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf3a5;</i>
+                      </div>
+                      <span class="nav-text">Mining</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar-section">
+                <h3 class="sidebar-section-title">Settings</h3>
+                <ul class="nav-list">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf013;</i>
+                      </div>
+                      <span class="nav-text">Settings</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf023;</i>
+                      </div>
+                      <span class="nav-text">Security</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="window.location.href='help.html'; return false;">
+                      <div class="nav-icon">
+                        <i class="fas">&#xf129;</i>
+                      </div>
+                      <span class="nav-text">Help & Support</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <main class="main-content">
+                <header class="page-header">
+                    <div>
+                        <h1 class="page-title">Notices & Announcements</h1>
+                        <p class="page-subtitle">Stay updated with important information about the platform</p>
+                    </div>
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+                </header>
+                <!-- Notice Grid -->
+                <div class="notice-grid" id="noticeGrid">
+                    <div id="notification-container"></div>
+                </div>
+                <!-- Pagination -->
+               <div class="pagination" id="pagination">
+                <button class="pagination-btn pagination-btn-nav" id="first-page-btn">&lt;&lt;</button>
+                <button class="pagination-btn pagination-btn-nav" id="prev-page-btn">&lt;</button>
+                <!-- Pagination page buttons will be generated dynamically here -->
+                <button class="pagination-btn pagination-btn-nav" id="next-page-btn">&gt;</button>
+                <button class="pagination-btn pagination-btn-nav" id="last-page-btn">&gt;&gt;</button>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Custom Delete Modal -->
+<div class="custom-modal" id="deleteModal">
+  <div class="custom-modal-content">
+    <h3 class="modal-title">Delete Notification</h3>
+    <p class="modal-message">Are you sure you want to delete this notification?</p>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="cancelDeleteBtn">Cancel</button>
+      <button class="modal-btn modal-btn-confirm" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+   <script>
+  const api = axios.create({
+    baseURL: "https://api.dainterbfx.xyz/api",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+const ITEMS_PER_PAGE = 5;
+let currentPage = 1;
+let allNotifications = [];
+let notificationToDelete = null;
+
+async function loadNotifications() {
+  try {
+    const response = await api.get("/users/notifications");
+    allNotifications = response.data.data;
+    renderNotifications(currentPage);
+  } catch (error) {
+    console.error("Failed to load notifications:", error);
+    document.getElementById("notification-container").innerHTML = `
+      <div class="fallback-error">
+        <h3>Something went wrong 😞</h3>
+        <p>We couldn’t load your notifications right now. Please check your connection or try again later.</p>
+      </div>`;
+  }
+}
+
+function renderNotifications(page) {
+  const container = document.getElementById("notification-container");
+  container.innerHTML = "";
+
+  if (allNotifications.length === 0) {
+    container.innerHTML = `
+      <div class="fallback-empty">
+        <h3>No Notifications 📭</h3>
+        <p>You don’t have any notifications yet. We’ll let you know when something happens!</p>
+      </div>`;
+    return;
+  }
+
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const notifications = allNotifications.slice(startIndex, endIndex);
+
+  notifications.forEach(notice => {
+    const title = notice.title || "(No Title)";
+    const message = notice.message || "(No message content.)";
+    const details = notice.details || "";
+    const noticeDate = notice.noticeDate || "Unknown date";
+    const category = notice.noticeCategory || "Info";
+    const priorityClass = {
+      critical: "priority-critical",
+      important: "priority-important",
+      info: "priority-info"
+    }[category.toLowerCase()] || "priority-info";
+
+    const categoryClass = `category-${category.toLowerCase()}`;
+    const readClass = notice.read_status ? "" : "unread";
+    const statusText = notice.read_status ? "Read" : "Unread";
+    const markBtnText = notice.read_status ? "🗑 Delete" : "Mark as Read";
+    const markBtnClass = notice.read_status ? "delete-btn" : "mark-read-btn";
+
+    const noticeHTML = `
+      <div class="notice-card ${readClass} slide-in" data-category="${category}" data-priority="${priorityClass}" data-status="${statusText.toLowerCase()}">
+        <div class="notice-priority ${priorityClass}"></div>
+        <div class="notice-header">
+          <div>
+            <h3 class="notice-title">
+              ${notice.action 
+                ? `<a href="${notice.action}" target="_blank" class="notice-title-link">${title}</a>` 
+                : title}
+            </h3>
+            <div class="notice-meta">
+              <span class="notice-category ${categoryClass}">${category}</span>
+              <span class="notice-date">${noticeDate}</span>
+            </div>
+          </div>
+        </div>
+        <div class="notice-content">
+          <p>${message}</p>
+          ${details ? `<p>${details}</p>` : ""}
+        </div>
+        <div class="notice-footer">
+          <div class="notice-actions">
+            ${notice.action 
+              ? `<a href="${notice.action}" target="_blank" class="notice-btn notice-btn-primary">Go</a>` 
+              : ""}
+            <button class="notice-btn notice-btn-secondary ${markBtnClass}" data-id="${notice.id}">${markBtnText}</button>
+          </div>
+          <div class="notice-status">${statusText}</div>
+        </div>
+      </div>
+    `;
+    container.insertAdjacentHTML("beforeend", noticeHTML);
+  });
+
+  attachActionListeners();
+  renderPaginationControls();
+}
+
+
+  function renderPaginationControls() {
+    const totalPages = Math.ceil(allNotifications.length / ITEMS_PER_PAGE);
+    const pagination = document.getElementById("pagination");
+
+    const oldPageButtons = pagination.querySelectorAll(".pagination-btn-page");
+    oldPageButtons.forEach(btn => btn.remove());
+
+    const nextBtn = document.getElementById("next-page-btn");
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.classList.add("pagination-btn", "pagination-btn-page");
+      if (i === currentPage) btn.classList.add("active");
+      btn.setAttribute("data-page", i);
+      btn.textContent = i;
+
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        renderNotifications(currentPage);
+      });
+
+      pagination.insertBefore(btn, nextBtn);
+    }
+
+    document.getElementById("prev-page-btn").disabled = currentPage === 1;
+    document.getElementById("first-page-btn").disabled = currentPage === 1;
+    document.getElementById("next-page-btn").disabled = currentPage === totalPages;
+    document.getElementById("last-page-btn").disabled = currentPage === totalPages;
+  }
+
+  function setupPaginationListeners() {
+    document.getElementById("prev-page-btn").addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderNotifications(currentPage);
+      }
+    });
+
+    document.getElementById("next-page-btn").addEventListener("click", () => {
+      const totalPages = Math.ceil(allNotifications.length / ITEMS_PER_PAGE);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderNotifications(currentPage);
+      }
+    });
+
+    document.getElementById("first-page-btn").addEventListener("click", () => {
+      currentPage = 1;
+      renderNotifications(currentPage);
+    });
+
+    document.getElementById("last-page-btn").addEventListener("click", () => {
+      currentPage = Math.ceil(allNotifications.length / ITEMS_PER_PAGE);
+      renderNotifications(currentPage);
+    });
+  }
+
+  function attachActionListeners() {
+    // Mark as read
+    document.querySelectorAll(".mark-read-btn").forEach(button => {
+      button.addEventListener("click", async () => {
+        const id = button.getAttribute("data-id");
+        try {
+          await api.post(`/users/notifications/${id}/read`);
+          loadNotifications();
+          if (typeof loadUnreadNotificationCount === "function") {
+            loadUnreadNotificationCount();
+          }
+        } catch (err) {
+          console.error("Failed to mark as read:", err);
+        }
+      });
+    });
+
+    // Delete modal flow
+    document.querySelectorAll(".delete-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        notificationToDelete = button.getAttribute("data-id");
+        document.getElementById("deleteModal").style.display = "flex";
+      });
+    });
+
+    document.getElementById("cancelDeleteBtn").addEventListener("click", () => {
+      notificationToDelete = null;
+      document.getElementById("deleteModal").style.display = "none";
+    });
+
+    document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+      if (!notificationToDelete) return;
+
+      try {
+        await api.delete(`/users/notifications/${notificationToDelete}`);
+        loadNotifications();
+        if (typeof loadUnreadNotificationCount === "function") {
+          loadUnreadNotificationCount();
+        }
+      } catch (err) {
+        console.error("Failed to delete notification:", err);
+      }
+
+      notificationToDelete = null;
+      document.getElementById("deleteModal").style.display = "none";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    setupPaginationListeners();
+    loadNotifications();
+  });
+
+    async function loadUnreadNotificationCount() {
+  try {
+    const response = await api.get("/users/notifications/count/unread");
+    const unreadCount = response.data.unreadCount;
+
+    const badge = document.querySelector(".nav-badge");
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none"; // hide if zero
+    }
+  } catch (error) {
+    console.error("Failed to load unread notification count:", error);
+  }
+}
+
+// Call it when the page loads
+loadUnreadNotificationCount();
+   </script>
+
+
+    <script>
+  // DOM Elements
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const paginationBtns = document.querySelectorAll('.pagination-btn-page');
+
+  // Initialize
+  function init() {
+    // Mobile menu toggle
+    mobileMenuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Close sidebar when clicking overlay
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Pagination buttons
+    paginationBtns.forEach(btn => {
+      btn.addEventListener('click', function () {
+        paginationBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        // In a real app, load the appropriate page of notices
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+    </script>
+    
+    <script src="../js/withAuth.js"></script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zephyrequi | Notifications</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #7b3fe4;
+            --primary-light: #9361f3;
+            --primary-dark: #5c2db0;
+            --secondary: #00e4d0;
+            --accent: #ff3e8e;
+            --dark: #0a0e17;
+            --darker: #050912;
+            --light: #f8f9fc;
+            --gray: #a0aec0;
+            --gray-dark: #2d3748;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --card-bg: rgba(13, 17, 28, 0.8);
+            --card-border: rgba(123, 63, 228, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .header-icon:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(123, 63, 228, 0.4);
+        }
+
+        /* Page Title */
+        .page-title {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .page-title .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--gray);
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            color: var(--light);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            box-shadow: 0 0 15px rgba(123, 63, 228, 0.4);
+        }
+
+        /* Notifications */
+        .notifications {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .notification {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notification:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: rgba(123, 63, 228, 0.3);
+        }
+
+        .notification.unread {
+            background: rgba(123, 63, 228, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        .notification-icon.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .notification-icon.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .notification-icon.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .notification.unread .notification-title {
+            font-weight: 700;
+        }
+
+        .notification-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .notification-time {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .notification-badge {
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .notification-badge.unread {
+            background: rgba(123, 63, 228, 0.1);
+            color: var(--primary-light);
+        }
+
+        .notification-badge.new {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .notification-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .notification.unread .notification-description {
+            color: var(--light);
+        }
+
+        .notification-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .notification-action {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: var(--darker);
+            border: 1px solid var(--card-border);
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notification-action:hover {
+            background: var(--primary-dark);
+            color: var(--light);
+            border-color: var(--primary);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 40px 0;
+        }
+
+        .pagination-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--gray);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-item:hover {
+            background: var(--primary-dark);
+            color: var(--light);
+            border-color: var(--primary);
+        }
+
+        .pagination-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 30px 0;
+            border-top: 1px solid var(--card-border);
+            margin-top: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .page-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .notification {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .notification-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .notification-meta {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title .actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Icons */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+        }
+
+        .icon-sm {
+            width: 18px;
+            height: 18px;
+        }
+
+        .icon-lg {
+            width: 28px;
+            height: 28px;
+        }
+              /* ===== MODAL ===== */
+ .custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 24, 39, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.custom-modal-content {
+  background: var(--modal-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-message {
+  color: var(--text-tertiary);
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.modal-btn-cancel {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.modal-btn-cancel:hover {
+  background: var(--bg-tertiary);
+}
+
+.modal-btn-confirm {
+  background: var(--danger);
+  color: white;
+}
+
+.modal-btn-confirm:hover {
+  background: #b91c1c;
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="dashboard.html" class="logo">Dainterbfx<span>.</span></a>
+                <div class="header-actions">
+                    <div class="header-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                         <span id="notice-count" class="badge">0</span>
+                    </div>
+                 <!-- HTML -->
+             <div id="user-avatar" class="user-avatar">LP</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-title">
+            <h1>Notifications</h1>
+            <div class="actions">
+               <button id="delete-all-btn" class="btn btn-delete-all">Delete All</button>
+                <button class="btn btn-primary" onclick="window.history.back()">Go Back</button>
+            </div>
+        </div>
+
+          <!-- notification notic-->
+          <div id="notifications" class="notifications">
+          </div>
+
+        <!-- Pagination -->
+       <div id="pagination" class="pagination"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 zephyrequi. All rights reserved.</p>
+        </div>
+    </footer>
+
+        <!-- Custom Delete Modal -->
+    <div class="custom-modal" id="deleteModal">
+      <div class="custom-modal-content">
+        <h3 class="modal-title">Delete Notification</h3>
+        <p class="modal-message">Are you sure you want to delete this notification?</p>
+        <div class="modal-actions">
+          <button class="modal-btn modal-btn-cancel" id="cancelDeleteBtn">Cancel</button>
+          <button class="modal-btn modal-btn-confirm" id="confirmDeleteBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script>
+  // — Axios client pointed at /api/users —
+  const api = axios.create({
+    baseURL: "https://api.dainterbfx.xyz/api/users",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+  // — Modal elements & state —
+  const deleteModal      = document.getElementById("deleteModal");
+  const cancelDeleteBtn  = document.getElementById("cancelDeleteBtn");
+  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+  let pendingDelete = { type: null, id: null };
+
+  function openDeleteModal(type, id = null) {
+    pendingDelete = { type, id };
+    const titleEl   = deleteModal.querySelector(".modal-title");
+    const messageEl = deleteModal.querySelector(".modal-message");
+
+    if (type === "all") {
+      titleEl.textContent   = "Delete All Notifications";
+      messageEl.textContent = "Are you sure you want to delete ALL notifications?";
+    } else {
+      titleEl.textContent   = "Delete Notification";
+      messageEl.textContent = "Are you sure you want to delete this notification?";
+    }
+
+    deleteModal.style.display = "flex";
+  }
+
+  function closeDeleteModal() {
+    deleteModal.style.display = "none";
+  }
+
+  cancelDeleteBtn.addEventListener("click", closeDeleteModal);
+  confirmDeleteBtn.addEventListener("click", async () => {
+    if (pendingDelete.type === "single") {
+      await deleteNotice(pendingDelete.id);
+    } else if (pendingDelete.type === "all") {
+      await deleteAllNotices();
+    }
+    closeDeleteModal();
+  });
+
+  // — Helpers —  
+  function getIconClass(action) {
+    action = action.toLowerCase();
+    if (action.includes("failed") || action.includes("error"))   return "danger";
+    if (action.includes("alert")  || action.includes("warning")) return "warning";
+    if (action.includes("confirm")|| action.includes("complete"))return "success";
+    return "info";
+  }
+
+  // — Delete a single notice & refresh —
+  async function deleteNotice(id) {
+    try {
+      await api.delete(`/notices/${id}`);
+      noticesData = noticesData.filter(n => n.id !== id);
+      const totalPages = Math.max(1, Math.ceil(noticesData.length / ITEMS_PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      setupPagination();
+      showPage(currentPage);
+      // update badge
+      document.getElementById("notice-count").textContent = noticesData.length;
+    } catch (err) {
+      console.error("Delete failed:", err);
+    }
+  }
+
+  // — Delete all notices & refresh —
+  async function deleteAllNotices() {
+    try {
+      await api.delete("/notices");
+      noticesData = [];
+      document.getElementById("notifications").innerHTML = "";
+      setupPagination();
+      showPage(1);
+      document.getElementById("notice-count").textContent = "0";
+    } catch (err) {
+      console.error("Delete all failed:", err);
+      alert("Failed to delete all notices.");
+    }
+  }
+
+  // — View a single notice in an alert —
+  async function viewNotice(id) {
+    try {
+      const res = await api.get(`/notices/${id}`);
+      const n = res.data.notice;
+      alert(
+        `Title: ${n.action}\n\n` +
+        `Details: ${n.details}\n\n` +
+        `Time: ${n.created_at}`
+      );
+    } catch (err) {
+      console.error("View failed:", err);
+    }
+  }
+
+  // — Render one notice card with View/Delete (opens modal) —
+  function renderNotice({ id, action, details, created_at }) {
+    const wrap = document.createElement("div");
+    wrap.className = "notification";
+    const cls = getIconClass(action);
+
+    let svgContent = "";
+    if      (cls === "success") svgContent = `<polyline points="20 6 9 17 4 12"></polyline>`;
+    else if (cls === "warning") svgContent = `
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+      <line x1="12" y1="9"  x2="12"    y2="13"></line>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>`;
+    else if (cls === "danger")  svgContent = `
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="15" y1="9"  x2="9"  y2="15"></line>
+      <line x1="9"  y1="9"  x2="15" y2="15"></line>`;
+    else                        svgContent = `
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8"  x2="12.01" y2="8"></line>`;
+
+    wrap.innerHTML = `
+      <div class="notification-icon ${cls}">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          ${svgContent}
+        </svg>
+      </div>
+      <div class="notification-content">
+        <div class="notification-header">
+          <h3 class="notification-title">${action}</h3>
+          <div class="notification-meta">
+            <span class="notification-time">${created_at}</span>
+          </div>
+        </div>
+        <p class="notification-description">${details}</p>
+        <div class="notification-actions">
+          <button class="notification-action btn-view">View Details</button>
+          <button class="notification-action btn-delete">Delete</button>
+        </div>
+      </div>
+    `;
+
+    wrap.querySelector(".btn-view")
+        .addEventListener("click", () => viewNotice(id));
+    wrap.querySelector(".btn-delete")
+        .addEventListener("click", () => openDeleteModal("single", id));
+
+    return wrap;
+  }
+
+  // — Pagination & data state —
+  const ITEMS_PER_PAGE = 10;
+  let currentPage  = 1;
+  let noticesData  = [];
+
+  function setupPagination() {
+    const totalPages = Math.ceil(noticesData.length / ITEMS_PER_PAGE);
+    const p = document.getElementById("pagination");
+    p.innerHTML = "";
+
+    let a = document.createElement("a");
+    a.href = "#"; a.className = "pagination-item"; a.textContent = "‹";
+    a.onclick = e => { e.preventDefault(); if (currentPage>1) showPage(currentPage-1); };
+    p.append(a);
+
+    for (let i=1; i<=totalPages; i++) {
+      a = document.createElement("a");
+      a.href = "#"; a.className = "pagination-item";
+      if (i === currentPage) a.classList.add("active");
+      a.textContent = i;
+      a.onclick = e => { e.preventDefault(); showPage(i); };
+      p.append(a);
+    }
+
+    a = document.createElement("a");
+    a.href = "#"; a.className = "pagination-item"; a.textContent = "›";
+    a.onclick = e => { e.preventDefault(); if (currentPage<totalPages) showPage(currentPage+1); };
+    p.append(a);
+  }
+
+  function showPage(page) {
+    currentPage = page;
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const slice = noticesData.slice(start, start + ITEMS_PER_PAGE);
+
+    const list = document.getElementById("notifications");
+    list.innerHTML = "";
+    slice.forEach(n => list.append(renderNotice(n)));
+
+    document.querySelectorAll("#pagination .pagination-item")
+            .forEach(el => el.classList.remove("active"));
+    Array.from(document.querySelectorAll("#pagination .pagination-item"))
+         .filter(el => el.textContent == page)
+         .forEach(el => el.classList.add("active"));
+  }
+
+  // — Load & render all notices —  
+  async function loadNotices() {
+    try {
+      const res = await api.get("/notices");
+      noticesData = res.data.notices;
+      setupPagination();
+      showPage(1);
+    } catch (err) {
+      if (err.response?.status === 403) {
+        alert(err.response.data.error);
+      } else {
+        console.error("Failed to load notices:", err);
+      }
+    }
+  }
+
+  // — Load user initials —
+  async function loadUsername() {
+    try {
+      const res = await api.get("/profile/username");
+      const initials = res.data.username
+        .split(" ").map(n => n[0].toUpperCase()).join("");
+      document.getElementById("user-avatar").textContent = initials;
+    } catch (err) {
+      console.error("Failed to load username:", err);
+    }
+  }
+
+  // — Load notice count badge —
+  async function loadNoticeCount() {
+    try {
+      const { data } = await api.get("/notices/count");
+      document.getElementById("notice-count").textContent = data.totalNotices;
+    } catch (err) {
+      if (err.response?.status === 403) {
+        document.getElementById("notice-count").textContent = "!";
+      } else {
+        console.error("Notice count error:", err);
+      }
+    }
+  }
+
+  // — Hook “Delete All” to open the modal —
+  document.getElementById("delete-all-btn")
+          .addEventListener("click", () => openDeleteModal("all"));
+
+  // — Initialize on DOM ready —
+  document.addEventListener("DOMContentLoaded", () => {
+    loadUsername();
+    loadNoticeCount();
+    loadNotices();
+  });
+</script>
+
+
+
+<script src="../js/withAuth.js"></script>
+</body>
+</html>

@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truvance Trading Platform</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        :root {
+            --primary: #1e2026;
+            --secondary: #12161c;
+            --accent: #f0b90b;
+            --text-primary: #f8f9fa;
+            --text-secondary: #b7bdc6;
+            --danger: #f6465d;
+            --success: #0ecb81;
+            --card-bg: #2b3139;
+            --border-color: #363c45;
+            --hover-bg: #2a2e37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .balance {
+            background-color: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .balance-amount {
+            color: var(--accent);
+            margin-left: 0.5rem;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 60px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background-color: var(--primary);
+            border-right: 1px solid var(--border-color);
+            padding: 1rem 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-title {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-menu li:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .sidebar-menu li.active {
+            background-color: var(--hover-bg);
+            border-left: 3px solid var(--accent);
+        }
+
+        .sidebar-menu li i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .favorite-pair {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pair-price {
+            font-size: 0.9rem;
+        }
+
+        .price-up {
+            color: var(--success);
+        }
+
+        .price-down {
+            color: var(--danger);
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Trading View */
+        .trading-section {
+            display: flex;
+            height: 60%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chart-container {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+        }
+
+        .order-panel {
+            width: 350px;
+            border-left: 1px solid var(--border-color);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .panel-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .panel-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+        }
+
+        .panel-tab.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .order-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group .form-control {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-group-append {
+            background-color: var(--card-bg);
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .range-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .range-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .range-label:hover {
+            color: var(--accent);
+        }
+
+        .btn {
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+
+        .btn-buy {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background-color: #0bb974;
+        }
+
+        .btn-sell {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-sell:hover {
+            background-color: #e53e51;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-accent:hover {
+            background-color: #d9a60a;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Orders Section */
+        .orders-section {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .orders-container {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        tbody tr:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--danger);
+        }
+
+        /* Chat and News Section */
+        .chat-news {
+            width: 300px;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container, .news-container {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 4px;
+            background-color: var(--card-bg);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: 500;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .message-content {
+            font-size: 0.9rem;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .news-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .news-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--primary);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .chat-news {
+                display: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .trading-section {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .chart-container {
+                height: 400px;
+            }
+            
+            .order-panel {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                height: 100%;
+                z-index: 99;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--card-bg);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--text-secondary);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+            background-color: white;
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid var(--card-bg);
+            border-radius: 50%;
+            border-top: 3px solid var(--accent);
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 98;
+        }
+
+        /* Bot Assistant */
+        .bot-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 90;
+            transition: all 0.3s;
+        }
+
+        .bot-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        .bot-assistant i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .bot-chat {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: var(--primary);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 91;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .bot-chat-header {
+            padding: 1rem;
+            background-color: var(--accent);
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bot-chat-close {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .bot-chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .bot-message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+
+        .bot-message.from-bot {
+            align-self: flex-start;
+            background-color: var(--card-bg);
+            padding: 0.8rem;
+            border-radius: 8px 8px 8px 0;
+        }
+
+        .bot-message.from-user {
+            align-self: flex-end;
+            background-color: var(--accent);
+            color: var(--primary);
+            padding: 0.8rem;
+            border-radius: 8px 8px 0 8px;
+            margin-left: auto;
+        }
+
+        .bot-chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .bot-chat-input input {
+            flex: 1;
+        }
+
+        .bot-chat-input button {
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>TRUVANCE</span>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#" class="active">Trade</a>
+            <a href="#">Markets</a>
+            <a href="#">Futures</a>
+            <a href="#">Earn</a>
+            <a href="#">NFT</a>
+        </div>
+        
+        <div class="user-actions">
+            <div class="balance">
+                Balance: <span class="balance-amount">0.00 BTC</span>
+            </div>
+            <button class="icon-btn" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="icon-btn" id="userMenuBtn">
+                <i class="fas fa-user-circle"></i>
+            </button>
+            <button class="mobile-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Markets</div>
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>BTC/USDT</span>
+                    </li>
+                    <li>
+                        <i class="fab fa-ethereum"></i>
+                        <span>ETH/USDT</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-coins"></i>
+                        <span>SOL/USDT</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-coins"></i>
+                        <span>XRP/USDT</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Favorites</div>
+                <ul class="sidebar-menu">
+                    <li class="favorite-pair">
+                        <div>
+                            <i class="fab fa-bitcoin"></i>
+                            <span>BTC/USDT</span>
+                        </div>
+                        <span class="pair-price price-up">36,789.50</span>
+                    </li>
+                    <li class="favorite-pair">
+                        <div>
+                            <i class="fab fa-ethereum"></i>
+                            <span>ETH/USDT</span>
+                        </div>
+                        <span class="pair-price price-down">1,987.25</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tools</div>
+                <ul class="sidebar-menu">
+                    <li>
+                        <i class="fas fa-robot"></i>
+                        <span>Trading Bot</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-copy"></i>
+                        <span>Copy Trading</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-bell"></i>
+                        <span>Price Alerts</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Sidebar Overlay for Mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Trading Section -->
+            <div class="trading-section">
+                <!-- Chart Container -->
+                <div class="chart-container" id="tradingViewChart"></div>
+                
+                <!-- Order Panel -->
+                <div class="order-panel">
+                    <div class="panel-tabs">
+                        <div class="panel-tab active" data-tab="spot">Spot</div>
+                        <div class="panel-tab" data-tab="margin">Margin</div>
+                        <div class="panel-tab" data-tab="futures">Futures</div>
+                    </div>
+                    
+                    <div class="order-type-tabs panel-tabs">
+                        <div class="panel-tab active" data-order-type="limit">Limit</div>
+                        <div class="panel-tab" data-order-type="market">Market</div>
+                        <div class="panel-tab" data-order-type="stop">Stop-Limit</div>
+                    </div>
+                    
+                    <div class="order-form" id="limitOrderForm">
+                        <div class="form-group">
+                            <label for="limitPrice">Price</label>
+                            <div class="input-group">
+                                <input type="number" id="limitPrice" class="form-control" value="36789.50">
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="limitAmount">Amount</label>
+                            <div class="input-group">
+                                <input type="number" id="limitAmount" class="form-control" placeholder="0.00">
+                                <div class="input-group-append">BTC</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Size</label>
+                            <input type="range" id="sizeSlider" class="range-slider" min="0" max="100" value="0">
+                            <div class="range-labels">
+                                <span class="range-label" data-value="0">0%</span>
+                                <span class="range-label" data-value="25">25%</span>
+                                <span class="range-label" data-value="50">50%</span>
+                                <span class="range-label" data-value="75">75%</span>
+                                <span class="range-label" data-value="100">100%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="totalAmount">Total</label>
+                            <div class="input-group">
+                                <input type="number" id="totalAmount" class="form-control" placeholder="0.00" readonly>
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button class="btn btn-buy" id="buyBtn">Buy BTC</button>
+                            <button class="btn btn-sell" id="sellBtn">Sell BTC</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-form" id="marketOrderForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="marketAmount">Amount</label>
+                            <div class="input-group">
+                                <input type="number" id="marketAmount" class="form-control" placeholder="0.00">
+                                <div class="input-group-append">BTC</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Size</label>
+                            <input type="range" id="marketSizeSlider" class="range-slider" min="0" max="100" value="0">
+                            <div class="range-labels">
+                                <span class="range-label" data-value="0">0%</span>
+                                <span class="range-label" data-value="25">25%</span>
+                                <span class="range-label" data-value="50">50%</span>
+                                <span class="range-label" data-value="75">75%</span>
+                                <span class="range-label" data-value="100">100%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Estimated Total</label>
+                            <div class="input-group">
+                                <input type="number" id="estimatedTotal" class="form-control" placeholder="0.00" readonly>
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button class="btn btn-buy" id="marketBuyBtn">Buy BTC</button>
+                            <button class="btn btn-sell" id="marketSellBtn">Sell BTC</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-form" id="stopLimitOrderForm" style="display: none;">
+                        <div class="form-group">
+                            <label for="stopPrice">Stop Price</label>
+                            <div class="input-group">
+                                <input type="number" id="stopPrice" class="form-control" placeholder="0.00">
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="limitPriceStop">Limit Price</label>
+                            <div class="input-group">
+                                <input type="number" id="limitPriceStop" class="form-control" placeholder="0.00">
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="stopAmount">Amount</label>
+                            <div class="input-group">
+                                <input type="number" id="stopAmount" class="form-control" placeholder="0.00">
+                                <div class="input-group-append">BTC</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="stopTotal">Total</label>
+                            <div class="input-group">
+                                <input type="number" id="stopTotal" class="form-control" placeholder="0.00" readonly>
+                                <div class="input-group-append">USDT</div>
+                            </div>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button class="btn btn-buy" id="stopBuyBtn">Buy Stop</button>
+                            <button class="btn btn-sell" id="stopSellBtn">Sell Stop</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orders Section -->
+            <div class="orders-section">
+                <div class="orders-container">
+                    <div class="section-header">
+                        <div class="section-title">Open Orders</div>
+                        <button class="btn btn-outline" id="copyTradeBtn">
+                            <i class="fas fa-copy"></i> Copy Trade
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="openOrdersTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Pair</th>
+                                    <th>Type</th>
+                                    <th>Side</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                    <th>Filled</th>
+                                    <th>Total</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Open orders will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="section-header" style="margin-top: 2rem;">
+                        <div class="section-title">Order History</div>
+                        <div>
+                            <button class="btn btn-outline" id="exportBtn">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="orderHistoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Pair</th>
+                                    <th>Type</th>
+                                    <th>Side</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Order history will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Chat and News Section -->
+                <div class="chat-news">
+                    <div class="chat-container">
+                        <div class="section-header">
+                            <div class="section-title">Live Chat</div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">TradingExpert</span>
+                                    <span class="message-time">10:30 AM</span>
+                                </div>
+                                <div class="message-content">
+                                    BTC looking bullish today. Watch for a breakout above 37k.
+                                </div>
+                            </div>
+                            
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">CryptoWhale</span>
+                                    <span class="message-time">10:45 AM</span>
+                                </div>
+                                <div class="message-content">
+                                    ETH/BTC ratio is at a critical level. Could see some interesting moves.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type a message...">
+                                <button class="btn btn-accent">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="news-container">
+                        <div class="section-header">
+                            <div class="section-title">Market News</div>
+                        </div>
+                        
+                        <div class="news-items" id="newsItems">
+                            <div class="news-item">
+                                <div class="news-title">Bitcoin Surges Past $36,000 as Institutional Interest Grows</div>
+                                <div class="news-meta">
+                                    <span>CryptoNews</span>
+                                    <span>2 hours ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="news-item">
+                                <div class="news-title">Ethereum 2.0 Upgrade: What You Need to Know</div>
+                                <div class="news-meta">
+                                    <span>BlockchainDaily</span>
+                                    <span>5 hours ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="news-item">
+                                <div class="news-title">Regulatory Developments: SEC's New Stance on Crypto</div>
+                                <div class="news-meta">
+                                    <span>CoinDesk</span>
+                                    <span>Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bot Assistant -->
+    <div class="bot-assistant" id="botAssistant">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="bot-chat" id="botChat">
+        <div class="bot-chat-header">
+            <span>Trading Assistant</span>
+            <button class="bot-chat-close" id="botChatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="bot-chat-messages" id="botChatMessages">
+            <div class="bot-message from-bot">
+                Hello! I'm your trading assistant. How can I help you today?
+            </div>
+        </div>
+        
+        <div class="bot-chat-input">
+            <input type="text" class="form-control" id="botChatInput" placeholder="Ask something...">
+            <button class="btn btn-accent" id="botChatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <!-- Notification Modal -->
+    <div class="modal" id="notificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Notifications</div>
+                <button class="modal-close" id="closeNotificationModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="chat-message">
+                    <div class="message-header">
+                        <span class="message-sender">System</span>
+                        <span class="message-time">11:30 AM</span>
+                    </div>
+                    <div class="message-content">
+                        Your BTC/USDT buy order has been filled.
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="message-header">
+                        <span class="message-sender">Price Alert</span>
+                        <span class="message-time">10:15 AM</span>
+                    </div>
+                    <div class="message-content">
+                        BTC/USDT has reached your target price of $36,500.
+                    </div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="message-header">
+                        <span class="message-sender">System</span>
+                        <span class="message-time">Yesterday</span>
+                    </div>
+                    <div class="message-content">
+                        Welcome to Truvance Trading Platform! Start trading now.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Copy Trading Modal -->
+    <div class="modal" id="copyTradeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Copy Trading</div>
+                <button class="modal-close" id="closeCopyTradeModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="traderSelect">Select Trader to Copy</label>
+                    <select id="traderSelect" class="form-control">
+                        <option value="">Select a trader</option>
+                        <option value="trader1">CryptoWhale (Win Rate: 78%)</option>
+                        <option value="trader2">BTCMaster (Win Rate: 65%)</option>
+                        <option value="trader3">AlphaTrader (Win Rate: 82%)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="copyAmount">Amount to Allocate</label>
+                    <div class="input-group">
+                        <input type="number" id="copyAmount" class="form-control" placeholder="0.00">
+                        <div class="input-group-append">USDT</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="copyRatio">Copy Ratio</label>
+                    <input type="range" id="copyRatio" class="range-slider" min="10" max="100" value="50">
+                    <div class="range-labels">
+                        <span>10%</span>
+                        <span>50%</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Risk Management</label>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                        <span>Stop Loss</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                        <span>Take Profit</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelCopyTrade">Cancel</button>
+                <button class="btn btn-accent" id="confirmCopyTrade">Start Copy Trading</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- User Menu Modal -->
+    <div class="modal" id="userMenuModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Account</div>
+                <button class="modal-close" id="closeUserMenuModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <i class="fas fa-user-circle" style="font-size: 3rem;"></i>
+                    <div>
+                        <div style="font-weight: 600;">User123456</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">user@example.com</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1rem;">
+                    <div style="font-weight: 500; margin-bottom: 0.5rem;">Verification Status</div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--success);">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Verified</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-menu" style="margin-top: 1rem;">
+                    <li>
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-history"></i>
+                        <span>Transaction History</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-question-circle"></i>
+                        <span>Help Center</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Price Alert Modal -->
+    <div class="modal" id="priceAlertModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Set Price Alert</div>
+                <button class="modal-close" id="closePriceAlertModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="alertPair">Trading Pair</label>
+                    <select id="alertPair" class="form-control">
+                        <option value="BTC/USDT">BTC/USDT</option>
+                        <option value="ETH/USDT">ETH/USDT</option>
+                        <option value="SOL/USDT">SOL/USDT</option>
+                        <option value="XRP/USDT">XRP/USDT</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alertCondition">Condition</label>
+                    <select id="alertCondition" class="form-control">
+                        <option value="above">Price Above</option>
+                        <option value="below">Price Below</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alertPrice">Price</label>
+                    <div class="input-group">
+                        <input type="number" id="alertPrice" class="form-control" placeholder="0.00">
+                        <div class="input-group-append">USDT</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Notification Method</label>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                        <span>In-App</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem;">
+                        <span>Email</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelPriceAlert">Cancel</button>
+                <button class="btn btn-accent" id="confirmPriceAlert">Set Alert</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- TradingView Widget -->
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+    <script>
+        // DOM Elements
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationModal = document.getElementById('notificationModal');
+        const closeNotificationModal = document.getElementById('closeNotificationModal');
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenuModal = document.getElementById('userMenuModal');
+        const closeUserMenuModal = document.getElementById('closeUserMenuModal');
+        const copyTradeBtn = document.getElementById('copyTradeBtn');
+        const copyTradeModal = document.getElementById('copyTradeModal');
+        const closeCopyTradeModal = document.getElementById('closeCopyTradeModal');
+        const cancelCopyTrade = document.getElementById('cancelCopyTrade');
+        const confirmCopyTrade = document.getElementById('confirmCopyTrade');
+        const botAssistant = document.getElementById('botAssistant');
+        const botChat = document.getElementById('botChat');
+        const botChatClose = document.getElementById('botChatClose');
+        const botChatInput = document.getElementById('botChatInput');
+        const botChatSend = document.getElementById('botChatSend');
+        const botChatMessages = document.getElementById('botChatMessages');
+        const openOrdersTable = document.getElementById('openOrdersTable');
+        const orderHistoryTable = document.getElementById('orderHistoryTable');
+        const limitOrderForm = document.getElementById('limitOrderForm');
+        const marketOrderForm = document.getElementById('marketOrderForm');
+        const stopLimitOrderForm = document.getElementById('stopLimitOrderForm');
+        const orderTypeTabs = document.querySelectorAll('[data-order-type]');
+        const panelTabs = document.querySelectorAll('[data-tab]');
+        const buyBtn = document.getElementById('buyBtn');
+        const sellBtn = document.getElementById('sellBtn');
+        const marketBuyBtn = document.getElementById('marketBuyBtn');
+        const marketSellBtn = document.getElementById('marketSellBtn');
+        const stopBuyBtn = document.getElementById('stopBuyBtn');
+        const stopSellBtn = document.getElementById('stopSellBtn');
+        const limitPrice = document.getElementById('limitPrice');
+        const limitAmount = document.getElementById('limitAmount');
+        const totalAmount = document.getElementById('totalAmount');
+        const sizeSlider = document.getElementById('sizeSlider');
+        const rangeLabels = document.querySelectorAll('.range-label');
+        
+        // API Base URL
+        const API_BASE_URL = 'https://api.example.com';
+        
+        // Current Trading Pair
+        let currentPair = 'BTC/USDT';
+        let currentPrice = 36789.50;
+        let userBalance = {
+            BTC: 0.5,
+            USDT: 25000
+        };
+        
+        // Initialize TradingView Widget
+        function initTradingViewWidget() {
+            new TradingView.widget({
+                "autosize": true,
+                "symbol": "BINANCE:BTCUSDT",
+                "interval": "15",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#1e2026",
+                "enable_publishing": false,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingViewChart"
+            });
+        }
+        
+        // Initialize the page
+        async function initialize() {
+            initTradingViewWidget();
+            await fetchTradeBalance();
+            await fetchOpenOrders();
+            await fetchOrderHistory();
+            setupEventListeners();
+            calculateTotal();
+        }
+        
+        // Fetch Trade Balance
+        async function fetchTradeBalance() {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/trade-balance`);
+                // Simulating API response
+                // userBalance = response.data;
+                updateBalanceDisplay();
+            } catch (error) {
+                console.error('Error fetching trade balance:', error);
+                showToast('Failed to fetch balance', 'error');
+            }
+        }
+        
+        // Update Balance Display
+        function updateBalanceDisplay() {
+            const balanceElement = document.querySelector('.balance-amount');
+            balanceElement.textContent = `${userBalance.USDT.toFixed(2)} USDT`;
+        }
+        
+        // Fetch Open Orders
+        async function fetchOpenOrders() {
+            try {
+                // const response = await axios.get(`${API_BASE_URL}/open-orders`);
+                // Simulating API response
+                const openOrders = [
+                    {
+                        id: '1',
+                        date: '2023-05-15T10:30:00Z',
+                        pair: 'BTC/USDT',
+                        type: 'Limit',
+                        side: 'Buy',
+                        price: 35000,
+                        amount: 0.1,
+                        filled: '0%',
+                        total: 3500
+                    },
+                    {
+                        id: '2',
+                        date: '2023-05-15T11:45:00Z',
+                        pair: 'ETH/USDT',
+                        type: 'Stop-Limit',
+                        side: 'Sell',
+                        price: 2100,
+                        amount: 1.5,
+                        filled: '0%',
+                        total: 3150
+                    }
+                ];
+                
+                renderOpenOrders(openOrders);
+            } catch (error) {
+                console.error('Error fetching open orders:', error);
+                showToast('Failed to fetch open orders', 'error');
+            }
+        }
+        
+        // Render Open Orders
+        function renderOpenOrders(orders) {
+            const tbody = openOrdersTable.querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            if (orders.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="9" style="text-align: center;">No open orders</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+            
+            orders.forEach(order => {
+                const tr = document.createElement('tr');
+                const date = new Date(order.date).toLocaleString();
+                const sideClass = order.side === 'Buy' ? 'price-up' : 'price-down';
+                
+                tr.innerHTML = `
+                    <td>${date}</td>
+                    <td>${order.pair}</td>
+                    <td>${order.type}</td>
+                    <td class="${sideClass}">${order.side}</td>
+                    <td>${order.price.toFixed(2)}</td>
+                    <td>${order.amount}</td>
+                    <td>${order.filled}</td>
+                    <td>${order.total.toFixed(2)}</td>
+                    <td>
+                        <button class="action-btn" data-order-id="${order.id}" data-action="edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" data-order-id="${order.id}" data-action="cancel">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+            
+            // Add event listeners to action buttons
+            const actionButtons = tbody.querySelectorAll('.action-btn');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', handleOrderAction);
+            });
+        }
+        
+        // Fetch Order History
+        async function fetchOrderHistory() {
+            try {
+                // const response = await axios.get(`${API_BASE_URL}/all-orders`);
+                // Simulating API response
+                const orderHistory = [
+                    {
+                        id: '3',
+                        date: '2023-05-14T15:20:00Z',
+                        pair: 'BTC/USDT',
+                        type: 'Market',
+                        side: 'Buy',
+                        price: 36500,
+                        amount: 0.05,
+                        total: 1825,
+                        status: 'Filled'
+                    },
+                    {
+                        id: '4',
+                        date: '2023-05-13T09:15:00Z',
+                        pair: 'ETH/USDT',
+                        type: 'Limit',
+                        side: 'Sell',
+                        price: 1950,
+                        amount: 2,
+                        total: 3900,
+                        status: 'Filled'
+                    },
+                    {
+                        id: '5',
+                        date: '2023-05-12T14:30:00Z',
+                        pair: 'SOL/USDT',
+                        type: 'Limit',
+                        side: 'Buy',
+                        price: 85,
+                        amount: 10,
+                        total: 850,
+                        status: 'Canceled'
+                    }
+                ];
+                
+                renderOrderHistory(orderHistory);
+            } catch (error) {
+                console.error('Error fetching order history:', error);
+                showToast('Failed to fetch order history', 'error');
+            }
+        }
+        
+        // Render Order History
+        function renderOrderHistory(orders) {
+            const tbody = orderHistoryTable.querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            if (orders.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="8" style="text-align: center;">No order history</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+            
+            orders.forEach(order => {
+                const tr = document.createElement('tr');
+                const date = new Date(order.date).toLocaleString();
+                const sideClass = order.side === 'Buy' ? 'price-up' : 'price-down';
+                const statusClass = order.status === 'Filled' ? 'price-up' : 'price-down';
+                
+                tr.innerHTML = `
+                    <td>${date}</td>
+                    <td>${order.pair}</td>
+                    <td>${order.type}</td>
+                    <td class="${sideClass}">${order.side}</td>
+                    <td>${order.price.toFixed(2)}</td>
+                    <td>${order.amount}</td>
+                    <td>${order.total.toFixed(2)}</td>
+                    <td class="${statusClass}">${order.status}</td>
+                `;
+                
+                tbody.appendChild(tr);
+            });
+        }
+        
+        // Place Order
+        async function placeOrder(orderData) {
+            try {
+                // Show loading state
+                const button = orderData.side === 'Buy' ? buyBtn : sellBtn;
+                const originalText = button.textContent;
+                button.innerHTML = `<span class="loader"></span> Processing...`;
+                button.disabled = true;
+                
+                // Simulate API call
+                // const response = await axios.post(`${API_BASE_URL}/place-order`, orderData);
+                
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Reset button state
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                // Show success message
+                showToast(`${orderData.side} order placed successfully!`, 'success');
+                
+                // Refresh data
+                await fetchTradeBalance();
+                await fetchOpenOrders();
+                
+                // Reset form
+                limitAmount.value = '';
+                totalAmount.value = '';
+                sizeSlider.value = 0;
+            } catch (error) {
+                console.error('Error placing order:', error);
+                showToast('Failed to place order', 'error');
+                
+                // Reset button state
+                const button = orderData.side === 'Buy' ? buyBtn : sellBtn;
+                button.innerHTML = button.getAttribute('data-original-text');
+                button.disabled = false;
+            }
+        }
+        
+        // Cancel Order
+        async function cancelOrder(orderId) {
+            try {
+                // const response = await axios.delete(`${API_BASE_URL}/delete-order/${orderId}`);
+                
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                showToast('Order canceled successfully', 'success');
+                await fetchOpenOrders();
+            } catch (error) {
+                console.error('Error canceling order:', error);
+                showToast('Failed to cancel order', 'error');
+            }
+        }
+        
+        // Edit Order
+        async function editOrder(orderId) {
+            try {
+                // Fetch order details
+                // const response = await axios.get(`${API_BASE_URL}/order/${orderId}`);
+                // const order = response.data;
+                
+                // For demo, we'll just show a toast
+                showToast('Edit order functionality coming soon', 'info');
+            } catch (error) {
+                console.error('Error editing order:', error);
+                showToast('Failed to edit order', 'error');
+            }
+        }
+        
+        // Handle Order Action (Edit or Cancel)
+        function handleOrderAction(event) {
+            const button = event.currentTarget;
+            const orderId = button.getAttribute('data-order-id');
+            const action = button.getAttribute('data-action');
+            
+            if (action === 'cancel') {
+                if (confirm('Are you sure you want to cancel this order?')) {
+                    cancelOrder(orderId);
+                }
+            } else if (action === 'edit') {
+                editOrder(orderId);
+            }
+        }
+        
+        // Calculate Total
+        function calculateTotal() {
+            const price = parseFloat(limitPrice.value) || 0;
+            const amount = parseFloat(limitAmount.value) || 0;
+            const total = price * amount;
+            totalAmount.value = total.toFixed(2);
+        }
+        
+        // Update Amount based on Slider
+        function updateAmountFromSlider(value) {
+            // For demo purposes, we'll use a simple calculation
+            // In a real app, this would be based on the user's balance
+            const maxAmount = userBalance.USDT / parseFloat(limitPrice.value);
+            const amount = (maxAmount * value) / 100;
+            limitAmount.value = amount.toFixed(8);
+            calculateTotal();
+        }
+        
+        // Show Toast Notification
+        function showToast(message, type = 'info') {
+            const backgroundColor = type === 'success' ? '#0ecb81' : 
+                                   type === 'error' ? '#f6465d' : 
+                                   type === 'info' ? '#1e2026' : '#f0b90b';
+            
+            Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: backgroundColor,
+                stopOnFocus: true
+            }).showToast();
+        }
+        
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Mobile Menu Toggle
+            mobileMenuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            });
+            
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                sidebarOverlay.style.display = 'none';
+            });
+            
+            // Notification Modal
+            notificationBtn.addEventListener('click', () => {
+                notificationModal.style.display = 'flex';
+            });
+            
+            closeNotificationModal.addEventListener('click', () => {
+                notificationModal.style.display = 'none';
+            });
+            
+            // User Menu Modal
+            userMenuBtn.addEventListener('click', () => {
+                userMenuModal.style.display = 'flex';
+            });
+            
+            closeUserMenuModal.addEventListener('click', () => {
+                userMenuModal.style.display = 'none';
+            });
+            
+            // Copy Trade Modal
+            copyTradeBtn.addEventListener('click', () => {
+                copyTradeModal.style.display = 'flex';
+            });
+            
+            closeCopyTradeModal.addEventListener('click', () => {
+                copyTradeModal.style.display = 'none';
+            });
+            
+            cancelCopyTrade.addEventListener('click', () => {
+                copyTradeModal.style.display = 'none';
+            });
+            
+            confirmCopyTrade.addEventListener('click', () => {
+                showToast('Copy trading started successfully', 'success');
+                copyTradeModal.style.display = 'none';
+            });
+            
+            // Bot Assistant
+            botAssistant.addEventListener('click', () => {
+                botChat.style.display = 'flex';
+            });
+            
+            botChatClose.addEventListener('click', () => {
+                botChat.style.display = 'none';
+            });
+            
+            botChatSend.addEventListener('click', sendBotMessage);
+            
+            botChatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendBotMessage();
+                }
+            });
+            
+            // Order Type Tabs
+            orderTypeTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    orderTypeTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding form
+                    const orderType = tab.getAttribute('data-order-type');
+                    limitOrderForm.style.display = orderType === 'limit' ? 'block' : 'none';
+                    marketOrderForm.style.display = orderType === 'market' ? 'block' : 'none';
+                    stopLimitOrderForm.style.display = orderType === 'stop' ? 'block' : 'none';
+                });
+            });
+            
+            // Panel Tabs
+            panelTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabGroup = tab.parentElement;
+                    const tabs = tabGroup.querySelectorAll('.panel-tab');
+                    
+                    // Remove active class from all tabs in this group
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                });
+            });
+            
+            // Order Form Inputs
+            limitPrice.addEventListener('input', calculateTotal);
+            limitAmount.addEventListener('input', calculateTotal);
+            
+            // Size Slider
+            sizeSlider.addEventListener('input', (e) => {
+                updateAmountFromSlider(e.target.value);
+            });
+            
+            // Range Labels
+            rangeLabels.forEach(label => {
+                label.addEventListener('click', () => {
+                    const value = label.getAttribute('data-value');
+                    sizeSlider.value = value;
+                    updateAmountFromSlider(value);
+                });
+            });
+            
+            // Buy and Sell Buttons
+            buyBtn.addEventListener('click', () => {
+                const price = parseFloat(limitPrice.value);
+                const amount = parseFloat(limitAmount.value);
+                
+                if (!price || !amount) {
+                    showToast('Please enter valid price and amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Limit',
+                    side: 'Buy',
+                    price: price,
+                    amount: amount,
+                    total: price * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            sellBtn.addEventListener('click', () => {
+                const price = parseFloat(limitPrice.value);
+                const amount = parseFloat(limitAmount.value);
+                
+                if (!price || !amount) {
+                    showToast('Please enter valid price and amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Limit',
+                    side: 'Sell',
+                    price: price,
+                    amount: amount,
+                    total: price * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            // Market Buy and Sell Buttons
+            marketBuyBtn.addEventListener('click', () => {
+                const amount = parseFloat(document.getElementById('marketAmount').value);
+                
+                if (!amount) {
+                    showToast('Please enter valid amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Market',
+                    side: 'Buy',
+                    price: currentPrice, // Market price
+                    amount: amount,
+                    total: currentPrice * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            marketSellBtn.addEventListener('click', () => {
+                const amount = parseFloat(document.getElementById('marketAmount').value);
+                
+                if (!amount) {
+                    showToast('Please enter valid amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Market',
+                    side: 'Sell',
+                    price: currentPrice, // Market price
+                    amount: amount,
+                    total: currentPrice * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            // Stop Buy and Sell Buttons
+            stopBuyBtn.addEventListener('click', () => {
+                const stopPrice = parseFloat(document.getElementById('stopPrice').value);
+                const limitPrice = parseFloat(document.getElementById('limitPriceStop').value);
+                const amount = parseFloat(document.getElementById('stopAmount').value);
+                
+                if (!stopPrice || !limitPrice || !amount) {
+                    showToast('Please enter valid stop price, limit price, and amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Stop-Limit',
+                    side: 'Buy',
+                    stopPrice: stopPrice,
+                    price: limitPrice,
+                    amount: amount,
+                    total: limitPrice * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            stopSellBtn.addEventListener('click', () => {
+                const stopPrice = parseFloat(document.getElementById('stopPrice').value);
+                const limitPrice = parseFloat(document.getElementById('limitPriceStop').value);
+                const amount = parseFloat(document.getElementById('stopAmount').value);
+                
+                if (!stopPrice || !limitPrice || !amount) {
+                    showToast('Please enter valid stop price, limit price, and amount', 'error');
+                    return;
+                }
+                
+                const orderData = {
+                    pair: currentPair,
+                    type: 'Stop-Limit',
+                    side: 'Sell',
+                    stopPrice: stopPrice,
+                    price: limitPrice,
+                    amount: amount,
+                    total: limitPrice * amount
+                };
+                
+                placeOrder(orderData);
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === notificationModal) {
+                    notificationModal.style.display = 'none';
+                }
+                if (e.target === userMenuModal) {
+                    userMenuModal.style.display = 'none';
+                }
+                if (e.target === copyTradeModal) {
+                    copyTradeModal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Send Bot Message
+        function sendBotMessage() {
+            const message = botChatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'bot-message from-user';
+            userMessageDiv.textContent = message;
+            botChatMessages.appendChild(userMessageDiv);
+            
+            // Clear input
+            botChatInput.value = '';
+            
+            // Scroll to bottom
+            botChatMessages.scrollTop = botChatMessages.scrollHeight;
+            
+            // Simulate bot response
+            setTimeout(() => {
+                const botResponses = [
+                    "I recommend setting a stop loss at around 5-10% below your entry price to manage risk.",
+                    "Based on current market conditions, BTC is showing bullish signals on the 4-hour chart.",
+                    "The current BTC/USDT trading volume is above average, indicating strong market interest.",
+                    "Consider using a trailing stop to lock in profits if the market moves in your favor.",
+                    "The RSI indicator is currently at 65, suggesting the market is approaching overbought territory."
+                ];
+                
+                const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+                
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'bot-message from-bot';
+                botMessageDiv.textContent = randomResponse;
+                botChatMessages.appendChild(botMessageDiv);
+                
+                // Scroll to bottom
+                botChatMessages.scrollTop = botChatMessages.scrollHeight;
+            }, 1000);
+        }
+        
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>

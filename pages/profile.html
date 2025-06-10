@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zephyrequi | Professional Profile</title>
+<link rel="stylesheet" href="css/profile.css">
+<link rel="stylesheet" href="css/toaster.css">
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+  <a href="dashboard.html" class="logo" style="text-decoration: none; color: inherit;">
+    <div class="logo-icon">D</div>
+    <div class="logo-text">Dainter<span>bfx</span></div>
+  </a>
+  <div class="header-actions">
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
+      <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+      </svg>
+    </button>
+    <button class="header-action" id="notification-button" aria-label="Notifications">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"></path>
+      </svg>
+      <div class="notification-badge">0</div>
+    </button>
+<div class="user-menu" id="user-menu" onclick="toggleLogout()">
+  <div class="user-avatar">
+    A
+    <div class="user-avatar-badge"></div>
+  </div>
+
+  <div class="user-info">
+    <div class="user-name">Alex</div>
+    <div class="user-level">Platinum</div>
+  </div>
+
+  <div class="logout-menu" id="logoutMenu">
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<script>
+  function toggleLogout() {
+    const menu = document.getElementById("logoutMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "../auth/login.html";
+  }
+
+  // Close logout menu when clicking outside the entire user-menu
+  window.addEventListener("click", function (e) {
+    const userMenu = document.getElementById("user-menu");
+    if (!userMenu.contains(e.target)) {
+      document.getElementById("logoutMenu").style.display = "none";
+    }
+  });
+</script>
+
+
+</header>
+
+<!-- Main Container -->
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Profile</div>
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item active" data-tab="overview">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Overview</div>
+        </li>
+        <li class="sidebar-menu-item" data-tab="portfolio">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Portfolio</div>
+        </li>
+        <li class="sidebar-menu-item" data-tab="activity">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Activity</div>
+        </li>
+        <li class="sidebar-menu-item" data-tab="achievements">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Achievements</div>
+          <div class="sidebar-menu-badge">3</div>
+        </li>
+        <li class="sidebar-menu-item" data-tab="security">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Security</div>
+        </li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Settings</div>
+      <ul class="sidebar-menu">
+        <li class="sidebar-menu-item" data-tab="edit-profile">
+          <div class="sidebar-menu-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+            </svg>
+          </div>
+          <div class="sidebar-menu-text">Edit Profile</div>
+        </li>
+      </ul>
+    </div>
+<div class="sidebar-section">
+  <div class="sidebar-title">Back to dashboard</div>
+  <ul class="sidebar-menu">
+    <li
+      class="sidebar-menu-item"
+      onclick="window.location.href='dashboard.html';"
+      style="cursor: pointer;"
+    >
+      <div class="sidebar-menu-text">Dashboard</div>
+    </li>
+  </ul>
+</div>
+
+  </div>
+  <!-- End Sidebar -->
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Profile Header -->
+    <div class="profile-header">
+     <div class="profile-cover">
+  <div class="profile-cover-actions">
+    <button class="btn btn-secondary" id="edit-cover-btn">
+      <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+      </svg>
+      Edit Cover
+    </button>
+  </div>
+
+  <!-- Color picker palette -->
+  <div class="cover-palette" id="cover-palette">
+    <span class="swatch" data-color="#5c2db0" style="background:#5c2db0"></span>
+    <span class="swatch" data-color="#00e4d0" style="background:#00e4d0"></span>
+    <span class="swatch" data-color="#ff3e8e" style="background:#ff3e8e"></span>
+    <span class="swatch" data-color="#9361f3" style="background:#9361f3"></span>
+    <span class="swatch" data-color="#f59e0b" style="background:#f59e0b"></span>
+  </div>
+</div>
+
+      <div class="profile-info-wrapper">
+        <div class="profile-info">
+          <div class="profile-avatar-wrapper">
+            <div class="profile-avatar-large">
+              A
+              <div class="profile-avatar-badge-large">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14" style="fill: white;">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="profile-details">
+            <div class="profile-name-wrapper">
+              <h1 class="profile-name">Alex Trader</h1>
+              <div class="profile-verification">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+                </svg>
+                Verified
+              </div>
+            </div>
+           <div class="profile-username">
+              <span id="username-text">@alextrader</span>
+              <svg class="icon profile-username-copy" viewBox="0 0 24 24" width="16" height="16" id="copy-username" style="cursor:pointer; margin-left:4px;">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+              </svg>
+          </div>
+            <div class="profile-bio">
+              Crypto enthusiast and professional trader with over 5 years of experience. Specializing in DeFi, NFTs, and emerging blockchain technologies. Always looking for the next big opportunity.
+            </div>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <div class="profile-stat-value">$0.00</div>
+                <div class="profile-stat-label">Total earned</div>
+              </div>
+              <div class="profile-stat">
+                <div class="profile-stat-value">0</div>
+                <div class="profile-stat-label">Total Trades</div>
+              </div>
+              <div class="profile-stat">
+                <div class="profile-stat-value">+00.8%</div>
+                <div class="profile-stat-label">30d Return</div>
+              </div>
+              <div class="profile-stat">
+                <div class="profile-stat-value">May 2020</div>
+                <div class="profile-stat-label">Member Since</div>
+              </div>
+            </div>
+            <div class="profile-badges">
+              <div class="profile-badge">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+                </svg>
+                Platinum Tier
+              </div>
+              <div class="profile-badge">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+                </svg>
+                KYC Verified
+              </div>
+              <div class="profile-badge">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"></path>
+                </svg>
+                2FA Enabled
+              </div>
+              <div class="profile-badge">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"></path>
+                </svg>
+                No Restrictions
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <!-- <button class="btn btn-secondary" id="share-profile-btn">
+          <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path>
+          </svg>
+          Share Profile
+        </button> -->
+        <button class="btn btn-primary" id="edit-profile-btn">
+          <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+          </svg>
+          Edit Profile
+        </button>
+      </div>
+    </div>
+
+    <!-- Glass Modal Overlay -->
+<div id="edit-modal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="close-modal">&times;</button>
+    <h2>Edit Profile</h2>
+    <!-- You can move your basic-profile-form in here -->
+    <form id="basic-profile-form" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="basic-name">Name</label>
+        <input type="text" id="basic-name" name="name" />
+      </div>
+      <div class="form-group">
+        <label for="basic-username">Username</label>
+        <input type="text" id="basic-username" name="username" />
+      </div>
+      <div class="form-group">
+        <label for="basic-bio">Bio</label>
+        <textarea id="basic-bio" name="bio" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="basic-image">Avatar Image</label>
+        <input type="file" id="basic-image" name="image" accept="image/*" />
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+
+    <!-- Profile Navigation -->
+    <div class="profile-nav">
+      <ul class="profile-nav-list">
+        <li class="profile-nav-item active" data-tab="overview">Overview</li>
+        <li class="profile-nav-item" data-tab="portfolio">Portfolio</li>
+        <li class="profile-nav-item" data-tab="activity">Activity</li>
+        <li class="profile-nav-item" data-tab="achievements">Achievements</li>
+        <li class="profile-nav-item" data-tab="security">Security</li>
+      </ul>
+    </div>
+
+    <!-- Tab Content -->
+    <!-- Overview Tab -->
+    <div class="tab-content active" id="overview-tab">
+      <!-- Stats Section -->
+      <div class="grid grid-4" style="margin-bottom: 30px;">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+            </svg>
+          </div>
+          <div class="stat-value">$0,00</div>
+          <div class="stat-label">Total earned</div>
+          <div class="stat-change positive">
+            <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+              <path d="M7 14l5-5 5 5z"></path>
+            </svg>
+            <!-- +3.2% this week --> earn 
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
+            </svg>
+          </div>
+          <div class="stat-value">0</div>
+          <div class="stat-label">Total Trades</div>
+          <div class="stat-change positive">
+            <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+              <path d="M7 14l5-5 5 5z"></path>
+            </svg>
+            <!-- +12 this month --> count
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"></path>
+            </svg>
+          </div>
+          <div class="stat-value">+00.8%</div>
+          <div class="stat-label">Return</div>
+          <div class="stat-change positive">
+            <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+              <path d="M7 14l5-5 5 5z"></path>
+            </svg>
+            Outperforming market
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path>
+            </svg>
+          </div>
+          <div class="stat-value">2 Years</div>
+          <div class="stat-label">Member Since</div>
+          <div class="stat-change">
+            Joined May 11, 2023
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+<!-- Recent Deposit Activity Card -->
+<div class="card" style="margin-bottom: 30px;">
+  <div class="card-header">
+    <div class="card-title">
+      <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+        <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+      </svg>
+      Recent Deposit Activity
+    </div>
+    <div class="card-actions">
+      <button class="card-action">
+        <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
+          <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- this will be populated by your JS -->
+    <div class="activity-list" id="deposit-activity-list"></div>
+  </div>
+  <div class="card-footer">
+    <span style="font-size: 13px; color: var(--text-secondary);">
+      Showing recent deposits
+    </span>
+    <button class="btn btn-secondary" id="view-all-activity-btn">
+      View All Activity
+    </button>
+  </div>
+</div>
+
+
+      <!-- Profile Details -->
+      <div class="grid grid-2">
+        <div class="card">
+  <div class="card-header">
+    <div class="card-title">
+      <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+      </svg>
+      Personal Information
+    </div>
+    <div class="card-actions" id="personal-info-actions">
+      <button class="card-action" id="edit-personal-info-btn">
+        <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
+          <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div>
+        <div class="form-group">
+          <div class="form-label">Full Name</div>
+          <div id="profile-name">Alexander Trader</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Email</div>
+          <div id="profile-email" style="display: flex; align-items: center; gap: 5px;">
+            alex.trader@example.com
+            <svg class="icon verified-badge" viewBox="0 0 24 24" width="16" height="16">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Phone</div>
+          <div id="profile-phone" style="display: flex; align-items: center; gap: 5px;">
+            +1 (555) 123-4567
+            <svg class="icon verified-badge" viewBox="0 0 24 24" width="16" height="16">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+          <div class="form-label">Location</div>
+          <div id="profile-address">San Francisco, CA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+        </div>
+         <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+              </svg>
+              Security Status
+            </div>
+            <div class="card-actions">
+              <button class="card-action" id="manage-security-btn">
+                <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
+                  <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73 0 .21-.02.43-.05.73l-.14 1.13.89.7 1.08.84-.7 1.21-1.27-.51-1.04-.42-.9.68c-.43.32-.84.56-1.25.73l-1.06.43-.16 1.13-.2 1.35h-1.4l-.19-1.35-.16-1.13-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7-1.06.43-1.27.51-.7-1.21 1.08-.84.89-.7-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13-.89-.7-1.08-.84.7-1.21 1.27.51 1.04.42.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43.16-1.13.2-1.35h1.39l.19 1.35.16 1.13 1.06.43c.43.18.83.41 1.23.71l.91.7 1.06-.43 1.27-.51.7 1.21-1.07.85-.89.7.14 1.13z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="security-item">
+              <div class="security-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                </svg>
+              </div>
+              <div class="security-details">
+                <div class="security-title">Two-Factor Authentication</div>
+                <div class="security-description">Protect your account with 2FA</div>
+              </div>
+              <div class="security-status">
+                <div class="security-status-indicator enabled">
+                  <svg class="icon" viewBox="0 0 24 24" width="10" height="10">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+                  </svg>
+                </div>
+                <div class="security-status-text enabled">Enabled</div>
+              </div>
+            </div>
+            <div class="security-item">
+              <div class="security-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+                </svg>
+              </div>
+              <div class="security-details">
+                <div class="security-title">Identity Verification</div>
+                <div class="security-description">KYC verification status</div>
+              </div>
+              <div class="security-status">
+                <div class="security-status-indicator enabled">
+                  <svg class="icon" viewBox="0 0 24 24" width="10" height="10">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+                  </svg>
+                </div>
+                <div class="security-status-text enabled">Verified</div>
+              </div>
+            </div>
+         </div>
+        </div> 
+      </div>
+    </div>
+
+    <!-- Portfolio Tab -->
+    <div class="tab-content" id="portfolio-tab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+            </svg>
+            Asset Holdings
+          </div>
+        </div>
+        <div class="card-body">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <th style="text-align: left; padding: 10px;">Asset</th>
+                <th style="text-align: right; padding: 10px;">Holdings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 15px 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: #F7931A; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">B</div>
+                    <div>
+                      <div style="font-weight: 600;">Bitcoin</div>
+                      <div style="font-size: 12px; color: var(--text-secondary);">BTC</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="text-align: right; padding: 15px 10px;">00.0 BTC</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 15px 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: #627EEA; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">E</div>
+                    <div>
+                      <div style="font-weight: 600;">Ethereum</div>
+                      <div style="font-size: 12px; color: var(--text-secondary);">ETH</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="text-align: right; padding: 15px 10px;">00.0 ETH</td>
+              </tr>
+              <tr>
+                <td style="padding: 15px 10px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: #9945FF; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">S</div>
+                    <div>
+                      <div style="font-weight: 600;">Solana</div>
+                      <div style="font-size: 12px; color: var(--text-secondary);">SOL</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="text-align: right; padding: 15px 10px;">00.0 SOL</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <span style="font-size: 13px; color: var(--text-secondary);" id="portfolio-value">Total Portfolio Value: $00.00</span>
+            <button class="btn btn-primary" onclick="window.location.href='deposit.html'">Add Asset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Tab -->
+    <div class="tab-content" id="activity-tab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
+            </svg>
+            Activity History
+          </div>
+        </div>
+      <div class="card-body">
+  <!-- Replace your static items with this: -->
+  <div class="activity-list" id="activity-list">
+    <!-- JS will inject the latest 3 notices here -->
+  </div>
+</div>
+
+        <div class="card-footer">
+          <button class="btn btn-secondary" onclick="window.location.href='notifications.html'">Load More</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements Tab -->
+    <div class="tab-content" id="achievements-tab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+            </svg>
+            Achievements
+          </div>
+        </div>
+       <div class="card-body">
+  <div class="achievement-grid" id="achievement-grid">
+    <!-- cards will be injected here -->
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div class="tab-content" id="security-tab">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg class="icon card-icon" viewBox="0 0 24 24" width="18" height="18">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+            </svg>
+            Security Settings
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="security-item">
+            <div class="security-icon">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+              </svg>
+            </div>
+            <div class="security-details">
+              <div class="security-title">Two-Factor Authentication</div>
+              <div class="security-description">Protect your account with 2FA</div>
+            </div>
+            <div class="security-status">
+              <div class="security-status-indicator enabled">
+                <svg class="icon" viewBox="0 0 24 24" width="10" height="10">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+                </svg>
+              </div>
+              <div class="security-status-text enabled">Enabled</div>
+            </div>
+            <button class="btn btn-secondary" style="margin-left: 15px;">Manage</button>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+              </svg>
+            </div>
+            <div class="security-details">
+              <div class="security-title">Identity Verification</div>
+              <div class="security-description">KYC verification status</div>
+            </div>
+            <div class="security-status">
+              <div class="security-status-indicator enabled">
+                <svg class="icon" viewBox="0 0 24 24" width="10" height="10">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+                </svg>
+              </div>
+              <div class="security-status-text enabled">Verified</div>
+            </div>
+            <button class="btn btn-secondary" style="margin-left: 15px;">View</button>
+          </div>
+
+          <!-- <div class="security-item">
+            <div class="security-icon">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"></path>
+              </svg>
+            </div>
+            <div class="security-status">
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div> -->
+          <div class="security-item">
+            <div class="security-icon">
+              <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path>
+              </svg>
+            </div>
+              <div class="security-details">
+                <div class="security-title">Change Password</div>
+                <div class="security-description">Update your account password</div>
+              </div>
+              <button class="btn btn-secondary" id="change-password-btn" style="margin-left: auto;">
+                Change
+              </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="change-password-modal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close" id="close-change-password">&times;</button>
+    <h2>Change Password</h2>
+    <form id="change-password-form">
+      <div class="form-group">
+        <label for="old-password">Current Password</label>
+        <input type="password" id="old-password" name="oldPassword" required />
+      </div>
+      <div class="form-group">
+        <label for="new-password">New Password</label>
+        <input type="password" id="new-password" name="newPassword" required />
+      </div>
+      <button type="submit" class="btn btn-primary" id="change-password-save">
+  <span class="btn-text">Save</span>
+  <span class="spinner hidden" id="save-spinner"></span>
+</button>
+
+    </form>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+ 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— 0) Toast helper —————
+  function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => container.removeChild(toast), 3200);
+  }
+  // ————— 1) Axios instances —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+  const invApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/earn/investment",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+  // ————— 2) DOM Elements —————
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const sidebar          = document.getElementById('sidebar');
+  const overlay          = document.getElementById('overlay');
+  const profileNavItems  = document.querySelectorAll('.profile-nav-item');
+  const sidebarMenuItems = document.querySelectorAll('.sidebar-menu-item');
+  const tabContents      = document.querySelectorAll('.tab-content');
+  const profileNameEl    = document.querySelector('.profile-name');
+  const usernameTextEl   = document.getElementById('username-text');
+  const profileBioEl     = document.querySelector('.profile-bio');
+  const avatarWrapper    = document.querySelector('.profile-avatar-large');
+  const copyUsernameBtn  = document.getElementById('copy-username');
+  const shareProfileBtn  = document.getElementById('share-profile-btn');
+  const editProfileBtn   = document.getElementById('edit-profile-btn');
+// ————— 2.1) Stats & Badges elements —————
+const statEls        = document.querySelectorAll('.profile-stats .profile-stat');
+const totalAmountEl  = statEls[0].querySelector('.profile-stat-value');
+const totalOrdersEl  = statEls[1].querySelector('.profile-stat-value');
+// standalone stat-cards
+  const statCardEls      = document.querySelectorAll('.stat-card');
+  const statCardAmtEl    = statCardEls[0].querySelector('.stat-value');
+  const statCardTrdEl    = statCardEls[1].querySelector('.stat-value');
+  const statCardReturnEl = statCardEls[2].querySelector('.stat-value');
+  const statCardReturnLbl= statCardEls[2].querySelector('.stat-label');
+  const statCardSinceEl  = statCardEls[3].querySelector('.stat-value');
+  const statCardSinceLbl = statCardEls[3].querySelector('.stat-label');
+  const statCardSinceChg = statCardEls[3].querySelector('.stat-change');
+
+  const topAvatarEl = document.querySelector('#user-menu .user-avatar');
+  const topNameEl   = document.querySelector('#user-menu .user-name');
+
+  // badges
+  const badgeEls = document.querySelectorAll('.profile-badges .profile-badge');
+
+  let profileId = "";
+
+  // ————— 3) Fetch full profile info —————
+userApi.get('/profile/username')
+  .then(({ data }) => {
+    // —— HEADER —— 
+    topNameEl.textContent = data.name;
+    if (data.image) {
+      const url = `https://new.api.zephyrequi.com${data.image}`;
+      topAvatarEl.innerHTML = `
+        <img src="${url}" alt="${data.name}" class="avatar-sm" />
+        <div class="user-avatar-badge"></div>
+      `;
+    } else {
+      const initial = data.name.charAt(0).toUpperCase();
+      topAvatarEl.textContent = initial;
+      const badge = document.createElement('div');
+      badge.className = 'user-avatar-badge';
+      topAvatarEl.appendChild(badge);
+    }
+
+    // —— PROFILE PANEL ——
+    profileNameEl.textContent  = data.name;
+    usernameTextEl.textContent = `@${data.username}`;
+      profileBioEl.textContent   = data.bio || "";
+      profileId                  = data.profile_id;
+
+        // — Member Since in the profile-stats panel (as e.g. “May 2020”)
+    const joined = new Date(data.created_at);
+    statEls[3]
+      .querySelector('.profile-stat-value')
+      .textContent = joined.toLocaleDateString(undefined, {
+        year:  'numeric',
+        month: 'short'
+      });
+
+    // — Member Since in the standalone stat-card (years/months + full join date)
+    // make sure you have a 4th stat-card in your HTML
+    const diffYears  = Math.floor((new Date() - joined) / (1000*60*60*24*365));
+    const diffMonths = Math.floor(((new Date() - joined) % (1000*60*60*24*365)) / (1000*60*60*24*30));
+    const sinceLabel = diffYears > 0
+      ? `${diffYears} Year${diffYears>1?'s':''}`
+      : `${diffMonths} Month${diffMonths>1?'s':''}`;
+    const memberCard      = statCardEls[3];               // 4th stat-card
+    memberCard.querySelector('.stat-value').textContent  = sinceLabel;
+    memberCard.querySelector('.stat-label').textContent  = 'Member Since';
+    memberCard.querySelector('.stat-change').textContent = 
+      `Joined ${joined.toLocaleDateString(undefined, {
+        month: 'short', day: 'numeric', year: 'numeric'
+      })}`;
+
+      // KYC badge
+      const kycBadge = badgeEls[1];
+      if (data.kyc_verification === "completed") {
+        kycBadge.classList.remove('inactive-text');
+        kycBadge.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          KYC Verified
+        `;
+      } else {
+        kycBadge.classList.add('inactive-text');
+        kycBadge.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          KYC Pending
+        `;
+      }
+
+      // 2FA badge
+      const tfaBadge = badgeEls[2];
+      if (data.two_fa_enabled) {
+        tfaBadge.classList.remove('inactive-text');
+        tfaBadge.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          2FA Enabled
+        `;
+      } else {
+        tfaBadge.classList.add('inactive-text');
+        tfaBadge.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" width="14" height="14"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          2FA Disabled
+        `;
+      }
+
+      // Status badge
+      badgeEls[3].textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+
+      // Avatar
+      if (data.image) {
+        const url = `https://new.api.zephyrequi.com${data.image}`;
+        avatarWrapper.innerHTML = `
+          <img src="${url}" alt="${data.name}" class="avatar-img" />
+          <div class="profile-avatar-badge-large">
+            <svg class="icon" viewBox="0 0 24 24" width="14" height="14" style="fill:white">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          </div>`;
+      } else {
+        const initials = data.name.split(' ').map(w => w[0]).join('').toUpperCase();
+        avatarWrapper.innerHTML = `
+          <span class="avatar-initial">${initials}</span>
+          <div class="profile-avatar-badge-large">
+            <svg class="icon" viewBox="0 0 24 24" width="14" height="14" style="fill:white">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          </div>`;
+      }
+    })
+    .catch(err => console.error("Failed to load profile info:", err));
+
+      // ————— 4) Fetch total daily rate for 30d Return —————
+      invApi.get('/daily-rate/total')
+        .then(({ data }) => {
+          const daily = Number(data.total_daily_rate) || 0;
+
+          // build the percent string once
+          const pct = `${daily >= 0 ? '+' : ''}${daily.toFixed(2)}%`;
+
+          // 4a) Update profile-stats panel (3rd stat)
+          statEls[2].querySelector('.profile-stat-value').textContent = pct;
+          statEls[2].querySelector('.profile-stat-label').textContent = 'Return';
+
+          // 4b) Update standalone stat-card (3rd card)
+          statCardReturnEl.textContent = pct;
+          statCardReturnLbl.textContent = 'Return';
+        })
+        .catch(err => console.error("Failed to load daily rate:", err));
+
+
+// ————— 4.5) All-orders summary —————
+userApi.get('/all-orders/count')
+  .then(({ data }) => {
+    const { total_amount, total_orders } = data.summary;
+
+    // Format as USD with commas and two decimals
+    const formattedAmt = Number(total_amount).toLocaleString(undefined, {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    });
+    const formattedCnt = Number(total_orders).toLocaleString();
+
+    // populate profile-stats panel
+    totalAmountEl.textContent = formattedAmt;
+    totalOrdersEl.textContent = formattedCnt;
+
+    // populate standalone stat-cards
+    statCardAmtEl.textContent = formattedAmt;
+    statCardTrdEl.textContent = formattedCnt;
+  })
+  .catch(err => console.error("Failed to load order summary:", err));
+
+
+  // ————— 5) Mobile menu toggle —————
+  mobileMenuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+  });
+
+  // ————— 6) Close sidebar —————
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  // ————— 7) Tab navigation —————
+  function activateTab(tabId) {
+    profileNavItems.forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+    sidebarMenuItems.forEach(t => t.classList.toggle('active', t.dataset.tab === tabId));
+    tabContents.forEach(c => c.classList.toggle('active', c.id === `${tabId}-tab`));
+  }
+  profileNavItems.forEach(item => item.addEventListener('click', () => activateTab(item.dataset.tab)));
+  sidebarMenuItems.forEach(item => item.addEventListener('click', () => activateTab(item.dataset.tab)));
+
+  // ————— 8) Copy Profile ID —————
+  copyUsernameBtn.addEventListener('click', () => {
+    if (!profileId) {
+      return showToast('Profile ID not loaded yet.', 'error');
+    }
+    navigator.clipboard.writeText(profileId)
+      .then(() => showToast('Profile ID copied!', 'success'))
+      .catch(() => showToast('Copy failed.', 'error'));
+  });
+
+  // ————— 9) Share & Edit —————
+  shareProfileBtn.addEventListener('click', () => alert('Open share modal…'));
+  editProfileBtn.addEventListener('click', () => {
+    const tab = document.querySelector('.sidebar-menu-item[data-tab="edit-profile"]');
+    if (tab) tab.click();
+    else alert('Navigate to Edit Profile page.');
+  });
+
+  // ————— 10) Responsive cleanup —————
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 992) {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— Axios instance —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+  // ————— DOM references —————
+  const activityListEl = document.querySelector('.card-body .activity-list');
+  const viewAllBtn     = document.getElementById('view-all-activity-btn');
+
+  // clear any placeholder items
+  activityListEl.innerHTML = '';
+
+  // helper to format amounts
+  function formatAmount(amount, currency) {
+    const fiat = ["USD","EUR","GBP","JPY"];
+    if (fiat.includes(currency.toUpperCase())) {
+      return Number(amount).toLocaleString(undefined, {
+        style: 'currency',
+        currency: currency.toUpperCase(),
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    } else {
+      // up to 8 decimals, trim trailing zeros
+      return Number(amount)
+        .toFixed(8)
+        .replace(/\.?0+$/, '') + " " + currency.toUpperCase();
+    }
+  }
+
+  // ————— Fetch 3 most recent deposits —————
+  userApi.get('/wallet/deposit/history/3')
+    .then(({ data }) => {
+      data.history.forEach(tx => {
+        // time ago
+        const date = new Date(tx.createdAt);
+        const diffH = Math.round((Date.now() - date)/36e5);
+        const timeAgo = diffH < 24
+          ? `${diffH} hour${diffH!==1?'s':''} ago`
+          : date.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+
+        // build one activity-item
+        const item = document.createElement('div');
+        item.className = 'activity-item';
+        item.innerHTML = `
+          <div class="activity-icon buy">
+            <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+          </div>
+          <div class="activity-content">
+            <div class="activity-title">Deposit ${tx.currency.toUpperCase()}</div>
+            <div class="activity-description">${formatAmount(tx.amount, tx.currency)}</div>
+            <div class="activity-meta">
+              <div class="activity-time">
+                <svg class="icon" viewBox="0 0 24 24" width="12" height="12">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                </svg>
+                ${timeAgo}
+              </div>
+              <div class="activity-status ${tx.status==='completed'?'completed':'pending'}">
+                <svg class="icon" viewBox="0 0 24 24" width="12" height="12">
+                  ${tx.status==='completed'
+                    ? '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>'
+                    : '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>'}
+                </svg>
+                ${tx.status.charAt(0).toUpperCase()+tx.status.slice(1)}
+              </div>
+            </div>
+          </div>
+        `;
+        activityListEl.appendChild(item);
+      });
+    })
+    .catch(err => {
+      console.error("Failed to load deposit history:", err);
+      activityListEl.innerHTML = `
+        <p style="padding:1rem;color:var(--text-secondary);">
+          Could not load recent deposits.
+        </p>`;
+    });
+
+  // wire up “View All Activity” button
+  viewAllBtn.addEventListener('click', () => {
+    window.location.href = 'deposit-history.html';
+  });
+});
+</script>
+<!-- // ————— Personal Info Tab ————— -->
+<script>
+  const userUp = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+  const fields = ["name", "email", "phone_number", "address"];
+  const ids    = {
+    name:    "profile-name",
+    email:   "profile-email",
+    phone_number: "profile-phone",
+    address: "profile-address"
+  };
+  const actionsContainer = document.getElementById("personal-info-actions");
+
+  async function loadProfileContact() {
+    try {
+      const { data } = await userUp.get("/profile-contact");
+      fields.forEach(key => {
+        const el = document.getElementById(ids[key]);
+        el.textContent = data.user[key] || "";
+      });
+    } catch (e) {
+      console.error("Load failed", e);
+    }
+  }
+
+  function enterEditMode() {
+    fields.forEach(key => {
+      const container = document.getElementById(ids[key]);
+      const input = document.createElement("input");
+      input.type      = "text";
+      input.value     = container.textContent.trim();
+      input.id        = ids[key] + "-input";
+      input.className = "inline-edit";
+      container.replaceWith(input);
+    });
+
+    actionsContainer.innerHTML = `
+      <button id="save-personal-info-btn" class="card-action">💾</button>
+      <button id="cancel-personal-info-btn" class="card-action">✕</button>
+    `;
+    document.getElementById("save-personal-info-btn")
+            .addEventListener("click", saveEdits);
+    document.getElementById("cancel-personal-info-btn")
+            .addEventListener("click", () => { loadProfileContact(); exitEditMode(); });
+  }
+
+  function exitEditMode() {
+    actionsContainer.innerHTML = `
+      <button id="edit-personal-info-btn" class="card-action">✎</button>
+    `;
+    document.getElementById("edit-personal-info-btn")
+            .addEventListener("click", enterEditMode);
+
+    fields.forEach(key => {
+      const input = document.getElementById(ids[key] + "-input");
+      if (input) {
+        const div = document.createElement("div");
+        div.id = ids[key];
+        div.className = "";
+        div.textContent = input.value;
+        input.replaceWith(div);
+      }
+    });
+  }
+
+  async function saveEdits() {
+    const payload = {};
+    fields.forEach(key => {
+      const input = document.getElementById(ids[key] + "-input");
+      if (input) payload[key] = input.value.trim();
+    });
+
+    try {
+      await userUp.put("/update-profile-contact", payload);
+      await loadProfileContact();
+      exitEditMode();
+    } catch (err) {
+      console.error("Update failed", err);
+      alert(err.response?.data?.message || "Update error");
+    }
+  }
+
+  // initial load & wire up edit
+  loadProfileContact().then(() => {
+    document.getElementById("edit-personal-info-btn")
+            .addEventListener("click", enterEditMode);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— 0) Toast helper —————
+  function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => container.removeChild(toast), 3200);
+  }
+
+  // ————— 1) Axios instance —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  // ————— 2) Form elements & pre-fill —————
+  const basicForm       = document.getElementById("basic-profile-form");
+  const basicNameInput  = document.getElementById("basic-name");
+  const basicUserInput  = document.getElementById("basic-username");
+  const basicBioInput   = document.getElementById("basic-bio");
+  const basicImageInput = document.getElementById("basic-image");
+  if (!basicForm) {
+    console.error("Form not found: #basic-profile-form");
+    return;
+  }
+  userApi.get("/profile/username")
+    .then(({ data }) => {
+      basicNameInput.value    = data.name     || "";
+      basicUserInput.value    = data.username || "";
+      basicBioInput.value     = data.bio      || "";
+    })
+    .catch(err => {
+      console.error("Pre-fill failed:", err);
+      showToast("Could not load profile data", "error");
+    });
+
+  // ————— 3) Submit handler —————
+  basicForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (basicNameInput.value.trim())     formData.append("name",     basicNameInput.value.trim());
+    if (basicUserInput.value.trim())     formData.append("username", basicUserInput.value.trim());
+    if (basicBioInput.value.trim())      formData.append("bio",      basicBioInput.value.trim());
+    if (basicImageInput.files[0])        formData.append("image",    basicImageInput.files[0]);
+    if ([...formData.keys()].length === 0) {
+      return showToast("Make at least one change.", "error");
+    }
+    try {
+      const res = await userApi.put("/update-profile-basic", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+      showToast(res.data.message, "success");
+    } catch (err) {
+      console.error("Update failed:", err);
+      showToast(err.response?.data?.message || "Update failed", "error");
+    }
+  });
+
+  // ————— 4) Modal toggle —————
+  const editBtn  = document.getElementById("edit-profile-btn");
+  const modal    = document.getElementById("edit-modal");
+  const closeBtn = document.getElementById("close-modal");
+  editBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+  modal.querySelector(".modal-backdrop")
+       .addEventListener("click", () => modal.classList.add("hidden"));
+
+  // ————— 5) Unread notifications count —————
+  const notifBtn   = document.getElementById("notification-button");
+  const notifBadge = notifBtn?.querySelector(".notification-badge");
+  async function loadUnreadCount() {
+    try {
+      const res   = await userApi.get("/notifications/count/unread");
+      const count = res.data.unreadCount || 0;
+      if (notifBadge) {
+        notifBadge.textContent    = count;
+        notifBadge.style.display  = count > 0 ? "flex" : "none";
+      }
+    } catch (err) {
+      console.error("Failed to load unread count:", err);
+    }
+  }
+  if (notifBtn && notifBadge) {
+    loadUnreadCount();
+    notifBtn.addEventListener("click", () => {
+      // open notifications panel…
+      loadUnreadCount();
+    });
+  }
+});
+
+
+</script>
+
+<script>
+// ————— 0) Toast helper —————
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => container.removeChild(toast), 3200);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— 1) Axios instance —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  // ————— 2) Change Password Modal & Form —————
+  const changeBtn    = document.getElementById("change-password-btn");
+  const changeModal  = document.getElementById("change-password-modal");
+  const closeChange  = document.getElementById("close-change-password");
+  const changeForm   = document.getElementById("change-password-form");
+  const saveBtn      = document.getElementById("change-password-save");
+  const spinner      = document.getElementById("save-spinner");
+  const btnText      = saveBtn.querySelector(".btn-text");
+
+  // Open modal
+  changeBtn.addEventListener("click", () => {
+    changeModal.classList.remove("hidden");
+  });
+
+  // Close modal
+  closeChange.addEventListener("click", () => changeModal.classList.add("hidden"));
+  changeModal.querySelector(".modal-backdrop")
+              .addEventListener("click", () => changeModal.classList.add("hidden"));
+
+  // Handle submission
+  changeForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    const oldPassword = document.getElementById("old-password").value.trim();
+    const newPassword = document.getElementById("new-password").value.trim();
+
+    if (!oldPassword || !newPassword) {
+      return showToast("Both fields are required", "error");
+    }
+
+    // Show loader
+    saveBtn.disabled       = true;
+    btnText.textContent    = "Saving…";
+    spinner.classList.remove("hidden");
+
+    try {
+      const res = await userApi.put("/change-password", { oldPassword, newPassword });
+      showToast(res.data.message, "success");
+      changeModal.classList.add("hidden");
+      changeForm.reset();
+    } catch (err) {
+      console.error("Change password failed:", err);
+      showToast(err.response?.data?.message || "Failed to change password", "error");
+    } finally {
+      // Hide loader
+      spinner.classList.add("hidden");
+      btnText.textContent = "Save";
+      saveBtn.disabled    = false;
+    }
+  });
+});
+</script>
+
+<script>
+// ————— 0) Toast helper —————
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => container.removeChild(toast), 3200);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— 1) Axios instance —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+  const grid = document.getElementById("achievement-grid");
+
+  const meta = {
+    "First Strike": {
+      description: "Make your first transaction",
+      iconPath:    "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+    },
+    "Coin Collector": {
+      description: "Accumulate 1,000 coins",
+      iconPath:    "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+    },
+    "Seasoned Miner": {
+      description: "Mine for 100 hours",
+      iconPath:    "M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1"
+    },
+    "Elite Extractor": {
+      description: "Extract rare resource",
+      iconPath:    "M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+    },
+    "Mining Tycoon": {
+      description: "Reach $10,000 in earnings",
+      iconPath:    "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6"
+    }
+  };
+
+  async function loadAchievements() {
+    if (!grid) return console.error("Achievement grid not found");
+    try {
+      const res = await userApi.get("/achievements");
+      grid.innerHTML = ""; // clear existing
+      res.data.achievements.forEach(item => {
+        const info = meta[item.name] || {};
+        const card = document.createElement("div");
+        card.className = "achievement-card";
+        card.innerHTML = `
+          <div class="achievement-icon">
+            <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
+              <path d="${info.iconPath || meta["First Strike"].iconPath}"></path>
+            </svg>
+          </div>
+          <div class="achievement-title">${item.name}</div>
+          <div class="achievement-description">${info.description || ""}</div>
+          <div class="achievement-status ${item.status === "Unlocked" ? "unlocked" : "locked"}">
+            ${item.status}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    } catch (err) {
+      console.error("Failed to load achievements:", err);
+      showToast("Could not load achievements", "error");
+    }
+  }
+
+  // invoke on load
+  loadAchievements();
+
+}); // end DOMContentLoaded
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 1) Axios instance for wallet endpoints
+  const walletApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  // 2) Selectors for table body and footer
+  const tbody   = document.querySelector(".card-body table tbody");
+  const footer  = document.querySelector(".card-footer span");
+
+  // 3) Helper to format numbers + currency
+  function fmtNumber(x, symbol) {
+    return `${Number(x).toLocaleString()} ${symbol}`;
+  }
+  function fmtUSD(x) {
+    return Number(x).toLocaleString(undefined, {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    });
+  }
+
+  // 4) Fetch & render
+  async function loadWallets() {
+    try {
+      // a) Wallets with balance
+      const { data: wData } = await walletApi.get("/wallet/with-balance");
+      tbody.innerHTML = "";
+
+      wData.wallets.forEach(({ currency, balance }) => {
+        const row = document.createElement("tr");
+        row.style.borderBottom = "1px solid var(--border-color)";
+        row.innerHTML = `
+          <td style="padding:15px 10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="
+                width:32px;height:32px;border-radius:50%;
+                background-color:#777;
+                display:flex;align-items:center;
+                justify-content:center;color:white;
+                font-weight:bold;
+              ">
+                ${currency.charAt(0)}
+              </div>
+              <div>
+                <div style="font-weight:600;">${currency}</div>
+                <div style="font-size:12px;color:var(--text-secondary);">${currency}</div>
+              </div>
+            </div>
+          </td>
+          <td style="text-align:right;padding:15px 10px;">
+            ${fmtNumber(balance, currency)}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // b) Cached USD total
+      const { data: cData } = await walletApi.get("/wallet/crypto-usd/price-sum/cached");
+      footer.textContent = `Total Portfolio Value: ${fmtUSD(cData.grand_total)}`;
+    } catch (err) {
+      console.error("Failed to load wallets or totals:", err);
+      alert("Could not load wallet data.");
+    }
+  }
+
+  loadWallets();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ————— 1) Axios instances —————
+  const walletApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  // ————— 2) Portfolio Value —————
+  const portfolioValueEl = document.getElementById("portfolio-value");
+  function fmtUSD(x) {
+    return Number(x).toLocaleString(undefined, {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    });
+  }
+  async function loadPortfolioValue() {
+    try {
+      const { data } = await walletApi.get("/wallet/crypto-usd/price-sum/cached");
+      const total = data.grand_total ?? data.crypto_total_usd ?? 0;
+      portfolioValueEl.textContent = `Total Portfolio Value: ${fmtUSD(total)}`;
+    } catch (err) {
+      console.error("Failed to load cached totals:", err);
+      portfolioValueEl.textContent = "Total Portfolio Value: —";
+      showToast("Could not load portfolio value", "error");
+    }
+  }
+  // ————— 4) Invoke on page load —————
+  loadPortfolioValue();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // ————— axios instance for notices —————
+  const userApi = axios.create({
+    baseURL: "https://new.api.zephyrequi.com/api/users",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  // ————— container reference —————
+  const list = document.getElementById("activity-list");
+
+  // ————— render helper —————
+  function renderNotices(notices) {
+    list.innerHTML = "";
+    if (notices.length === 0) {
+      list.textContent = "No recent activity.";
+      return;
+    }
+
+    notices.forEach(note => {
+      // pick icon & verb based on action
+      let iconPath, verb, cls;
+      switch (note.action) {
+        case "change_password":
+          iconPath = "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+          verb     = "Changed password";
+          cls      = "info";
+          break;
+        case "login":
+          iconPath = "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+          verb     = "Logged in";
+          cls      = "info";
+          break;
+        // add more cases as needed...
+        default:
+          iconPath = "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+          verb     = note.action;
+          cls      = "info";
+      }
+
+      const item = document.createElement("div");
+      item.className = "activity-item";
+      item.innerHTML = `
+        <div class="activity-icon ${cls}">
+          <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
+            <path d="${iconPath}"></path>
+          </svg>
+        </div>
+        <div class="activity-content">
+          <div class="activity-title">${verb}</div>
+          <div class="activity-description">${note.details}</div>
+          <div class="activity-meta">
+            <div class="activity-time">${note.created_at}</div>
+            <div class="activity-status completed">
+              <svg class="icon" viewBox="0 0 24 24" width="12" height="12">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
+              </svg>
+              Completed
+            </div>
+          </div>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  // ————— fetch & render the 3 latest —————
+  async function loadLatestNotices() {
+    try {
+      const res = await userApi.get("/notices/latest?limit=3");
+      renderNotices(res.data.notices);
+    } catch (err) {
+      console.error("Failed to load notices:", err);
+      list.textContent = "Unable to load activity.";
+    }
+  }
+
+  loadLatestNotices();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const editBtn      = document.getElementById('edit-cover-btn');
+  const palette      = document.getElementById('cover-palette');
+  const coverSection = document.querySelector('.profile-cover');
+
+  // Show/hide the palette when “Edit Cover” is clicked
+  editBtn.addEventListener('click', () => {
+    palette.classList.toggle('active');
+  });
+
+  // When a swatch is clicked, apply its color and hide the palette
+  palette.querySelectorAll('.swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      const color = s.dataset.color;
+      coverSection.style.background = color;
+      palette.classList.remove('active');
+    });
+  });
+
+  // Optional: click outside to close
+  document.addEventListener('click', e => {
+    if (!coverSection.contains(e.target) && palette.classList.contains('active')) {
+      palette.classList.remove('active');
+    }
+  });
+});
+</script>
+<script src="../js/withAuth.js"></script>
+
+</body>
+</html>

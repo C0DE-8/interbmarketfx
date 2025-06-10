@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deposit Cryptocurrency - Zephyr Equi</title>
+<!-- Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #0f1419;
+        color: #ffffff;
+        min-height: 100vh;
+    }
+
+    .header {
+        background: #0f1419;
+        padding: 20px 40px;
+        border-bottom: 1px solid #2a3441;
+    }
+
+    .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo {
+        color: #8b5cf6;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        margin-left: auto;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #9ca3af;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: #ffffff;
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .nav-link.active {
+        color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: #9ca3af;
+        font-size: 24px;
+        cursor: pointer;
+        margin-left: auto;
+    }
+
+    .main-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px;
+        min-height: calc(100vh - 80px);
+    }
+
+    .page-title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #ffffff;
+    }
+
+    .page-subtitle {
+        color: #9ca3af;
+        margin-bottom: 40px;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .deposit-layout {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 40px;
+        height: calc(100vh - 200px);
+    }
+
+    @media (max-width: 1024px) {
+        .deposit-layout {
+            grid-template-columns: 1fr;
+            height: auto;
+        }
+    }
+
+    .asset-selector {
+        background: #1a202c;
+        border-radius: 12px;
+        padding: 24px;
+        border: 1px solid #2a3441;
+    }
+
+    .selector-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        color: #8b5cf6;
+        font-weight: 600;
+    }
+
+    .balance-refresh {
+        margin-left: auto;
+        background: none;
+        border: none;
+        color: #8b5cf6;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+    }
+
+    .balance-refresh:hover {
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .asset-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .asset-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+        background: #2a3441;
+    }
+
+    .asset-item:hover {
+        background: #374151;
+    }
+
+    .asset-item.selected {
+        border-color: #8b5cf6;
+        background: #312e81;
+    }
+
+    .asset-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .asset-icon.btc { background: #f7931a; }
+    .asset-icon.eth { background: #627eea; }
+    .asset-icon.usdt { background: #26a17b; }
+    .asset-icon.xrp { background: #23292f; }
+    .asset-icon.ltc { background: #bfbbbb; }
+    .asset-icon.sol { background: #9945ff; }
+
+    .asset-info {
+        flex: 1;
+    }
+
+    .asset-name {
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .asset-balance {
+        font-size: 14px;
+        color: #9ca3af;
+    }
+
+    .balance-loading {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(156, 163, 175, 0.3);
+        border-radius: 50%;
+        border-top-color: #9ca3af;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    .balance-value {
+        color: #10b981;
+        font-weight: 500;
+    }
+
+    .balance-usd {
+        color: #6b7280;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .asset-price {
+        text-align: right;
+        font-size: 14px;
+    }
+
+    .price-value {
+        color: #ffffff;
+        font-weight: 500;
+    }
+
+    .price-change {
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    .price-change.positive { color: #10b981; }
+    .price-change.negative { color: #ef4444; }
+
+    .deposit-panel {
+        background: #1a202c;
+        border-radius: 12px;
+        padding: 32px;
+        border: 1px solid #2a3441;
+        overflow-y: auto;
+    }
+
+    .deposit-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+    .deposit-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .deposit-subtitle {
+        color: #9ca3af;
+        margin-bottom: 32px;
+    }
+
+    .section {
+        margin-bottom: 32px;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 16px;
+    }
+
+    .network-selector {
+        margin-bottom: 24px;
+    }
+
+    .network-button {
+        background: #8b5cf6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .network-button:hover {
+        background: #7c3aed;
+    }
+
+    .address-section {
+        margin-bottom: 32px;
+    }
+
+    .address-input-container {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .address-input {
+        flex: 1;
+        background: #374151;
+        border: 1px solid #4b5563;
+        border-radius: 8px;
+        padding: 16px;
+        color: #ffffff;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 14px;
+    }
+
+    .copy-button {
+        background: #374151;
+        border: 1px solid #4b5563;
+        border-radius: 8px;
+        padding: 16px 20px;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .copy-button:hover {
+        background: #4b5563;
+        color: #ffffff;
+    }
+
+    .qr-container {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+    }
+
+    .qr-code {
+        width: 160px;
+        height: 160px;
+        background: #ffffff;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .qr-code img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+    }
+
+    .qr-placeholder {
+        color: #6b7280;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .deposit-info {
+        flex: 1;
+    }
+
+    .info-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        color: #8b5cf6;
+        font-weight: 600;
+    }
+
+    .info-grid {
+        display: grid;
+        gap: 16px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .info-label {
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .info-value {
+        color: #ffffff;
+        font-weight: 500;
+        text-align: right;
+    }
+
+    .amount-section {
+        background: #2a3441;
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .amount-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        outline: none;
+    }
+
+    .amount-input::placeholder {
+        color: #6b7280;
+    }
+
+    .amount-usd {
+        color: #9ca3af;
+        font-size: 14px;
+    }
+
+    .file-upload-section {
+        margin-bottom: 32px;
+    }
+
+    .file-upload-area {
+        border: 2px dashed #4b5563;
+        border-radius: 8px;
+        padding: 32px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .file-upload-area:hover {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.05);
+    }
+
+    .file-upload-area.has-file {
+        border-color: #10b981;
+        background: rgba(16, 185, 129, 0.05);
+    }
+
+    .file-upload-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+        color: #6b7280;
+    }
+
+    .file-upload-text {
+        color: #9ca3af;
+        margin-bottom: 8px;
+    }
+
+    .file-upload-subtext {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    .submit-button {
+        width: 100%;
+        background: #8b5cf6;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .submit-button:hover:not(:disabled) {
+        background: #7c3aed;
+    }
+
+    .submit-button:disabled {
+        background: #4b5563;
+        cursor: not-allowed;
+    }
+
+    .loading-spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #ffffff;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Toast Notification Styles */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 400px;
+    }
+
+    .toast {
+        padding: 16px 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .toast.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .toast.hide {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    .toast-success {
+        background: rgba(16, 185, 129, 0.15);
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #10b981;
+    }
+
+    .toast-error {
+        background: rgba(239, 68, 68, 0.15);
+        border-color: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+    }
+
+    .toast-warning {
+        background: rgba(245, 158, 11, 0.15);
+        border-color: rgba(245, 158, 11, 0.3);
+        color: #f59e0b;
+    }
+
+    .toast-info {
+        background: rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.3);
+        color: #8b5cf6;
+    }
+
+    .toast-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .toast-content {
+        flex: 1;
+        font-weight: 500;
+    }
+
+    .toast-close {
+        background: none;
+        border: none;
+        color: currentColor;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+        font-size: 18px;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+
+    .toast-close:hover {
+        opacity: 1;
+    }
+
+    .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: currentColor;
+        opacity: 0.3;
+        transition: width linear;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .wallet-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .wallet-tab {
+        padding: 8px 16px;
+        background: #374151;
+        border: 1px solid #4b5563;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #9ca3af;
+        transition: all 0.2s ease;
+    }
+
+    .wallet-tab.active {
+        background: #8b5cf6;
+        border-color: #8b5cf6;
+        color: white;
+    }
+
+    .wallet-tab:hover:not(.active) {
+        background: #4b5563;
+        color: #ffffff;
+    }
+
+    .no-wallet-message {
+        text-align: center;
+        padding: 60px 20px;
+        color: #9ca3af;
+    }
+
+    .no-wallet-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+        color: #6b7280;
+    }
+
+    .price-loading {
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(156, 163, 175, 0.3);
+        border-radius: 50%;
+        border-top-color: #9ca3af;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    .total-portfolio {
+        background: #2a3441;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 20px;
+        border: 1px solid #374151;
+    }
+
+    .portfolio-title {
+        color: #9ca3af;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .portfolio-value {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 20, 25, 0.95);
+        z-index: 1000;
+        padding: 20px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-nav.active {
+        transform: translateY(0);
+    }
+
+    .mobile-nav-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #9ca3af;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .mobile-nav-link {
+        color: #9ca3af;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 18px;
+        transition: all 0.2s ease;
+        width: 200px;
+        text-align: center;
+    }
+
+    .mobile-nav-link:hover {
+        color: #ffffff;
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    .mobile-nav-link.active {
+        color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.1);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .header {
+            padding: 15px 20px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .mobile-menu-btn {
+            display: block;
+        }
+
+        .mobile-nav {
+            display: flex;
+        }
+
+        .main-container {
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .deposit-layout {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            height: auto;
+        }
+
+        .asset-selector {
+            padding: 16px;
+        }
+
+        .deposit-panel {
+            padding: 20px;
+        }
+
+        .qr-container {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .qr-code {
+            width: 140px;
+            height: 140px;
+        }
+
+        .address-input-container {
+            flex-direction: column;
+        }
+
+        .copy-button {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .toast-container {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            max-width: none;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">⚡ dainterbfx</div>
+        <div class="nav-links">
+            <a href="deposit.html" class="nav-link active">Deposit</a>
+            <a href="deposit-history.html" class="nav-link">Deposit History</a>
+            <a href="#" class="nav-link">Withdraw</a>
+            <a href="withdrawal-history.html" class="nav-link">Withdrawal History</a>
+            <a href="#" class="nav-link">Portfolio</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+</div>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+    <div class="mobile-nav-links">
+        <a href="deposit.html" class="mobile-nav-link active">Deposit</a>
+        <a href="deposit-history.html" class="mobile-nav-link">Deposit History</a>
+        <a href="#" class="mobile-nav-link">Withdraw</a>
+        <a href="withdrawal-history.html" class="mobile-nav-link">Withdrawal History</a>
+        <a href="#" class="mobile-nav-link">Portfolio</a>
+    </div>
+</div>
+
+<div class="main-container">
+    <h1 class="page-title">Deposit Cryptocurrency</h1>
+    <p class="page-subtitle">
+        Select a cryptocurrency from the list below to deposit funds into your Zephy account.<br>
+        All deposits are subject to network confirmation times.
+    </p>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div class="deposit-layout">
+        <!-- Left Panel: Asset Selector -->
+        <div class="asset-selector">
+            <div class="selector-header">
+                <span>🔘</span>
+                <span>Select Asset</span>
+                <button class="balance-refresh" onclick="fetchUserBalances()" title="Refresh Balances">
+                    🔄
+                </button>
+            </div>
+
+            <!-- Total Portfolio Value -->
+            <div class="total-portfolio">
+                <div class="portfolio-title">Total Portfolio Value</div>
+                <div class="portfolio-value" id="totalPortfolioValue">
+                    <div class="balance-loading"></div>
+                </div>
+            </div>
+            
+            <div class="asset-list" id="assetList">
+                <div class="asset-item" data-currency="btc" data-coingecko-id="bitcoin">
+                    <div class="asset-icon btc">₿</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Bitcoin <span style="color: #9ca3af;">BTC</span></div>
+                        <div class="asset-balance" id="balance-btc">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-btc">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-btc"></div>
+                    </div>
+                </div>
+
+                <div class="asset-item" data-currency="eth" data-coingecko-id="ethereum">
+                    <div class="asset-icon eth">Ξ</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Ethereum <span style="color: #9ca3af;">ETH</span></div>
+                        <div class="asset-balance" id="balance-eth">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-eth">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-eth"></div>
+                    </div>
+                </div>
+
+                <div class="asset-item" data-currency="usdt" data-coingecko-id="tether">
+                    <div class="asset-icon usdt">₮</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Tether <span style="color: #9ca3af;">USDT</span></div>
+                        <div class="asset-balance" id="balance-usdt">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-usdt">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-usdt"></div>
+                    </div>
+                </div>
+
+                <div class="asset-item" data-currency="xrp" data-coingecko-id="ripple">
+                    <div class="asset-icon xrp">◉</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Ripple <span style="color: #9ca3af;">XRP</span></div>
+                        <div class="asset-balance" id="balance-xrp">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-xrp">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-xrp"></div>
+                    </div>
+                </div>
+
+                <div class="asset-item" data-currency="litecoin" data-coingecko-id="litecoin">
+                    <div class="asset-icon ltc">Ł</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Litecoin <span style="color: #9ca3af;">LTC</span></div>
+                        <div class="asset-balance" id="balance-litecoin">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-litecoin">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-litecoin"></div>
+                    </div>
+                </div>
+
+                <div class="asset-item" data-currency="sol" data-coingecko-id="solana">
+                    <div class="asset-icon sol">◎</div>
+                    <div class="asset-info">
+                        <div class="asset-name">Solana <span style="color: #9ca3af;">SOL</span></div>
+                        <div class="asset-balance" id="balance-sol">
+                            <div class="balance-loading"></div>
+                        </div>
+                    </div>
+                    <div class="asset-price">
+                        <div class="price-value" id="price-sol">
+                            <div class="price-loading"></div>
+                        </div>
+                        <div class="price-change" id="change-sol"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Deposit Details -->
+        <div class="deposit-panel">
+            <div id="depositContent">
+                <div style="text-align: center; padding: 80px 20px; color: #6b7280;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">💰</div>
+                    <h3 style="color: #9ca3af; margin-bottom: 8px;">Select a cryptocurrency</h3>
+                    <p>Choose an asset from the left panel to start your deposit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ————— Axios instances —————
+    const userApi = axios.create({
+        baseURL: "https://api.dainterbfx.xyz/api/users",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+
+    const coinGeckoApi = axios.create({
+        baseURL: "https://api.coingecko.com/api/v3",
+        timeout: 10000
+    });
+
+    // Global variables
+    let selectedCurrency = null;
+    let walletAddresses = [];
+    let selectedWalletIndex = 0;
+    let exchangeRates = {};
+    let userBalances = {};
+    let rateCache = {};
+    let balanceCache = {};
+    let lastRateUpdate = 0;
+    let lastBalanceUpdate = 0;
+    const RATE_CACHE_DURATION = 60000;
+    const BALANCE_CACHE_DURATION = 30000; // 30 seconds for balance cache
+
+    const currencyMapping = {
+        'btc': 'bitcoin',
+        'eth': 'ethereum',
+        'usdt': 'tether',
+        'xrp': 'ripple',
+        'litecoin': 'litecoin',
+        'sol': 'solana'
+    };
+
+    const currencyNames = {
+        'btc': 'Bitcoin',
+        'eth': 'Ethereum',
+        'usdt': 'Tether',
+        'xrp': 'Ripple',
+        'litecoin': 'Litecoin',
+        'sol': 'Solana'
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePage();
+        setupEventListeners();
+        fetchAllExchangeRates();
+        fetchUserBalances();
+    });
+
+    function initializePage() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            showAlert('Please login to access the deposit page', 'error');
+            return;
+        }
+    }
+
+    function setupEventListeners() {
+        document.querySelectorAll('.asset-item').forEach(item => {
+            item.addEventListener('click', function() {
+                selectCurrency(this.dataset.currency);
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            const tabElement = event.target.closest('.wallet-tab');
+            if (tabElement) {
+                const index = parseInt(tabElement.dataset.index);
+                if (!isNaN(index)) {
+                    switchWallet(index);
+                }
+            }
+            
+            const copyButton = event.target.closest('.copy-button');
+            if (copyButton) {
+                const address = copyButton.dataset.address;
+                copyToClipboard(address);
+            }
+
+            const fileArea = event.target.closest('.file-upload-area');
+            if (fileArea) {
+                document.getElementById('proofFile').click();
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.add('active');
+        });
+
+        document.getElementById('mobileNavClose').addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.remove('active');
+        });
+    }
+
+    async function fetchUserBalances() {
+        try {
+            // Check cache first
+            const now = Date.now();
+            if (balanceCache.timestamp && (now - balanceCache.timestamp) < BALANCE_CACHE_DURATION) {
+                updateBalanceDisplay(balanceCache.balances);
+                return;
+            }
+
+            const response = await userApi.get('/wallet-crypto');
+            
+            if (response.data.wallets) {
+                // Convert array to object for easier lookup
+                const balances = {};
+                response.data.wallets.forEach(wallet => {
+                    balances[wallet.currency.toLowerCase()] = parseFloat(wallet.balance) || 0;
+                });
+                
+                // Cache the balances
+                balanceCache = {
+                    balances: balances,
+                    timestamp: now
+                };
+                
+                userBalances = balances;
+                updateBalanceDisplay(balances);
+                calculateTotalPortfolioValue();
+            } else {
+                // No balances found, set all to 0
+                const emptyBalances = {};
+                Object.keys(currencyMapping).forEach(currency => {
+                    emptyBalances[currency] = 0;
+                });
+                userBalances = emptyBalances;
+                updateBalanceDisplay(emptyBalances);
+            }
+            
+        } catch (error) {
+            console.error('Error fetching user balances:', error);
+            // Set default balances to 0 on error
+            const defaultBalances = {};
+            Object.keys(currencyMapping).forEach(currency => {
+                defaultBalances[currency] = 0;
+            });
+            userBalances = defaultBalances;
+            updateBalanceDisplay(defaultBalances);
+        }
+    }
+
+    function updateBalanceDisplay(balances) {
+        Object.keys(currencyMapping).forEach(currency => {
+            const balanceElement = document.getElementById(`balance-${currency}`);
+            if (balanceElement) {
+                const balance = balances[currency] || 0;
+                const currencyUpper = currency.toUpperCase();
+                
+                // Calculate USD value if we have exchange rates
+                let usdValue = '';
+                if (exchangeRates[currency] && balance > 0) {
+                    const usdAmount = balance * exchangeRates[currency].usd;
+                    usdValue = `<div class="balance-usd">≈ $${usdAmount.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}</div>`;
+                }
+                
+                balanceElement.innerHTML = `
+                    <div class="balance-value">
+                        ${balance.toFixed(8)} ${currencyUpper}
+                    </div>
+                    ${usdValue}
+                `;
+            }
+        });
+    }
+
+    function calculateTotalPortfolioValue() {
+        let totalValue = 0;
+        
+        Object.keys(userBalances).forEach(currency => {
+            const balance = userBalances[currency] || 0;
+            if (exchangeRates[currency] && balance > 0) {
+                totalValue += balance * exchangeRates[currency].usd;
+            }
+        });
+        
+        const portfolioElement = document.getElementById('totalPortfolioValue');
+        if (portfolioElement) {
+            portfolioElement.textContent = `$${totalValue.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })}`;
+        }
+    }
+
+    async function fetchAllExchangeRates() {
+        try {
+            const now = Date.now();
+            if (rateCache.timestamp && (now - rateCache.timestamp) < RATE_CACHE_DURATION) {
+                updatePriceDisplay(rateCache.rates);
+                return;
+            }
+
+            const coinIds = Object.values(currencyMapping).join(',');
+            const response = await coinGeckoApi.get(`/simple/price?ids=${coinIds}&vs_currencies=usd&include_24hr_change=true`);
+            
+            const rates = {};
+            Object.keys(currencyMapping).forEach(currency => {
+                const coinId = currencyMapping[currency];
+                if (response.data[coinId]) {
+                    rates[currency] = {
+                        usd: response.data[coinId].usd,
+                        change_24h: response.data[coinId].usd_24h_change
+                    };
+                }
+            });
+
+            rateCache = { rates: rates, timestamp: now };
+            exchangeRates = rates;
+            updatePriceDisplay(rates);
+            
+            // Update balance display with USD values
+            updateBalanceDisplay(userBalances);
+            calculateTotalPortfolioValue();
+            
+        } catch (error) {
+            console.error('Error fetching exchange rates:', error);
+            updatePriceDisplayError();
+        }
+    }
+
+    function updatePriceDisplay(rates) {
+        Object.keys(rates).forEach(currency => {
+            const priceElement = document.getElementById(`price-${currency}`);
+            const changeElement = document.getElementById(`change-${currency}`);
+            
+            if (priceElement && rates[currency]) {
+                const price = rates[currency].usd;
+                const change = rates[currency].change_24h;
+                
+                priceElement.textContent = `$${price.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: price < 1 ? 6 : 2
+                })}`;
+                
+                if (changeElement) {
+                    const changeSymbol = change >= 0 ? '+' : '';
+                    changeElement.textContent = `${changeSymbol}${change.toFixed(2)}%`;
+                    changeElement.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+                }
+            }
+        });
+    }
+
+    function updatePriceDisplayError() {
+        Object.keys(currencyMapping).forEach(currency => {
+            const priceElement = document.getElementById(`price-${currency}`);
+            if (priceElement) {
+                priceElement.textContent = 'Price unavailable';
+                priceElement.style.color = '#ef4444';
+            }
+        });
+    }
+
+    async function selectCurrency(currency) {
+        document.querySelectorAll('.asset-item').forEach(item => item.classList.remove('selected'));
+        document.querySelector(`[data-currency="${currency}"]`).classList.add('selected');
+        
+        selectedCurrency = currency;
+        showAlert('Loading wallet addresses...', 'info');
+        
+        await fetchWalletAddresses(currency);
+    }
+
+    async function fetchWalletAddresses(currency) {
+        try {
+            const response = await userApi.get(`/wallet-address/${currency}`);
+            
+            if (response.data.walletAddresses && response.data.walletAddresses.length > 0) {
+                walletAddresses = response.data.walletAddresses;
+                selectedWalletIndex = 0;
+                displayDepositPanel();
+                clearAlert();
+            } else {
+                displayNoWalletMessage(currency);
+            }
+        } catch (error) {
+            console.error('Error fetching wallet addresses:', error);
+            displayNoWalletMessage(currency);
+        }
+    }
+
+    function displayDepositPanel() {
+        const currency = selectedCurrency;
+        const currencyUpper = currency.toUpperCase();
+        const currencyName = currencyNames[currency];
+        const selectedWallet = walletAddresses[selectedWalletIndex];
+        const currentBalance = userBalances[currency] || 0;
+
+        let tabsHtml = '';
+        if (walletAddresses.length > 1) {
+            tabsHtml = `
+                <div class="wallet-tabs">
+                    ${walletAddresses.map((wallet, index) => `
+                        <div class="wallet-tab ${index === selectedWalletIndex ? 'active' : ''}" 
+                             data-index="${index}">
+                            ${wallet.wallet_type} #${index + 1}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        const content = `
+            <div class="deposit-header">
+                <div class="asset-icon ${currency}">${getAssetSymbol(currency)}</div>
+                <div>
+                    <div class="deposit-title">Deposit ${currencyName}</div>
+                    <div class="deposit-subtitle">
+                        Send ${currencyUpper} to your Zephy wallet
+                        <br><small style="color: #10b981;">Current Balance: ${currentBalance.toFixed(8)} ${currencyUpper}</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Select Network</div>
+                <button class="network-button">${currencyName} Network</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Deposit Address</div>
+                ${tabsHtml}
+                <div class="address-input-container">
+                    <input type="text" class="address-input" value="${selectedWallet.wallet_address}" readonly>
+                    <button class="copy-button" data-address="${selectedWallet.wallet_address}">
+                        <span>📋</span>
+                        <span>Copy</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="qr-container">
+                <div class="qr-code">
+                    ${selectedWallet.qrcode_path ? 
+                        `<img src="${selectedWallet.qrcode_path}" alt="QR Code">` : 
+                        '<div class="qr-placeholder">QR Code<br>Not Available</div>'
+                    }
+                </div>
+                
+                <div class="deposit-info">
+                    <div class="info-header">
+                        <span>ℹ️</span>
+                        <span>Deposit Information</span>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <span class="info-label">Minimum Deposit</span>
+                            <span class="info-value">0.0001 ${currencyUpper}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Network</span>
+                            <span class="info-value">${currencyName} Network</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Required Confirmations</span>
+                            <span class="info-value">${getConfirmations(currency)} confirmations</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Estimated Arrival</span>
+                            <span class="info-value">${getEstimatedTime(currency)}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Deposit Amount (USD)</div>
+                <div class="amount-section">
+                    <input type="number" class="amount-input" id="depositAmount" placeholder="Enter amount in USD" min="1" step="0.01">
+                    <div class="amount-usd" id="cryptoEquivalent">Enter amount to see crypto equivalent</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Upload Proof of Payment</div>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <div class="file-upload-icon">📎</div>
+                    <div class="file-upload-text" id="fileUploadText">Choose file or drag here</div>
+                    <div class="file-upload-subtext">Upload screenshot or transaction receipt</div>
+                    <input type="file" id="proofFile" class="file-input" accept="image/*,.pdf">
+                </div>
+            </div>
+
+            <button class="submit-button" id="submitDeposit" disabled>
+                <span id="submitText">Submit Deposit Request</span>
+                <div id="submitLoading" class="loading-spinner hidden"></div>
+            </button>
+        `;
+
+        document.getElementById('depositContent').innerHTML = content;
+        setupDepositEventListeners();
+    }
+
+    function setupDepositEventListeners() {
+        const amountInput = document.getElementById('depositAmount');
+        const fileInput = document.getElementById('proofFile');
+        const submitButton = document.getElementById('submitDeposit');
+
+        if (amountInput) {
+            amountInput.addEventListener('input', calculateCryptoAmount);
+        }
+
+        if (fileInput) {
+            fileInput.addEventListener('change', handleFileUpload);
+        }
+
+        if (submitButton) {
+            submitButton.addEventListener('click', submitDeposit);
+        }
+    }
+
+    function calculateCryptoAmount() {
+        const amount = document.getElementById('depositAmount').value;
+        const cryptoEquivalent = document.getElementById('cryptoEquivalent');
+        
+        if (!amount || !selectedCurrency || !exchangeRates[selectedCurrency]) {
+            cryptoEquivalent.textContent = 'Enter amount to see crypto equivalent';
+            updateSubmitButton();
+            return;
+        }
+
+        const rate = exchangeRates[selectedCurrency].usd;
+        const cryptoAmount = parseFloat(amount) / rate;
+        
+        cryptoEquivalent.textContent = `≈ ${cryptoAmount.toFixed(8)} ${selectedCurrency.toUpperCase()}`;
+        updateSubmitButton();
+    }
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileUploadText = document.getElementById('fileUploadText');
+        
+        if (file) {
+            fileUploadArea.classList.add('has-file');
+            fileUploadText.textContent = `Selected: ${file.name}`;
+        } else {
+            fileUploadArea.classList.remove('has-file');
+            fileUploadText.textContent = 'Choose file or drag here';
+        }
+        
+        updateSubmitButton();
+    }
+
+    function updateSubmitButton() {
+        const amount = document.getElementById('depositAmount')?.value;
+        const file = document.getElementById('proofFile')?.files[0];
+        const submitBtn = document.getElementById('submitDeposit');
+        
+        if (!submitBtn) return;
+        
+        const hasWalletAddress = walletAddresses.length > 0;
+        const hasValidRate = exchangeRates[selectedCurrency]?.usd > 0;
+        
+        const isValid = selectedCurrency && amount && parseFloat(amount) > 0 && file && hasWalletAddress && hasValidRate;
+        submitBtn.disabled = !isValid;
+    }
+
+    async function submitDeposit() {
+        const submitBtn = document.getElementById('submitDeposit');
+        const submitText = document.getElementById('submitText');
+        const submitLoading = document.getElementById('submitLoading');
+        
+        submitBtn.disabled = true;
+        submitText.style.display = 'none';
+        submitLoading.classList.remove('hidden');
+
+        try {
+            const formData = new FormData();
+            formData.append('amount', document.getElementById('depositAmount').value);
+            formData.append('currency', selectedCurrency);
+            formData.append('file', document.getElementById('proofFile').files[0]);
+
+            const response = await axios.post('https://api.dainterbfx.xyz/api/users/wallet/deposit', formData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            showAlert(response.data.message, 'success');
+            resetDepositForm();
+            
+            // Refresh balances after successful deposit
+            setTimeout(() => {
+                fetchUserBalances();
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Deposit error:', error);
+            const message = error.response?.data?.message || 'Error processing deposit';
+            showAlert(message, 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitText.style.display = 'inline';
+            submitLoading.classList.add('hidden');
+            updateSubmitButton();
+        }
+    }
+
+    function resetDepositForm() {
+        const amountInput = document.getElementById('depositAmount');
+        const fileInput = document.getElementById('proofFile');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileUploadText = document.getElementById('fileUploadText');
+        const cryptoEquivalent = document.getElementById('cryptoEquivalent');
+
+        if (amountInput) amountInput.value = '';
+        if (fileInput) fileInput.value = '';
+        if (fileUploadArea) fileUploadArea.classList.remove('has-file');
+        if (fileUploadText) fileUploadText.textContent = 'Choose file or drag here';
+        if (cryptoEquivalent) cryptoEquivalent.textContent = 'Enter amount to see crypto equivalent';
+    }
+
+    function displayNoWalletMessage(currency) {
+        const currencyUpper = currency.toUpperCase();
+        const content = `
+            <div class="no-wallet-message">
+                <div class="no-wallet-icon">🔒</div>
+                <h3 style="color: #ffffff; margin-bottom: 8px;">No ${currencyUpper} Wallet Address Assigned</h3>
+                <p>You don't have any ${currencyUpper} wallet addresses assigned to your account.</p>
+                <p style="margin-top: 16px;">Please contact support to get a wallet address assigned.</p>
+            </div>
+        `;
+        
+        document.getElementById('depositContent').innerHTML = content;
+        clearAlert();
+    }
+
+    function switchWallet(index) {
+        if (index >= 0 && index < walletAddresses.length) {
+            selectedWalletIndex = index;
+            displayDepositPanel();
+        }
+    }
+
+    function getAssetSymbol(currency) {
+        const symbols = {
+            'btc': '₿',
+            'eth': 'Ξ',
+            'usdt': '₮',
+            'xrp': '◉',
+            'litecoin': 'Ł',
+            'sol': '◎'
+        };
+        return symbols[currency] || '?';
+    }
+
+    function getConfirmations(currency) {
+        const confirmations = {
+            'btc': '3',
+            'eth': '12',
+            'usdt': '12',
+            'xrp': '1',
+            'litecoin': '6',
+            'sol': '1'
+        };
+        return confirmations[currency] || '1';
+    }
+
+    function getEstimatedTime(currency) {
+        const times = {
+            'btc': '30-60 minutes',
+            'eth': '5-15 minutes',
+            'usdt': '5-15 minutes',
+            'xrp': '1-5 minutes',
+            'litecoin': '15-30 minutes',
+            'sol': '1-3 minutes'
+        };
+        return times[currency] || '5-30 minutes';
+    }
+
+    // Toast notification functions
+    let toastCounter = 0;
+
+    function showToast(message, type = 'info', duration = 5000) {
+        const toastContainer = document.getElementById('toastContainer');
+        const toastId = `toast-${++toastCounter}`;
+        
+        // Icon mapping for different toast types
+        const icons = {
+            success: '✅',
+            error: '❌',
+            warning: '⚠️',
+            info: 'ℹ️'
+        };
+        
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.id = toastId;
+        toast.className = `toast toast-${type}`;
+        
+        toast.innerHTML = `
+            <div class="toast-icon">${icons[type] || icons.info}</div>
+            <div class="toast-content">${message}</div>
+            <button class="toast-close" onclick="hideToast('${toastId}')">&times;</button>
+            ${duration > 0 ? `<div class="toast-progress" id="${toastId}-progress"></div>` : ''}
+        `;
+        
+        // Add to container
+        toastContainer.appendChild(toast);
+        
+        // Trigger show animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Auto-hide with progress bar
+        if (duration > 0) {
+            const progressBar = document.getElementById(`${toastId}-progress`);
+            if (progressBar) {
+                progressBar.style.width = '100%';
+                progressBar.style.transition = `width ${duration}ms linear`;
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                }, 10);
+            }
+            
+            setTimeout(() => {
+                hideToast(toastId);
+            }, duration);
+        }
+        
+        return toastId;
+    }
+
+    function hideToast(toastId) {
+        const toast = document.getElementById(toastId);
+        if (toast) {
+            toast.classList.add('hide');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }
+    }
+
+    function clearAllToasts() {
+        const toastContainer = document.getElementById('toastContainer');
+        const toasts = toastContainer.querySelectorAll('.toast');
+        toasts.forEach(toast => {
+            hideToast(toast.id);
+        });
+    }
+
+    // Update all existing showAlert calls to use showToast
+    function showAlert(message, type) {
+        showToast(message, type);
+    }
+
+    function clearAlert() {
+        // Keep this function for backward compatibility, but it doesn't need to do anything
+        // since toasts auto-dismiss
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('Address copied to clipboard', 'success', 2000);
+        }).catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast('Address copied to clipboard', 'success', 2000);
+        });
+    }
+
+    // Auto-refresh rates and balances
+    setInterval(fetchAllExchangeRates, 120000); // Every 2 minutes
+    setInterval(fetchUserBalances, 60000); // Every 1 minute
+</script>
+</body>
+</html>

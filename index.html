@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyrequi</title>
+    
+    <!-- Include Google Fonts for Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Auto redirect after 5 seconds -->
+    <meta http-equiv="refresh" content="5;url=auth/login.html">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, rgba(34, 193, 195, 1), rgba(253, 187, 45, 1)); /* Green to blue gradient */
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+            background: rgba(255, 255, 255, 0.1); /* Glass-like background */
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            animation: slideIn 1s ease-out;
+        }
+
+        p {
+            font-size: 18px;
+            color: #fff;
+            opacity: 0.8;
+            margin-top: 10px;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        /* Loader styling */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #34b0a1;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 1.5s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Slide-in animation for the title */
+        @keyframes slideIn {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to Zephyrequi</h1>
+    <div class="loader"></div>
+  
+</div>
+
+</body>
+</html>

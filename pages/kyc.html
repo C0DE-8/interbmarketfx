@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification - Trading Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0e1a;
+            --secondary-bg: #1a1f2e;
+            --card-bg: #252b3d;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-color: #374151;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title i {
+            font-size: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-btn {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .kyc-container {
+            background: var(--secondary-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-card {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .status-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .status-pending .status-icon {
+            color: var(--warning-color);
+        }
+
+        .status-approved .status-icon {
+            color: var(--success-color);
+        }
+
+        .status-rejected .status-icon {
+            color: var(--error-color);
+        }
+
+        .status-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .status-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .step.completed {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--accent-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-upload.has-file .file-upload-label {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .file-preview {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .file-preview.show {
+            display: block;
+        }
+
+        .file-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent-color);
+        }
+
+        .info-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-photo-section {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .camera-preview {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .camera-preview.show {
+            display: block;
+        }
+
+        .camera-preview video {
+            width: 100%;
+            height: auto;
+        }
+
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .kyc-container {
+                padding: 25px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .form-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>KYC Verification</h1>
+                </div>
+                <a href="dashboard.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back
+                </a>
+            </div>
+        </div>
+
+        <div class="kyc-container">
+            <!-- Status Display -->
+            <div id="statusDisplay" style="display: none;">
+                <div class="status-card">
+                    <div id="statusIcon" class="status-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h2 id="statusTitle" class="status-title">Verification Pending</h2>
+                    <p id="statusMessage" class="status-message">Your KYC verification is being reviewed. Please wait for approval.</p>
+                    <button id="resubmitBtn" class="btn btn-primary" style="display: none;" onclick="showKYCForm()">
+                        <i class="fas fa-redo"></i>
+                        Resubmit KYC
+                    </button>
+                </div>
+            </div>
+
+            <!-- KYC Form -->
+            <div id="kycForm" style="display: none;">
+                <div class="form-container">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Important Information</h3>
+                        <p>Please provide accurate information for KYC verification. All fields are required and your documents will be securely processed.</p>
+                    </div>
+
+                    <div class="form-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <span>Financial Info</span>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <span>Trading Experience</span>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <span>Identity & Address</span>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <span>Documents</span>
+                        </div>
+                    </div>
+
+                    <form id="kycSubmissionForm" enctype="multipart/form-data">
+                        <!-- Step 1: Financial Information -->
+                        <div class="form-step active" data-step="1">
+                            <div class="section-title">
+                                <i class="fas fa-dollar-sign"></i>
+                                Financial Information
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="annual_income">Annual Income (USD)</label>
+                                    <select id="annual_income" name="annual_income" required>
+                                        <option value="">Select Annual Income</option>
+                                        <option value="Under $25,000">Under $25,000</option>
+                                        <option value="$25,000 - $50,000">$25,000 - $50,000</option>
+                                        <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                                        <option value="$100,000 - $250,000">$100,000 - $250,000</option>
+                                        <option value="$250,000 - $500,000">$250,000 - $500,000</option>
+                                        <option value="Over $500,000">Over $500,000</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="net_worth">Net Worth (USD)</label>
+                                    <select id="net_worth" name="net_worth" required>
+                                        <option value="">Select Net Worth</option>
+                                        <option value="Under $50,000">Under $50,000</option>
+                                        <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                                        <option value="$100,000 - $250,000">$100,000 - $250,000</option>
+                                        <option value="$250,000 - $500,000">$250,000 - $500,000</option>
+                                        <option value="$500,000 - $1,000,000">$500,000 - $1,000,000</option>
+                                        <option value="Over $1,000,000">Over $1,000,000</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="investment_volume">Expected Investment Volume</label>
+                                    <select id="investment_volume" name="investment_volume" required>
+                                        <option value="">Select Investment Volume</option>
+                                        <option value="Under $10,000">Under $10,000</option>
+                                        <option value="$10,000 - $50,000">$10,000 - $50,000</option>
+                                        <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                                        <option value="$100,000 - $500,000">$100,000 - $500,000</option>
+                                        <option value="Over $500,000">Over $500,000</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="source_of_funds">Source of Funds</label>
+                                    <select id="source_of_funds" name="source_of_funds" required>
+                                        <option value="">Select Source of Funds</option>
+                                        <option value="Employment Income">Employment Income</option>
+                                        <option value="Business Income">Business Income</option>
+                                        <option value="Investment Returns">Investment Returns</option>
+                                        <option value="Inheritance">Inheritance</option>
+                                        <option value="Savings">Savings</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Trading Experience -->
+                        <div class="form-step" data-step="2">
+                            <div class="section-title">
+                                <i class="fas fa-chart-line"></i>
+                                Trading Experience
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="trading_experience">Trading Experience Level</label>
+                                    <select id="trading_experience" name="trading_experience" required>
+                                        <option value="">Select Experience Level</option>
+                                        <option value="Beginner">Beginner (0-1 years)</option>
+                                        <option value="Intermediate">Intermediate (1-3 years)</option>
+                                        <option value="Advanced">Advanced (3-5 years)</option>
+                                        <option value="Expert">Expert (5+ years)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="years_of_experience">Years of Trading Experience</label>
+                                    <input type="number" id="years_of_experience" name="years_of_experience" min="0" max="50" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="preferred_market">Preferred Market</label>
+                                    <select id="preferred_market" name="preferred_market" required>
+                                        <option value="">Select Preferred Market</option>
+                                        <option value="Forex">Forex</option>
+                                        <option value="Stocks">Stocks</option>
+                                        <option value="Commodities">Commodities</option>
+                                        <option value="Cryptocurrencies">Cryptocurrencies</option>
+                                        <option value="Indices">Indices</option>
+                                        <option value="Mixed">Mixed</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="trading_frequency">Trading Frequency</label>
+                                    <select id="trading_frequency" name="trading_frequency" required>
+                                        <option value="">Select Trading Frequency</option>
+                                        <option value="Daily">Daily</option>
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Occasionally">Occasionally</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="risk_profile">Risk Profile</label>
+                                    <select id="risk_profile" name="risk_profile" required>
+                                        <option value="">Select Risk Profile</option>
+                                        <option value="Conservative">Conservative</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Aggressive">Aggressive</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="trading_risk_appetite">Trading Risk Appetite</label>
+                                    <select id="trading_risk_appetite" name="trading_risk_appetite" required>
+                                        <option value="">Select Risk Appetite</option>
+                                        <option value="Conservative">Conservative</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="Aggressive">Aggressive</option>
+                                        <option value="Very Aggressive">Very Aggressive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Are you a professional trader?</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="professional_yes" name="professional_trader" value="Yes" required>
+                                        <label for="professional_yes">Yes</label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="professional_no" name="professional_trader" value="No" required>
+                                        <label for="professional_no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Identity & Address -->
+                        <div class="form-step" data-step="3">
+                            <div class="section-title">
+                                <i class="fas fa-id-card"></i>
+                                Identity & Address Information
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="id_type">ID Type</label>
+                                    <select id="id_type" name="id_type" required>
+                                        <option value="">Select ID Type</option>
+                                        <option value="Passport">Passport</option>
+                                        <option value="Driver's License">Driver's License</option>
+                                        <option value="National ID">National ID</option>
+                                        <option value="State ID">State ID</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="id_number">ID Number</label>
+                                    <input type="text" id="id_number" name="id_number" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="street_address">Street Address</label>
+                                <input type="text" id="street_address" name="street_address" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="state">State/Province</label>
+                                    <input type="text" id="state" name="state" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="postal_code">Postal Code</label>
+                                    <input type="text" id="postal_code" name="postal_code" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select id="country" name="country" required>
+                                        <option value="">Select Country</option>
+                                        <option value="United States">United States</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="France">France</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Documents -->
+                        <div class="form-step" data-step="4">
+                            <div class="section-title">
+                                <i class="fas fa-file-upload"></i>
+                                Document Upload
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>ID Front Side</label>
+                                    <div class="file-upload" id="idFrontUpload">
+                                        <input type="file" id="id_front" name="id_front" accept="image/*" required>
+                                        <div class="file-upload-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span>Upload ID Front Side</span>
+                                        </div>
+                                    </div>
+                                    <div class="file-preview" id="idFrontPreview">
+                                        <img id="idFrontImg" src="/placeholder.svg" alt="ID Front Preview">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>ID Back Side</label>
+                                    <div class="file-upload" id="idBackUpload">
+                                        <input type="file" id="id_back" name="id_back" accept="image/*" required>
+                                        <div class="file-upload-label">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span>Upload ID Back Side</span>
+                                        </div>
+                                    </div>
+                                    <div class="file-preview" id="idBackPreview">
+                                        <img id="idBackImg" src="/placeholder.svg" alt="ID Back Preview">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="live-photo-section">
+                                <div class="section-title">
+                                    <i class="fas fa-camera"></i>
+                                    Live Photo Verification
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Live Photo</label>
+                                    <div class="file-upload" id="livePhotoUpload">
+                                        <input type="file" id="live_photo" name="live_photo" accept="image/*">
+                                        <div class="file-upload-label">
+                                            <i class="fas fa-camera"></i>
+                                            <span>Upload Live Photo</span>
+                                        </div>
+                                    </div>
+                                    <div class="file-preview" id="livePhotoPreview">
+                                        <img id="livePhotoImg" src="/placeholder.svg" alt="Live Photo Preview">
+                                    </div>
+                                </div>
+
+                                <div class="camera-preview" id="cameraPreview">
+                                    <video id="cameraVideo" autoplay></video>
+                                </div>
+
+                                <div class="camera-controls">
+                                    <button type="button" class="btn btn-secondary" id="startCameraBtn">
+                                        <i class="fas fa-camera"></i>
+                                        Start Camera
+                                    </button>
+                                    <button type="button" class="btn btn-primary" id="capturePhotoBtn" style="display: none;">
+                                        <i class="fas fa-camera-retro"></i>
+                                        Capture Photo
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="stopCameraBtn" style="display: none;">
+                                        <i class="fas fa-stop"></i>
+                                        Stop Camera
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">
+                                <i class="fas fa-arrow-left"></i>
+                                Previous
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                                Next
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">
+                                <i class="fas fa-check"></i>
+                                Submit KYC
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ————— Axios instance —————
+        const userApi = axios.create({
+            baseURL: "https://api.dainterbfx.xyz/api/kyc",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        let currentStep = 1;
+        const totalSteps = 4;
+        let cameraStream = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            checkKYCStatus();
+            setupFileUploads();
+            setupCameraFunctionality();
+        });
+
+        // Check KYC status
+        async function checkKYCStatus() {
+            try {
+                const response = await userApi.get('/submit-kyc');
+                
+                if (response.data.message === "No existing KYC. You may submit your details.") {
+                    showKYCForm();
+                } else {
+                    showStatus(response.data);
+                }
+            } catch (error) {
+                console.error('Error checking KYC status:', error);
+                if (error.response?.status === 404) {
+                    showKYCForm();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to check KYC status. Please try again.',
+                        background: '#1a1f2e',
+                        color: '#ffffff'
+                    });
+                }
+            }
+        }
+
+        // Show KYC status
+        function showStatus(data) {
+            const statusDisplay = document.getElementById('statusDisplay');
+            const kycForm = document.getElementById('kycForm');
+            const statusIcon = document.getElementById('statusIcon');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            const resubmitBtn = document.getElementById('resubmitBtn');
+
+            statusDisplay.style.display = 'block';
+            kycForm.style.display = 'none';
+
+            const status = data.status?.toLowerCase();
+            
+            switch (status) {
+                case 'pending':
+                    statusDisplay.className = 'status-card status-pending';
+                    statusIcon.innerHTML = '<i class="fas fa-clock"></i>';
+                    statusTitle.textContent = 'Verification Pending';
+                    statusMessage.textContent = data.message;
+                    break;
+                case 'approved':
+                    statusDisplay.className = 'status-card status-approved';
+                    statusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+                    statusTitle.textContent = 'Verification Approved';
+                    statusMessage.textContent = data.message;
+                    break;
+                case 'rejected':
+                    statusDisplay.className = 'status-card status-rejected';
+                    statusIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+                    statusTitle.textContent = 'Verification Rejected';
+                    statusMessage.textContent = data.message;
+                    resubmitBtn.style.display = 'inline-flex';
+                    break;
+                default:
+                    statusDisplay.className = 'status-card';
+                    statusIcon.innerHTML = '<i class="fas fa-info-circle"></i>';
+                    statusTitle.textContent = 'KYC Status';
+                    statusMessage.textContent = data.message;
+            }
+        }
+
+        // Show KYC form
+        function showKYCForm() {
+            document.getElementById('statusDisplay').style.display = 'none';
+            document.getElementById('kycForm').style.display = 'block';
+        }
+
+        // Step navigation
+        function nextStep() {
+            if (validateCurrentStep()) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepDisplay();
+                }
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepDisplay();
+            }
+        }
+
+        function updateStepDisplay() {
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Update form steps
+            document.querySelectorAll('.form-step').forEach((step, index) => {
+                step.classList.remove('active');
+                if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            prevBtn.style.display = currentStep > 1 ? 'inline-flex' : 'none';
+            nextBtn.style.display = currentStep < totalSteps ? 'inline-flex' : 'none';
+            submitBtn.style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
+        }
+
+        // Validate current step
+        function validateCurrentStep() {
+            const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Required Field',
+                        text: 'Please fill in all required fields before proceeding.',
+                        background: '#1a1f2e',
+                        color: '#ffffff'
+                    });
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Setup file uploads
+        function setupFileUploads() {
+            setupFileUpload('id_front', 'idFrontUpload', 'idFrontPreview', 'idFrontImg');
+            setupFileUpload('id_back', 'idBackUpload', 'idBackPreview', 'idBackImg');
+            setupFileUpload('live_photo', 'livePhotoUpload', 'livePhotoPreview', 'livePhotoImg');
+        }
+
+        function setupFileUpload(inputId, uploadId, previewId, imgId) {
+            const input = document.getElementById(inputId);
+            const upload = document.getElementById(uploadId);
+            const preview = document.getElementById(previewId);
+            const img = document.getElementById(imgId);
+
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    upload.classList.add('has-file');
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        img.src = e.target.result;
+                        preview.classList.add('show');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Camera functionality
+        function setupCameraFunctionality() {
+            const startCameraBtn = document.getElementById('startCameraBtn');
+            const capturePhotoBtn = document.getElementById('capturePhotoBtn');
+            const stopCameraBtn = document.getElementById('stopCameraBtn');
+            const cameraPreview = document.getElementById('cameraPreview');
+            const cameraVideo = document.getElementById('cameraVideo');
+
+            startCameraBtn.addEventListener('click', async function() {
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { facingMode: 'user' } 
+                    });
+                    cameraVideo.srcObject = cameraStream;
+                    cameraPreview.classList.add('show');
+                    
+                    startCameraBtn.style.display = 'none';
+                    capturePhotoBtn.style.display = 'inline-flex';
+                    stopCameraBtn.style.display = 'inline-flex';
+                } catch (error) {
+                    console.error('Error accessing camera:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Camera Error',
+                        text: 'Unable to access camera. Please check permissions.',
+                        background: '#1a1f2e',
+                        color: '#ffffff'
+                    });
+                }
+            });
+
+            capturePhotoBtn.addEventListener('click', function() {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                
+                canvas.width = cameraVideo.videoWidth;
+                canvas.height = cameraVideo.videoHeight;
+                context.drawImage(cameraVideo, 0, 0);
+                
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], 'live_photo.jpg', { type: 'image/jpeg' });
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    
+                    const livePhotoInput = document.getElementById('live_photo');
+                    livePhotoInput.files = dataTransfer.files;
+                    
+                    // Trigger change event to show preview
+                    livePhotoInput.dispatchEvent(new Event('change'));
+                    
+                    // Stop camera
+                    stopCamera();
+                });
+            });
+
+            stopCameraBtn.addEventListener('click', stopCamera);
+        }
+
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            document.getElementById('cameraPreview').classList.remove('show');
+            document.getElementById('startCameraBtn').style.display = 'inline-flex';
+            document.getElementById('capturePhotoBtn').style.display = 'none';
+            document.getElementById('stopCameraBtn').style.display = 'none';
+        }
+
+        // Submit KYC form
+        document.getElementById('kycSubmissionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Submitting...</div>';
+
+                // Create FormData for KYC submission (without live photo)
+                const formData = new FormData();
+                
+                // Add all form fields except live_photo
+                const formElements = this.elements;
+                for (let element of formElements) {
+                    if (element.name && element.name !== 'live_photo') {
+                        if (element.type === 'file' && element.files.length > 0) {
+                            formData.append(element.name, element.files[0]);
+                        } else if (element.type === 'radio') {
+                            if (element.checked) {
+                                formData.append(element.name, element.value);
+                            }
+                        } else if (element.type !== 'button' && element.type !== 'submit') {
+                            formData.append(element.name, element.value);
+                        }
+                    }
+                }
+                
+                // Create axios instance for multipart form data
+                const multipartApi = axios.create({
+                    baseURL: "https://api.dainterbfx.xyz/api/kyc",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+
+                // Submit KYC first
+                const response = await multipartApi.post('/submit-kyc', formData);
+
+                // If KYC submission successful and live photo exists, upload it separately
+                const livePhotoInput = document.getElementById('live_photo');
+                if (livePhotoInput.files.length > 0) {
+                    const livePhotoFormData = new FormData();
+                    livePhotoFormData.append('live_photo', livePhotoInput.files[0]);
+                    
+                    try {
+                        await multipartApi.post('/upload-live-photo', livePhotoFormData);
+                    } catch (livePhotoError) {
+                        console.warn('Live photo upload failed:', livePhotoError);
+                        // Don't fail the entire process if live photo upload fails
+                    }
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'KYC Submitted Successfully!',
+                    text: response.data.message,
+                    background: '#1a1f2e',
+                    color: '#ffffff'
+                }).then(() => {
+                    checkKYCStatus();
+                });
+
+            } catch (error) {
+                console.error('Error submitting KYC:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: error.response?.data?.message || 'Failed to submit KYC. Please try again.',
+                    background: '#1a1f2e',
+                    color: '#ffffff'
+                });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // Function to upload live photo separately
+        async function uploadLivePhoto(file) {
+            try {
+                const livePhotoFormData = new FormData();
+                livePhotoFormData.append('live_photo', file);
+                
+                const multipartApi = axios.create({
+                    baseURL: "https://api.dainterbfx.xyz/api/kyc",
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    }
+                });
+
+                const response = await multipartApi.post('/upload-live-photo', livePhotoFormData);
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Live Photo Uploaded!',
+                    text: response.data.message,
+                    background: '#1a1f2e',
+                    color: '#ffffff'
+                });
+
+                return response.data;
+            } catch (error) {
+                console.error('Error uploading live photo:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Upload Failed',
+                    text: error.response?.data?.message || 'Failed to upload live photo.',
+                    background: '#1a1f2e',
+                    color: '#ffffff'
+                });
+                throw error;
+            }
+        }
+
+        // Cleanup camera on page unload
+        window.addEventListener('beforeunload', function() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+    <script src="../js/withAuth.js"></script>
+</body>
+</html>

@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Zephy | Advanced Cryptocurrency Platform</title>
+    <meta name="description" content="Comprehensive privacy policy for Zephy cryptocurrency platform. Learn how we protect your data and ensure compliance with global regulations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Primary Color System - Purple Theme */
+            --primary-50: #f3f1ff;
+            --primary-100: #ebe5ff;
+            --primary-200: #d9ccff;
+            --primary-300: #bea6ff;
+            --primary-400: #9f75ff;
+            --primary-500: #9361f3;
+            --primary-600: #5c2db0;
+            --primary-700: #4c1d95;
+            --primary-800: #3c1677;
+            --primary-900: #2e1065;
+            
+            --secondary-50: #faf5ff;
+            --secondary-100: #f3e8ff;
+            --secondary-200: #e9d5ff;
+            --secondary-300: #d8b4fe;
+            --secondary-400: #c084fc;
+            --secondary-500: #a855f7;
+            --secondary-600: #9333ea;
+            --secondary-700: #7c3aed;
+            --secondary-800: #6b21a8;
+            --secondary-900: #581c87;
+            
+            /* Dark Theme Colors */
+            --dark-bg: #1a1f2e;
+            --dark-card: #1a1f2e;
+            --dark-surface: #242938;
+            --dark-border: #2d3748;
+            --dark-text: #e2e8f0;
+            --dark-text-secondary: #a0aec0;
+            
+            /* Neutral Colors */
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+            
+            --success-500: #10b981;
+            --warning-500: #f59e0b;
+            --error-500: #ef4444;
+            
+            /* Typography Scale */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            --text-5xl: 3rem;
+            --text-6xl: 3.75rem;
+            
+            /* Spacing Scale */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-3xl: 2rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-purple: 0 20px 25px -5px rgb(92 45 176 / 0.3), 0 8px 10px -6px rgb(147 97 243 / 0.2);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--space-20);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: var(--text-base);
+            line-height: 1.7;
+            color: var(--dark-text);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0f1419 50%, var(--dark-bg) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Layout Grid */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-8);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                grid-template-columns: 300px minmax(0, 1fr);
+                gap: var(--space-12);
+                padding: var(--space-8);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .main-content {
+                grid-template-columns: 350px minmax(0, 1fr);
+                gap: var(--space-16);
+            }
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-3xl);
+            padding: var(--space-8);
+            text-align: center;
+            box-shadow: var(--shadow-purple);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-600), var(--primary-500), var(--primary-600));
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        .logo {
+            font-size: var(--text-5xl);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--dark-text-secondary);
+            font-size: var(--text-lg);
+            font-weight: 500;
+            margin-bottom: var(--space-4);
+        }
+
+        .header-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: linear-gradient(135deg, var(--primary-600)20, var(--primary-500)20);
+            border: 1px solid var(--primary-600);
+            border-radius: var(--radius-xl);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--primary-300);
+        }
+
+        /* Navigation Sidebar */
+        .navigation {
+            position: sticky;
+            top: var(--space-6);
+            height: fit-content;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-title {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 2px solid var(--primary-600);
+        }
+
+        .nav-list {
+            list-style: none;
+            space-y: var(--space-1);
+        }
+
+        .nav-item {
+            margin-bottom: var(--space-1);
+        }
+
+        .nav-link {
+            display: block;
+            padding: var(--space-3) var(--space-4);
+            color: var(--dark-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-600)20;
+            color: var(--primary-300);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--primary-500);
+            border-radius: 2px;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--dark-border);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-600), var(--primary-500));
+            width: 0%;
+            transition: width var(--transition-fast);
+        }
+
+        /* Content Area */
+        .content {
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-10);
+            box-shadow: var(--shadow-purple);
+            position: relative;
+        }
+
+        .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: linear-gradient(135deg, var(--success-500), #059669);
+            color: white;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-xl);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-title {
+            font-size: var(--text-5xl);
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: var(--space-8);
+            text-align: center;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--space-12);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--dark-border);
+            background: var(--dark-surface);
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-purple);
+            transform: translateY(-2px);
+            border-color: var(--primary-600)50;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--dark-surface), var(--primary-600)10);
+            padding: var(--space-6);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--primary-600)15, var(--primary-500)10);
+        }
+
+        .section-title {
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            color: var(--dark-text);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            letter-spacing: -0.01em;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform var(--transition-fast);
+            color: var(--primary-400);
+        }
+
+        .section.collapsed .section-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: var(--space-8);
+            max-height: 2000px;
+            overflow: hidden;
+            transition: all var(--transition-slow);
+            background: var(--dark-card);
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        /* Typography */
+        h3 {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: var(--space-8) 0 var(--space-4) 0;
+            letter-spacing: -0.01em;
+        }
+
+        h3:first-child {
+            margin-top: 0;
+        }
+
+        h4 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--primary-300);
+            margin: var(--space-6) 0 var(--space-3) 0;
+        }
+
+        p {
+            margin-bottom: var(--space-5);
+            color: var(--dark-text-secondary);
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin: var(--space-4) 0 var(--space-6) 0;
+            padding-left: var(--space-6);
+        }
+
+        li {
+            margin-bottom: var(--space-3);
+            color: var(--dark-text-secondary);
+            line-height: 1.7;
+        }
+
+        li strong {
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        /* Special Content Blocks */
+        .highlight {
+            background: linear-gradient(135deg, var(--primary-600)15, var(--primary-500)10);
+            border: 1px solid var(--primary-600);
+            border-left: 4px solid var(--primary-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .highlight::before {
+            content: '💡';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+        }
+
+        .highlight p {
+            color: var(--dark-text);
+        }
+
+        .crypto-specific {
+            background: linear-gradient(135deg, var(--warning-500)15, #fbbf2410);
+            border: 1px solid var(--warning-500);
+            border-left: 4px solid var(--warning-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .crypto-specific::before {
+            content: '₿';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+            color: var(--warning-500);
+            font-weight: bold;
+        }
+
+        .crypto-specific p {
+            color: var(--dark-text);
+        }
+
+        .security-notice {
+            background: linear-gradient(135deg, var(--error-500)15, #ef444410);
+            border: 1px solid var(--error-500);
+            border-left: 4px solid var(--error-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .security-notice::before {
+            content: '🔒';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+        }
+
+        .security-notice p {
+            color: var(--dark-text);
+        }
+
+        /* Contact Section */
+        .contact-info {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            color: white;
+            padding: var(--space-10);
+            border-radius: var(--radius-2xl);
+            text-align: center;
+            margin-top: var(--space-12);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-purple);
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .contact-info h3 {
+            color: white;
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-6);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item h4 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: white;
+        }
+
+        .contact-item p {
+            margin: 0;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: var(--space-8);
+            right: var(--space-8);
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: var(--text-xl);
+            cursor: pointer;
+            box-shadow: var(--shadow-purple);
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+        }
+
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 25px 50px -12px rgb(92 45 176 / 0.5), 0 8px 10px -6px rgb(147 97 243 / 0.3);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary-400);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-300);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1023px) {
+            .navigation {
+                position: static;
+                margin-bottom: var(--space-6);
+            }
+            
+            .main-content {
+                padding: var(--space-4);
+            }
+            
+            .content {
+                padding: var(--space-6);
+            }
+            
+            .page-title {
+                font-size: var(--text-4xl);
+            }
+            
+            .logo {
+                font-size: var(--text-4xl);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header {
+                padding: var(--space-6);
+            }
+            
+            .content {
+                padding: var(--space-4);
+            }
+            
+            .section-content {
+                padding: var(--space-5);
+            }
+            
+            .page-title {
+                font-size: var(--text-3xl);
+            }
+            
+            .section-title {
+                font-size: var(--text-xl);
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fab-container {
+                bottom: var(--space-4);
+                right: var(--space-4);
+            }
+        }
+
+        @media (max-width: 479px) {
+            .main-content {
+                padding: var(--space-2);
+            }
+            
+            .header {
+                padding: var(--space-4);
+            }
+            
+            .logo {
+                font-size: var(--text-3xl);
+            }
+            
+            .page-title {
+                font-size: var(--text-2xl);
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navigation,
+            .fab-container,
+            .progress-container {
+                display: none;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .section-content {
+                max-height: none !important;
+                padding: var(--space-4) !important;
+            }
+            
+            .section {
+                break-inside: avoid;
+                margin-bottom: var(--space-6);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        .nav-link:focus,
+        .fab:focus,
+        .section-header:focus {
+            outline: 2px solid var(--primary-500);
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .highlight,
+            .crypto-specific,
+            .security-notice {
+                border-width: 2px;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="page-container">
+        <main class="main-content">
+            <header class="header fade-in">
+                <h1 class="logo">Dainterbfx</h1>
+                <p class="subtitle">Advanced Cryptocurrency & Blockchain Platform</p>
+                <div class="header-badges">
+                    <span class="badge">
+                        <span>🔒</span>
+                        <span>Bank-Grade Security</span>
+                    </span>
+                    <span class="badge">
+                        <span>🌍</span>
+                        <span>Global Compliance</span>
+                    </span>
+                    <span class="badge">
+                        <span>⚡</span>
+                        <span>Lightning Fast</span>
+                    </span>
+                </div>
+            </header>
+
+            <nav class="navigation slide-in-left" role="navigation" aria-label="Privacy policy sections">
+                <h2 class="nav-title">Table of Contents</h2>
+                <ul class="nav-list" role="list">
+                    <li class="nav-item"><a href="#introduction" class="nav-link" data-section="introduction">1. Introduction</a></li>
+                    <li class="nav-item"><a href="#information-collection" class="nav-link" data-section="information-collection">2. Information We Collect</a></li>
+                    <li class="nav-item"><a href="#information-usage" class="nav-link" data-section="information-usage">3. How We Use Information</a></li>
+                    <li class="nav-item"><a href="#information-sharing" class="nav-link" data-section="information-sharing">4. Information Sharing</a></li>
+                    <li class="nav-item"><a href="#data-security" class="nav-link" data-section="data-security">5. Data Security</a></li>
+                    <li class="nav-item"><a href="#user-rights" class="nav-link" data-section="user-rights">6. Your Rights</a></li>
+                    <li class="nav-item"><a href="#data-transfers" class="nav-link" data-section="data-transfers">7. International Transfers</a></li>
+                    <li class="nav-item"><a href="#data-retention" class="nav-link" data-section="data-retention">8. Data Retention</a></li>
+                    <li class="nav-item"><a href="#cookies" class="nav-link" data-section="cookies">9. Cookies & Tracking</a></li>
+                    <li class="nav-item"><a href="#children" class="nav-link" data-section="children">10. Children's Privacy</a></li>
+                    <li class="nav-item"><a href="#policy-changes" class="nav-link" data-section="policy-changes">11. Policy Changes</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link" data-section="contact">12. Contact Information</a></li>
+                </ul>
+            </nav>
+
+            <div class="content fade-in">
+                <div class="last-updated" role="status" aria-live="polite">
+                    <span>📅</span>
+                    <span>Last Updated: January 15, 2025</span>
+                </div>
+                
+                <h1 class="page-title">Privacy & Policy</h1>
+
+                <section class="section" id="introduction">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            1. Introduction & Scope
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>Welcome to Zephy, a cutting-edge cryptocurrency and blockchain technology platform. We are committed to maintaining the highest standards of privacy protection and data security in the digital asset ecosystem.</p>
+                        
+                        <p>This Privacy Policy governs the collection, processing, storage, and protection of your personal information when you interact with our platform, services, applications, and related technologies. It applies to all users, regardless of geographic location, and covers all aspects of our cryptocurrency exchange, trading, staking, DeFi, and blockchain services.</p>
+
+                        <div class="highlight">
+                            <p><strong>Your Consent & Agreement:</strong> By accessing or using Zephy's services, you explicitly consent to the collection, processing, and use of your information as described in this Privacy Policy. If you do not agree with any aspect of this policy, please discontinue use of our services immediately.</p>
+                        </div>
+
+                        <h3>Regulatory Compliance Framework</h3>
+                        <p>Zephy operates under strict compliance with international privacy and financial regulations, including:</p>
+                        <ul>
+                            <li><strong>GDPR</strong> (General Data Protection Regulation) - European Union</li>
+                            <li><strong>CCPA</strong> (California Consumer Privacy Act) - United States</li>
+                            <li><strong>PIPEDA</strong> (Personal Information Protection and Electronic Documents Act) - Canada</li>
+                            <li><strong>LGPD</strong> (Lei Geral de Proteção de Dados) - Brazil</li>
+                            <li><strong>Financial Action Task Force (FATF)</strong> guidelines</li>
+                            <li><strong>Local cryptocurrency and financial regulations</strong> in jurisdictions where we operate</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="information-collection">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            2. Information We Collect
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>2.1 Personal Identification Information</h3>
+                        <p>To comply with Know Your Customer (KYC) and Anti-Money Laundering (AML) regulations, we collect:</p>
+                        <ul>
+                            <li><strong>Identity Documents:</strong> Government-issued photo ID (passport, driver's license, national ID card)</li>
+                            <li><strong>Personal Details:</strong> Full legal name, date of birth, nationality, country of residence</li>
+                            <li><strong>Address Verification:</strong> Utility bills, bank statements, or government correspondence</li>
+                            <li><strong>Biometric Data:</strong> Facial recognition data for identity verification (where legally permitted)</li>
+                            <li><strong>Tax Information:</strong> Tax identification numbers, tax residency status</li>
+                        </ul>
+
+                        <h3>2.2 Contact & Communication Information</h3>
+                        <ul>
+                            <li><strong>Primary Contact:</strong> Email addresses, phone numbers, postal addresses</li>
+                            <li><strong>Emergency Contacts:</strong> Alternative contact information for account recovery</li>
+                            <li><strong>Communication Preferences:</strong> Language preferences, notification settings</li>
+                            <li><strong>Support Interactions:</strong> Customer service communications, chat logs, support tickets</li>
+                        </ul>
+
+                        <h3>2.3 Financial & Payment Information</h3>
+                        <ul>
+                            <li><strong>Banking Details:</strong> Bank account numbers, routing numbers, SWIFT codes</li>
+                            <li><strong>Payment Cards:</strong> Credit/debit card information (encrypted and tokenized)</li>
+                            <li><strong>Financial History:</strong> Source of funds documentation, wealth verification</li>
+                            <li><strong>Credit Information:</strong> Credit scores, financial assessments (where applicable)</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>2.4 Cryptocurrency & Blockchain Data</h3>
+                            <p><strong>Blockchain-Specific Information:</strong></p>
+                            <ul>
+                                <li><strong>Wallet Addresses:</strong> Public cryptocurrency addresses linked to your account</li>
+                                <li><strong>Transaction Records:</strong> Blockchain transaction hashes, amounts, timestamps, gas fees</li>
+                                <li><strong>Trading Activity:</strong> Order books, trade history, portfolio compositions, P&L statements</li>
+                                <li><strong>DeFi Interactions:</strong> Smart contract interactions, liquidity pool participation, yield farming activities</li>
+                                <li><strong>Staking Information:</strong> Validator selections, staking rewards, delegation history</li>
+                                <li><strong>NFT Holdings:</strong> Non-fungible token ownership, metadata, transaction history</li>
+                                <li><strong>Cross-Chain Activities:</strong> Bridge transactions, multi-chain portfolio tracking</li>
+                            </ul>
+                        </div>
+
+                        <h3>2.5 Technical & Device Information</h3>
+                        <ul>
+                            <li><strong>Device Identifiers:</strong> IP addresses, device IDs, browser fingerprints</li>
+                            <li><strong>System Information:</strong> Operating system, browser type and version, screen resolution</li>
+                            <li><strong>Network Data:</strong> ISP information, connection type, geographic location</li>
+                            <li><strong>Security Logs:</strong> Login attempts, security events, authentication logs</li>
+                            <li><strong>Performance Metrics:</strong> Page load times, error logs, crash reports</li>
+                        </ul>
+
+                        <h3>2.6 Behavioral & Analytics Data</h3>
+                        <ul>
+                            <li><strong>Usage Patterns:</strong> Feature usage, session duration, navigation paths</li>
+                            <li><strong>Trading Behavior:</strong> Risk tolerance, trading frequency, preferred assets</li>
+                            <li><strong>Engagement Metrics:</strong> Email opens, click-through rates, app usage statistics</li>
+                            <li><strong>Preference Data:</strong> UI customizations, saved searches, watchlists</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="information-usage">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            3. How We Use Your Information
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>3.1 Core Service Provision</h3>
+                        <ul>
+                            <li><strong>Account Management:</strong> Creating, maintaining, and securing user accounts</li>
+                            <li><strong>Transaction Processing:</strong> Executing cryptocurrency trades, transfers, and conversions</li>
+                            <li><strong>Portfolio Management:</strong> Tracking holdings, calculating performance, generating reports</li>
+                            <li><strong>Customer Support:</strong> Providing technical assistance and resolving issues</li>
+                            <li><strong>Platform Access:</strong> Authentication, authorization, and session management</li>
+                        </ul>
+
+                        <h3>3.2 Regulatory Compliance & Risk Management</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>KYC/AML Verification:</strong> Identity verification, sanctions screening, PEP checks</li>
+                                <li><strong>Transaction Monitoring:</strong> Detecting suspicious activities, unusual patterns</li>
+                                <li><strong>Regulatory Reporting:</strong> Submitting required reports to financial authorities</li>
+                                <li><strong>Tax Compliance:</strong> Generating tax documents, reporting to tax authorities</li>
+                                <li><strong>Audit Support:</strong> Maintaining records for regulatory audits and examinations</li>
+                                <li><strong>Sanctions Compliance:</strong> Screening against OFAC and other sanctions lists</li>
+                            </ul>
+                        </div>
+
+                        <h3>3.3 Security & Fraud Prevention</h3>
+                        <div class="security-notice">
+                            <ul>
+                                <li><strong>Threat Detection:</strong> Identifying and preventing unauthorized access attempts</li>
+                                <li><strong>Fraud Prevention:</strong> Analyzing patterns to detect fraudulent activities</li>
+                                <li><strong>Risk Assessment:</strong> Evaluating transaction risks and user behavior</li>
+                                <li><strong>Security Monitoring:</strong> Continuous monitoring of platform security</li>
+                                <li><strong>Incident Response:</strong> Investigating and responding to security incidents</li>
+                            </ul>
+                        </div>
+
+                        <h3>3.4 Platform Enhancement & Analytics</h3>
+                        <ul>
+                            <li><strong>Performance Optimization:</strong> Improving platform speed, reliability, and user experience</li>
+                            <li><strong>Feature Development:</strong> Developing new features based on user needs and feedback</li>
+                            <li><strong>Market Analysis:</strong> Analyzing market trends and user preferences</li>
+                            <li><strong>A/B Testing:</strong> Testing new features and improvements</li>
+                            <li><strong>Bug Fixes:</strong> Identifying and resolving technical issues</li>
+                        </ul>
+
+                        <h3>3.5 Communication & Marketing</h3>
+                        <ul>
+                            <li><strong>Service Communications:</strong> Account notifications, security alerts, system updates</li>
+                            <li><strong>Educational Content:</strong> Market insights, trading guides, platform tutorials</li>
+                            <li><strong>Marketing Communications:</strong> Product announcements, promotional offers (with consent)</li>
+                            <li><strong>Research Participation:</strong> Invitations to surveys and user research (optional)</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Legal Basis for Processing:</strong> We process your information based on various legal grounds including contract performance, legal obligations, legitimate interests, and your explicit consent where required by applicable law.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="information-sharing">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            4. Information Sharing & Disclosure
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>4.1 Authorized Third-Party Service Providers</h3>
+                        <p>We share information with carefully vetted service providers who assist in our operations:</p>
+                        
+                        <h4>Identity Verification Partners</h4>
+                        <ul>
+                            <li><strong>KYC/AML Providers:</strong> Jumio, Onfido, Chainalysis for identity verification</li>
+                            <li><strong>Document Verification:</strong> Automated and manual document authentication services</li>
+                            <li><strong>Biometric Verification:</strong> Facial recognition and liveness detection services</li>
+                        </ul>
+
+                        <h4>Financial Service Partners</h4>
+                        <ul>
+                            <li><strong>Payment Processors:</strong> Stripe, PayPal, bank transfer facilitators</li>
+                            <li><strong>Banking Partners:</strong> Correspondent banks for fiat currency operations</li>
+                            <li><strong>Liquidity Providers:</strong> Market makers and institutional trading partners</li>
+                            <li><strong>Custody Services:</strong> Institutional-grade cryptocurrency custody providers</li>
+                        </ul>
+
+                        <h4>Technology Infrastructure</h4>
+                        <ul>
+                            <li><strong>Cloud Providers:</strong> AWS, Google Cloud, Microsoft Azure for hosting and storage</li>
+                            <li><strong>Analytics Platforms:</strong> Google Analytics, Mixpanel for usage analytics</li>
+                            <li><strong>Communication Tools:</strong> Email service providers, SMS gateways, push notification services</li>
+                            <li><strong>Security Services:</strong> Cybersecurity firms, penetration testing companies</li>
+                        </ul>
+
+                        <h3>4.2 Legal & Regulatory Disclosures</h3>
+                        <div class="highlight">
+                            <p>We may disclose your information when legally required or authorized:</p>
+                            <ul>
+                                <li><strong>Court Orders:</strong> Compliance with subpoenas, court orders, and legal processes</li>
+                                <li><strong>Government Requests:</strong> Responding to lawful requests from government agencies</li>
+                                <li><strong>Regulatory Authorities:</strong> Reporting to financial regulators, tax authorities, and compliance bodies</li>
+                                <li><strong>Law Enforcement:</strong> Cooperating with criminal investigations and law enforcement</li>
+                                <li><strong>Legal Proceedings:</strong> Defending legal claims and protecting our rights</li>
+                            </ul>
+                        </div>
+
+                        <h3>4.3 Business Transfers & Corporate Events</h3>
+                        <ul>
+                            <li><strong>Mergers & Acquisitions:</strong> Transfer of information in corporate transactions</li>
+                            <li><strong>Asset Sales:</strong> Sale of business units or assets</li>
+                            <li><strong>Bankruptcy:</strong> Asset distribution in insolvency proceedings</li>
+                            <li><strong>Restructuring:</strong> Corporate reorganizations and restructuring events</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>4.4 Blockchain Transparency & Public Records</h3>
+                            <p><strong>Important Disclosure:</strong> Cryptocurrency transactions are inherently public and permanently recorded on blockchain networks. While we don't directly link your identity to your wallet addresses publicly, the following information is visible on public blockchains:</p>
+                            <ul>
+                                <li><strong>Transaction Amounts:</strong> All cryptocurrency transfer amounts</li>
+                                <li><strong>Wallet Addresses:</strong> Public addresses involved in transactions</li>
+                                <li><strong>Transaction Times:</strong> Timestamps of all blockchain transactions</li>
+                                <li><strong>Smart Contract Interactions:</strong> DeFi protocol interactions and smart contract calls</li>
+                                <li><strong>Token Holdings:</strong> Public visibility of token balances in non-custodial wallets</li>
+                            </ul>
+                            
+                            <p><strong>Privacy Consideration:</strong> While blockchain transactions are pseudonymous, sophisticated analysis techniques may potentially link wallet addresses to identities. We recommend using privacy-focused practices when interacting with public blockchains.</p>
+                        </div>
+
+                        <h3>4.5 Consent-Based Sharing</h3>
+                        <ul>
+                            <li><strong>Explicit Consent:</strong> Sharing information only with your explicit permission</li>
+                            <li><strong>Third-Party Integrations:</strong> Connecting with external services you authorize</li>
+                            <li><strong>Research Participation:</strong> Anonymous data sharing for industry research (opt-in only)</li>
+                            <li><strong>Marketing Partners:</strong> Sharing with marketing partners (with explicit consent)</li>
+                        </ul>
+
+                        <h3>4.6 Data Protection Safeguards</h3>
+                        <p>All third-party sharing is governed by strict contractual obligations:</p>
+                        <ul>
+                            <li><strong>Data Processing Agreements:</strong> Comprehensive contracts governing data use</li>
+                            <li><strong>Security Requirements:</strong> Mandatory security standards for all partners</li>
+                            <li><strong>Purpose Limitation:</strong> Restrictions on how shared data can be used</li>
+                            <li><strong>Audit Rights:</strong> Regular audits of third-party data handling practices</li>
+                            <li><strong>Data Minimization:</strong> Sharing only necessary information for specific purposes</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="data-security">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            5. Data Security & Protection
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <div class="security-notice">
+                            <p><strong>Security Commitment:</strong> Zephy employs military-grade security measures and follows industry best practices to protect your information and digital assets. Our security framework is continuously updated to address emerging threats in the cryptocurrency ecosystem.</p>
+                        </div>
+
+                        <h3>5.1 Encryption & Data Protection</h3>
+                        <ul>
+                            <li><strong>End-to-End Encryption:</strong> AES-256 encryption for data at rest and in transit</li>
+                            <li><strong>Transport Layer Security:</strong> TLS 1.3 for all communications</li>
+                            <li><strong>Database Encryption:</strong> Encrypted databases with rotating encryption keys</li>
+                            <li><strong>Field-Level Encryption:</strong> Additional encryption for sensitive data fields</li>
+                            <li><strong>Key Management:</strong> Hardware Security Modules (HSMs) for cryptographic key storage</li>
+                        </ul>
+
+                        <h3>5.2 Access Controls & Authentication</h3>
+                        <ul>
+                            <li><strong>Multi-Factor Authentication:</strong> Mandatory 2FA/MFA for all user accounts</li>
+                            <li><strong>Biometric Authentication:</strong> Fingerprint and facial recognition options</li>
+                            <li><strong>Hardware Security Keys:</strong> Support for FIDO2/WebAuthn security keys</li>
+                            <li><strong>Role-Based Access:</strong> Principle of least privilege for internal access</li>
+                            <li><strong>Session Management:</strong> Secure session handling with automatic timeouts</li>
+                        </ul>
+
+                        <h3>5.3 Cryptocurrency Asset Security</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Cold Storage:</strong> 95%+ of cryptocurrency assets stored offline in air-gapped systems</li>
+                                <li><strong>Multi-Signature Wallets:</strong> Multi-sig technology requiring multiple approvals</li>
+                                <li><strong>Hardware Security Modules:</strong> Dedicated HSMs for private key generation and storage</li>
+                                <li><strong>Geographically Distributed Storage:</strong> Assets stored across multiple secure locations</li>
+                                <li><strong>Insurance Coverage:</strong> Comprehensive insurance for digital asset holdings</li>
+                                <li><strong>Real-Time Monitoring:</strong> 24/7 monitoring of all cryptocurrency transactions</li>
+                            </ul>
+                        </div>
+
+                        <h3>5.4 Infrastructure Security</h3>
+                        <ul>
+                            <li><strong>Cloud Security:</strong> Enterprise-grade cloud infrastructure with advanced security controls</li>
+                            <li><strong>Network Segmentation:</strong> Isolated network segments for different system components</li>
+                            <li><strong>DDoS Protection:</strong> Advanced distributed denial-of-service attack mitigation</li>
+                            <li><strong>Intrusion Detection:</strong> Real-time monitoring and automated threat response</li>
+                            <li><strong>Vulnerability Management:</strong> Regular security assessments and patch management</li>
+                        </ul>
+
+                        <h3>5.5 Operational Security</h3>
+                        <ul>
+                            <li><strong>Employee Security:</strong> Background checks, security training, and access reviews</li>
+                            <li><strong>Incident Response:</strong> 24/7 security operations center with rapid response capabilities</li>
+                            <li><strong>Business Continuity:</strong> Disaster recovery and business continuity planning</li>
+                            <li><strong>Data Backup:</strong> Encrypted, geographically distributed backup systems</li>
+                            <li><strong>Security Audits:</strong> Regular third-party security audits and penetration testing</li>
+                        </ul>
+
+                        <h3>5.6 Compliance & Certifications</h3>
+                        <ul>
+                            <li><strong>SOC 2 Type II:</strong> Annual SOC 2 compliance audits</li>
+                            <li><strong>ISO 27001:</strong> Information security management system certification</li>
+                            <li><strong>PCI DSS:</strong> Payment card industry data security standards compliance</li>
+                            <li><strong>GDPR Compliance:</strong> Full compliance with European data protection regulations</li>
+                            <li><strong>Regulatory Audits:</strong> Regular audits by financial regulatory authorities</li>
+                        </ul>
+
+                        <h3>5.7 User Security Responsibilities</h3>
+                        <div class="highlight">
+                            <p><strong>Your Role in Security:</strong> While we implement comprehensive security measures, your cooperation is essential:</p>
+                            <ul>
+                                <li><strong>Strong Passwords:</strong> Use unique, complex passwords for your account</li>
+                                <li><strong>Enable 2FA:</strong> Always enable two-factor authentication</li>
+                                <li><strong>Secure Devices:</strong> Keep your devices updated and secure</li>
+                                <li><strong>Phishing Awareness:</strong> Be vigilant against phishing attempts and social engineering</li>
+                                <li><strong>Regular Monitoring:</strong> Monitor your account regularly for unauthorized activity</li>
+                                <li><strong>Secure Networks:</strong> Avoid using public Wi-Fi for sensitive transactions</li>
+                            </ul>
+                        </div>
+
+                        <h3>5.8 Incident Response & Breach Notification</h3>
+                        <p>In the unlikely event of a security incident:</p>
+                        <ul>
+                            <li><strong>Immediate Response:</strong> Rapid containment and investigation of security incidents</li>
+                            <li><strong>User Notification:</strong> Prompt notification of affected users within 72 hours</li>
+                            <li><strong>Regulatory Reporting:</strong> Timely reporting to relevant authorities as required</li>
+                            <li><strong>Remediation:</strong> Comprehensive remediation and security enhancement measures</li>
+                            <li><strong>Transparency:</strong> Clear communication about incident details and response actions</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="user-rights">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            6. Your Rights & Data Control
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <div class="highlight">
+                            <p><strong>Your Data, Your Control:</strong> We believe you should have full control over your personal information. This section outlines your comprehensive rights and how to exercise them.</p>
+                        </div>
+
+                        <h3>6.1 Access Rights</h3>
+                        <ul>
+                            <li><strong>Data Access:</strong> Request a complete copy of all personal information we hold about you</li>
+                            <li><strong>Processing Information:</strong> Understand how your data is being processed and for what purposes</li>
+                            <li><strong>Data Sources:</strong> Learn where we obtained your information</li>
+                            <li><strong>Sharing Details:</strong> Know which third parties have received your information</li>
+                            <li><strong>Retention Periods:</strong> Understand how long we retain different types of data</li>
+                        </ul>
+
+                        <h3>6.2 Correction & Update Rights</h3>
+                        <ul>
+                            <li><strong>Data Correction:</strong> Correct any inaccurate or incomplete personal information</li>
+                            <li><strong>Profile Updates:</strong> Update your contact information, preferences, and settings</li>
+                            <li><strong>Document Updates:</strong> Submit updated identity or address verification documents</li>
+                            <li><strong>Real-Time Updates:</strong> Make changes through your account dashboard</li>
+                        </ul>
+
+                        <h3>6.3 Deletion Rights (Right to be Forgotten)</h3>
+                        <ul>
+                            <li><strong>Account Deletion:</strong> Request complete deletion of your account and associated data</li>
+                            <li><strong>Selective Deletion:</strong> Delete specific types of information where legally permissible</li>
+                            <li><strong>Marketing Data:</strong> Remove your information from marketing databases</li>
+                            <li><strong>Historical Data:</strong> Delete old transaction records beyond legal retention requirements</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h4>Limitations on Deletion Rights</h4>
+                            <p><strong>Important Notice:</strong> Some information cannot be deleted due to regulatory and technical constraints:</p>
+                            <ul>
+                                <li><strong>Regulatory Records:</strong> KYC/AML data must be retained for 5-7 years as required by law</li>
+                                <li><strong>Blockchain Data:</strong> Cryptocurrency transactions are permanently recorded on public blockchains</li>
+                                <li><strong>Legal Obligations:</strong> Information required for ongoing legal proceedings or investigations</li>
+                                <li><strong>Financial Records:</strong> Transaction history required for tax reporting and audit purposes</li>
+                            </ul>
+                        </div>
+
+                        <h3>6.4 Data Portability Rights</h3>
+                        <ul>
+                            <li><strong>Data Export:</strong> Receive your data in a structured, machine-readable format (JSON, CSV)</li>
+                            <li><strong>Account History:</strong> Export complete trading and transaction history</li>
+                            <li><strong>Portfolio Data:</strong> Download portfolio performance and holdings information</li>
+                            <li><strong>Tax Documents:</strong> Generate and download tax reporting documents</li>
+                            <li><strong>Third-Party Transfer:</strong> Transfer your data directly to another service provider</li>
+                        </ul>
+
+                        <h3>6.5 Processing Restriction Rights</h3>
+                        <ul>
+                            <li><strong>Limit Processing:</strong> Restrict how we process your information in certain circumstances</li>
+                            <li><strong>Marketing Opt-Out:</strong> Stop all marketing communications and promotional content</li>
+                            <li><strong>Analytics Opt-Out:</strong> Exclude your data from analytics and research activities</li>
+                            <li><strong>Automated Decision-Making:</strong> Opt out of automated decision-making processes</li>
+                        </ul>
+
+                        <h3>6.6 Objection Rights</h3>
+                        <ul>
+                            <li><strong>Processing Objection:</strong> Object to processing based on legitimate interests</li>
+                            <li><strong>Marketing Objection:</strong> Object to direct marketing and profiling</li>
+                            <li><strong>Research Objection:</strong> Opt out of research and development activities</li>
+                            <li><strong>Automated Processing:</strong> Object to automated decision-making and profiling</li>
+                        </ul>
+
+                        <h3>6.7 Communication Preferences</h3>
+                        <ul>
+                            <li><strong>Notification Settings:</strong> Customize security alerts, trading notifications, and system updates</li>
+                            <li><strong>Marketing Preferences:</strong> Choose which marketing communications you receive</li>
+                            <li><strong>Channel Selection:</strong> Select preferred communication channels (email, SMS, push notifications)</li>
+                            <li><strong>Frequency Control:</strong> Adjust the frequency of non-essential communications</li>
+                            <li><strong>Language Preferences:</strong> Set your preferred language for communications</li>
+                        </ul>
+
+                        <h3>6.8 How to Exercise Your Rights</h3>
+                        <div class="highlight">
+                            <p><strong>Multiple Ways to Exercise Your Rights:</strong></p>
+                            <ul>
+                                <li><strong>Account Dashboard:</strong> Access most privacy controls directly in your account settings</li>
+                                <li><strong>Privacy Portal:</strong> Use our dedicated privacy portal at <a href="#">privacy.zephy.com</a></li>
+                                <li><strong>Email Request:</strong> Send detailed requests to privacy@zephy.com</li>
+                                <li><strong>Support Ticket:</strong> Submit a privacy-related support ticket through our help center</li>
+                                <li><strong>Written Request:</strong> Send written requests to our Data Protection Officer</li>
+                            </ul>
+                        </div>
+
+                        <h3>6.9 Response Timeframes</h3>
+                        <ul>
+                            <li><strong>Standard Requests:</strong> Response within 30 days of receipt</li>
+                            <li><strong>Complex Requests:</strong> Up to 60 days with notification of extension</li>
+                            <li><strong>Urgent Requests:</strong> Priority handling for security-related requests</li>
+                            <li><strong>Verification Process:</strong> Identity verification may be required for certain requests</li>
+                        </ul>
+
+                        <h3>6.10 Complaints & Appeals</h3>
+                        <ul>
+                            <li><strong>Internal Appeals:</strong> Appeal our decisions through our internal review process</li>
+                            <li><strong>Regulatory Complaints:</strong> File complaints with relevant data protection authorities</li>
+                            <li><strong>Supervisory Authorities:</strong> Contact your local data protection authority for assistance</li>
+                            <li><strong>Legal Remedies:</strong> Pursue legal remedies where available under applicable law</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="data-transfers">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            7. International Data Transfers
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>As a global cryptocurrency platform, Zephy operates across multiple jurisdictions and may transfer your personal information internationally to provide our services effectively and comply with various regulatory requirements.</p>
+
+                        <h3>7.1 Global Operations & Data Locations</h3>
+                        <ul>
+                            <li><strong>Primary Data Centers:</strong> United States, European Union, Singapore, Canada</li>
+                            <li><strong>Backup Facilities:</strong> Geographically distributed backup and disaster recovery sites</li>
+                            <li><strong>Service Providers:</strong> Third-party services located in various countries worldwide</li>
+                            <li><strong>Regulatory Offices:</strong> Local offices in jurisdictions where we operate</li>
+                        </ul>
+
+                        <h3>7.2 Legal Safeguards for International Transfers</h3>
+                        <div class="highlight">
+                            <p><strong>Transfer Mechanisms:</strong> We ensure appropriate safeguards for all international data transfers:</p>
+                            <ul>
+                                <li><strong>Adequacy Decisions:</strong> Transfers to countries with adequate data protection laws</li>
+                                <li><strong>Standard Contractual Clauses:</strong> EU-approved contractual protections for data transfers</li>
+                                <li><strong>Binding Corporate Rules:</strong> Internal policies governing intra-group data transfers</li>
+                                <li><strong>Certification Schemes:</strong> Participation in recognized data protection certification programs</li>
+                                <li><strong>Codes of Conduct:</strong> Adherence to industry-specific data protection codes</li>
+                            </ul>
+                        </div>
+
+                        <h3>7.3 Regional Data Protection Compliance</h3>
+                        
+                        <h4>European Union (GDPR)</h4>
+                        <ul>
+                            <li><strong>Data Protection Officer:</strong> Dedicated DPO for EU data protection matters</li>
+                            <li><strong>Legal Basis:</strong> Clear legal basis for all processing activities</li>
+                            <li><strong>Data Subject Rights:</strong> Full implementation of GDPR rights</li>
+                            <li><strong>Privacy by Design:</strong> Built-in privacy protections in all systems</li>
+                            <li><strong>Impact Assessments:</strong> Regular data protection impact assessments</li>
+                        </ul>
+
+                        <h4>United States (CCPA/CPRA)</h4>
+                        <ul>
+                            <li><strong>Consumer Rights:</strong> Full compliance with California privacy rights</li>
+                            <li><strong>Opt-Out Mechanisms:</strong> Easy opt-out for data sales and sharing</li>
+                            <li><strong>Sensitive Data:</strong> Enhanced protections for sensitive personal information</li>
+                            <li><strong>Third-Party Disclosure:</strong> Transparent disclosure of data sharing practices</li>
+                        </ul>
+
+                        <h4>Asia-Pacific Regions</h4>
+                        <ul>
+                            <li><strong>Singapore PDPA:</strong> Compliance with Personal Data Protection Act</li>
+                            <li><strong>Australia Privacy Act:</strong> Adherence to Australian privacy principles</li>
+                            <li><strong>Japan APPI:</strong> Compliance with Act on Protection of Personal Information</li>
+                            <li><strong>Hong Kong PDPO:</strong> Personal Data (Privacy) Ordinance compliance</li>
+                        </ul>
+
+                        <h3>7.4 Cross-Border Transfer Restrictions</h3>
+                        <div class="crypto-specific">
+                            <p><strong>Cryptocurrency-Specific Considerations:</strong></p>
+                            <ul>
+                                <li><strong>Regulatory Restrictions:</strong> Some jurisdictions restrict cryptocurrency data transfers</li>
+                                <li><strong>Sanctions Compliance:</strong> Enhanced screening for sanctioned countries and entities</li>
+                                <li><strong>Local Data Residency:</strong> Compliance with local data residency requirements</li>
+                                <li><strong>Financial Data Protection:</strong> Special protections for financial and trading data</li>
+                            </ul>
+                        </div>
+
+                        <h3>7.5 Transfer Impact Assessments</h3>
+                        <ul>
+                            <li><strong>Risk Evaluation:</strong> Assessment of risks associated with each transfer</li>
+                            <li><strong>Supplementary Measures:</strong> Additional protections where standard safeguards are insufficient</li>
+                            <li><strong>Ongoing Monitoring:</strong> Continuous monitoring of transfer arrangements</li>
+                            <li><strong>Regular Reviews:</strong> Periodic review and update of transfer mechanisms</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="data-retention">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            8. Data Retention & Lifecycle Management
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>We retain your information only as long as necessary to fulfill the purposes for which it was collected, comply with legal obligations, resolve disputes, and enforce our agreements.</p>
+
+                        <h3>8.1 General Retention Principles</h3>
+                        <ul>
+                            <li><strong>Purpose Limitation:</strong> Data retained only for specific, legitimate purposes</li>
+                            <li><strong>Minimization:</strong> Retention of minimal necessary information</li>
+                            <li><strong>Regular Review:</strong> Periodic assessment of retention needs</li>
+                            <li><strong>Secure Deletion:</strong> Secure destruction when retention is no longer required</li>
+                            <li><strong>Legal Compliance:</strong> Retention periods based on legal and regulatory requirements</li>
+                        </ul>
+
+                        <h3>8.2 Specific Retention Periods</h3>
+                        
+                        <h4>Account & Identity Information</h4>
+                        <ul>
+                            <li><strong>Active Accounts:</strong> Retained while account is active plus 7 years after closure</li>
+                            <li><strong>KYC Documents:</strong> 7 years after account closure (regulatory requirement)</li>
+                            <li><strong>Identity Verification:</strong> 5 years after last verification update</li>
+                            <li><strong>Address Verification:</strong> 3 years after document submission</li>
+                        </ul>
+
+                        <h4>Financial & Transaction Data</h4>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Transaction Records:</strong> 7 years (financial regulations requirement)</li>
+                                <li><strong>Trading History:</strong> 7 years for tax and audit purposes</li>
+                                <li><strong>Payment Information:</strong> 3 years after last transaction</li>
+                                <li><strong>Tax Documents:</strong> 7 years or as required by tax authorities</li>
+                                <li><strong>Blockchain Records:</strong> Permanently stored on public blockchains (immutable)</li>
+                                <li><strong>Wallet Addresses:</strong> Retained while associated with active accounts</li>
+                            </ul>
+                        </div>
+
+                        <h4>Communication & Support Data</h4>
+                        <ul>
+                            <li><strong>Customer Support:</strong> 3 years after case closure</li>
+                            <li><strong>Email Communications:</strong> 2 years after last interaction</li>
+                            <li><strong>Chat Logs:</strong> 1 year after conversation</li>
+                            <li><strong>Phone Records:</strong> 2 years (where legally permitted to record)</li>
+                        </ul>
+
+                        <h4>Technical & Analytics Data</h4>
+                        <ul>
+                            <li><strong>Log Files:</strong> 1 year for security and performance analysis</li>
+                            <li><strong>Usage Analytics:</strong> 2 years in aggregated, anonymized form</li>
+                            <li><strong>Security Logs:</strong> 3 years for incident investigation</li>
+                            <li><strong>Device Information:</strong> 1 year after last login</li>
+                        </ul>
+
+                        <h3>8.3 Extended Retention Circumstances</h3>
+                        <div class="highlight">
+                            <p><strong>Legal Hold Situations:</strong> We may retain information longer when:</p>
+                            <ul>
+                                <li><strong>Legal Proceedings:</strong> Ongoing litigation or regulatory investigations</li>
+                                <li><strong>Regulatory Requests:</strong> Specific requests from regulatory authorities</li>
+                                <li><strong>Dispute Resolution:</strong> Unresolved disputes or claims</li>
+                                <li><strong>Security Incidents:</strong> Investigation of security breaches or fraud</li>
+                                <li><strong>Compliance Audits:</strong> Regulatory audits and examinations</li>
+                            </ul>
+                        </div>
+
+                        <h3>8.4 Data Lifecycle Management</h3>
+                        <ul>
+                            <li><strong>Automated Deletion:</strong> Systematic deletion of data upon expiration</li>
+                            <li><strong>Data Classification:</strong> Categorization based on sensitivity and retention needs</li>
+                            <li><strong>Archive Systems:</strong> Secure archival for long-term retention requirements</li>
+                            <li><strong>Backup Management:</strong> Coordinated deletion from backup systems</li>
+                            <li><strong>Audit Trails:</strong> Comprehensive logging of data lifecycle events</li>
+                        </ul>
+
+                        <h3>8.5 Secure Deletion Procedures</h3>
+                        <ul>
+                            <li><strong>Cryptographic Erasure:</strong> Destruction of encryption keys to render data unreadable</li>
+                            <li><strong>Multi-Pass Overwriting:</strong> Secure overwriting of storage media</li>
+                            <li><strong>Physical Destruction:</strong> Physical destruction of storage devices when necessary</li>
+                            <li><strong>Cloud Deletion:</strong> Verified deletion from cloud storage systems</li>
+                            <li><strong>Certification:</strong> Documentation and certification of deletion processes</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="cookies">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            9. Cookies & Tracking Technologies
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>We use cookies and similar tracking technologies to enhance your experience, provide personalized services, analyze usage patterns, and maintain security. This section explains our use of these technologies and your control options.</p>
+
+                        <h3>9.1 Types of Cookies We Use</h3>
+                        
+                        <h4>Essential Cookies (Always Active)</h4>
+                        <ul>
+                            <li><strong>Authentication:</strong> Maintain your login session and account security</li>
+                            <li><strong>Security:</strong> Detect and prevent fraudulent activities</li>
+                            <li><strong>Load Balancing:</strong> Distribute traffic across our servers</li>
+                            <li><strong>CSRF Protection:</strong> Prevent cross-site request forgery attacks</li>
+                            <li><strong>Compliance:</strong> Remember your cookie preferences and consent</li>
+                        </ul>
+
+                        <h4>Functional Cookies</h4>
+                        <ul>
+                            <li><strong>Preferences:</strong> Remember your language, currency, and display settings</li>
+                            <li><strong>Customization:</strong> Save your dashboard layout and preferences</li>
+                            <li><strong>Accessibility:</strong> Maintain accessibility settings and preferences</li>
+                            <li><strong>Feature Toggles:</strong> Enable/disable specific platform features</li>
+                        </ul>
+
+                        <h4>Analytics Cookies</h4>
+                        <ul>
+                            <li><strong>Usage Analytics:</strong> Understand how you interact with our platform</li>
+                            <li><strong>Performance Monitoring:</strong> Identify and resolve technical issues</li>
+                            <li><strong>A/B Testing:</strong> Test new features and improvements</li>
+                            <li><strong>Error Tracking:</strong> Identify and fix bugs and errors</li>
+                        </ul>
+
+                        <h4>Marketing Cookies (Opt-in)</h4>
+                        <ul>
+                            <li><strong>Advertising:</strong> Deliver relevant advertisements on third-party sites</li>
+                            <li><strong>Retargeting:</strong> Show relevant content based on your interests</li>
+                            <li><strong>Campaign Tracking:</strong> Measure effectiveness of marketing campaigns</li>
+                            <li><strong>Social Media:</strong> Enable social media sharing and integration</li>
+                        </ul>
+
+                        <h3>9.2 Third-Party Tracking Technologies</h3>
+                        <div class="highlight">
+                            <p><strong>Third-Party Services:</strong> We work with trusted partners who may use tracking technologies:</p>
+                            <ul>
+                                <li><strong>Google Analytics:</strong> Website and app usage analytics</li>
+                                <li><strong>Mixpanel:</strong> Product analytics and user behavior tracking</li>
+                                <li><strong>Hotjar:</strong> User experience and heatmap analysis</li>
+                                <li><strong>Intercom:</strong> Customer support and communication</li>
+                                <li><strong>Facebook Pixel:</strong> Social media advertising and analytics</li>
+                                <li><strong>LinkedIn Insight:</strong> Professional network advertising</li>
+                            </ul>
+                        </div>
+
+                        <h3>9.3 Mobile App Tracking</h3>
+                        <ul>
+                            <li><strong>Device Identifiers:</strong> Advertising IDs and device fingerprinting</li>
+                            <li><strong>App Analytics:</strong> Usage patterns and feature adoption</li>
+                            <li><strong>Push Notifications:</strong> Delivery and engagement tracking</li>
+                            <li><strong>Crash Reporting:</strong> Automatic crash and error reporting</li>
+                            <li><strong>Performance Monitoring:</strong> App performance and optimization</li>
+                        </ul>
+
+                        <h3>9.4 Cookie Management & Control</h3>
+                        <ul>
+                            <li><strong>Cookie Preferences:</strong> Granular control through our cookie preference center</li>
+                            <li><strong>Browser Settings:</strong> Configure cookie settings in your browser</li>
+                            <li><strong>Opt-Out Tools:</strong> Industry opt-out tools and preference managers</li>
+                            <li><strong>Do Not Track:</strong> Respect for Do Not Track browser signals</li>
+                            <li><strong>Mobile Controls:</strong> Advertising ID controls on mobile devices</li>
+                        </ul>
+
+                        <h3>9.5 Impact of Disabling Cookies</h3>
+                        <div class="crypto-specific">
+                            <p><strong>Functionality Impact:</strong> Disabling certain cookies may affect platform functionality:</p>
+                            <ul>
+                                <li><strong>Login Issues:</strong> Difficulty maintaining authenticated sessions</li>
+                                <li><strong>Preference Loss:</strong> Settings and preferences may not be saved</li>
+                                <li><strong>Security Risks:</strong> Reduced protection against certain attacks</li>
+                                <li><strong>Performance Issues:</strong> Suboptimal platform performance</li>
+                                <li><strong>Limited Features:</strong> Some features may not work properly</li>
+                            </ul>
+                        </div>
+
+                        <h3>9.6 Cookie Retention Periods</h3>
+                        <ul>
+                            <li><strong>Session Cookies:</strong> Deleted when you close your browser</li>
+                            <li><strong>Persistent Cookies:</strong> Stored for specific periods (30 days to 2 years)</li>
+                            <li><strong>Analytics Cookies:</strong> Typically retained for 24-26 months</li>
+                            <li><strong>Marketing Cookies:</strong> Usually expire after 30-90 days</li>
+                            <li><strong>Security Cookies:</strong> May persist for up to 1 year</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="children">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            10. Children's Privacy Protection
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <div class="security-notice">
+                            <p><strong>Age Restriction Policy:</strong> Zephy's cryptocurrency services are not intended for, and we do not knowingly collect personal information from, individuals under the age of 18 years (or the applicable age of majority in their jurisdiction).</p>
+                        </div>
+
+                        <h3>10.1 Age Verification Requirements</h3>
+                        <ul>
+                            <li><strong>Minimum Age:</strong> Users must be at least 18 years old or the age of majority in their jurisdiction</li>
+                            <li><strong>Identity Verification:</strong> Government-issued ID required to verify age during KYC process</li>
+                            <li><strong>Legal Capacity:</strong> Users must have legal capacity to enter into binding agreements</li>
+                            <li><strong>Parental Consent:</strong> We do not accept parental consent for underage users</li>
+                        </ul>
+
+                        <h3>10.2 Prohibited Activities for Minors</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Account Creation:</strong> Minors cannot create accounts on our platform</li>
+                                <li><strong>Cryptocurrency Trading:</strong> No trading or exchange services for underage individuals</li>
+                                <li><strong>Financial Services:</strong> No access to lending, staking, or other financial products</li>
+                                <li><strong>Wallet Services:</strong> No custodial wallet services for minors</li>
+                                <li><strong>Educational Content:</strong> General educational content may be accessible without account creation</li>
+                            </ul>
+                        </div>
+
+                        <h3>10.3 Detection & Response Procedures</h3>
+                        <ul>
+                            <li><strong>Automated Screening:</strong> Age verification during account registration</li>
+                            <li><strong>Document Review:</strong> Manual review of identity documents for age verification</li>
+                            <li><strong>Ongoing Monitoring:</strong> Continuous monitoring for potential underage users</li>
+                            <li><strong>Immediate Action:</strong> Immediate account suspension upon discovery of underage users</li>
+                        </ul>
+
+                        <h3>10.4 Data Handling for Discovered Minors</h3>
+                        <div class="highlight">
+                            <p><strong>If we discover that we have collected information from a minor:</strong></p>
+                            <ul>
+                                <li><strong>Immediate Suspension:</strong> Account access is immediately suspended</li>
+                                <li><strong>Data Deletion:</strong> Personal information is promptly deleted from our systems</li>
+                                <li><strong>Asset Return:</strong> Any deposited funds are returned to the source</li>
+                                <li><strong>Parent Notification:</strong> Parents/guardians are notified where contact information is available</li>
+                                <li><strong>System Updates:</strong> Security measures are reviewed and enhanced</li>
+                            </ul>
+                        </div>
+
+                        <h3>10.5 Educational Resources</h3>
+                        <ul>
+                            <li><strong>Financial Literacy:</strong> Age-appropriate educational content about cryptocurrency</li>
+                            <li><strong>Safety Awareness:</strong> Information about online safety and digital asset risks</li>
+                            <li><strong>Future Planning:</strong> Guidance for when individuals reach the age of majority</li>
+                            <li><strong>Parental Resources:</strong> Information for parents about cryptocurrency and digital assets</li>
+                        </ul>
+
+                        <h3>10.6 Reporting Mechanisms</h3>
+                        <ul>
+                            <li><strong>Underage User Reports:</strong> Mechanisms for reporting suspected underage users</li>
+                            <li><strong>Parent Inquiries:</strong> Dedicated channels for parental concerns and inquiries</li>
+                            <li><strong>School Partnerships:</strong> Collaboration with educational institutions on digital literacy</li>
+                            <li><strong>Community Guidelines:</strong> Clear community standards regarding age requirements</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="policy-changes">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            11. Policy Changes & Updates
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>We may update this Privacy Policy periodically to reflect changes in our practices, technology, legal requirements, or other factors. We are committed to providing clear notice of any material changes and ensuring your continued understanding of our privacy practices.</p>
+
+                        <h3>11.1 Types of Policy Updates</h3>
+                        
+                        <h4>Material Changes</h4>
+                        <ul>
+                            <li><strong>Data Collection:</strong> New types of personal information being collected</li>
+                            <li><strong>Usage Purposes:</strong> Significant changes to how we use your information</li>
+                            <li><strong>Sharing Practices:</strong> New third-party sharing arrangements</li>
+                            <li><strong>User Rights:</strong> Changes to your privacy rights or how to exercise them</li>
+                            <li><strong>Retention Periods:</strong> Significant changes to data retention practices</li>
+                        </ul>
+
+                        <h4>Non-Material Changes</h4>
+                        <ul>
+                            <li><strong>Clarifications:</strong> Clarifying existing practices without changing substance</li>
+                            <li><strong>Contact Updates:</strong> Changes to contact information or addresses</li>
+                            <li><strong>Legal References:</strong> Updates to legal citations or regulatory references</li>
+                            <li><strong>Formatting:</strong> Improvements to readability and organization</li>
+                        </ul>
+
+                        <h3>11.2 Notification Methods</h3>
+                        <div class="highlight">
+                            <p><strong>How We Notify You of Changes:</strong></p>
+                            <ul>
+                                <li><strong>Email Notification:</strong> Direct email to your registered email address</li>
+                                <li><strong>Platform Notification:</strong> In-app notifications and dashboard alerts</li>
+                                <li><strong>Website Banner:</strong> Prominent notice on our website and platform</li>
+                                <li><strong>Blog Posts:</strong> Detailed explanations on our official blog</li>
+                                <li><strong>Social Media:</strong> Announcements on our official social media channels</li>
+                            </ul>
+                        </div>
+
+                        <h3>11.3 Notice Periods</h3>
+                        <ul>
+                            <li><strong>Material Changes:</strong> 30 days advance notice before implementation</li>
+                            <li><strong>Legal Requirements:</strong> Immediate implementation when required by law</li>
+                            <li><strong>Security Updates:</strong> Immediate implementation for security-related changes</li>
+                            <li><strong>Minor Updates:</strong> Notice provided at time of update</li>
+                        </ul>
+
+                        <h3>11.4 Your Options When Policies Change</h3>
+                        <ul>
+                            <li><strong>Continued Use:</strong> Continued use constitutes acceptance of updated policy</li>
+                            <li><strong>Account Closure:</strong> Option to close your account if you disagree with changes</li>
+                            <li><strong>Data Export:</strong> Download your data before policy changes take effect</li>
+                            <li><strong>Opt-Out Options:</strong> Specific opt-out mechanisms for certain changes</li>
+                            <li><strong>Grandfathering:</strong> Some existing users may be grandfathered under previous terms</li>
+                        </ul>
+
+                        <h3>11.5 Version Control & History</h3>
+                        <ul>
+                            <li><strong>Version Numbers:</strong> Clear versioning system for policy updates</li>
+                            <li><strong>Change Logs:</strong> Detailed logs of what changed in each version</li>
+                            <li><strong>Historical Versions:</strong> Archive of previous policy versions</li>
+                            <li><strong>Effective Dates:</strong> Clear indication of when changes take effect</li>
+                            <li><strong>Comparison Tools:</strong> Side-by-side comparison of policy versions</li>
+                        </ul>
+
+                        <h3>11.6 Regulatory-Driven Changes</h3>
+                        <div class="crypto-specific">
+                            <p><strong>Cryptocurrency Regulation Updates:</strong> The rapidly evolving regulatory landscape may require policy updates:</p>
+                            <ul>
+                                <li><strong>New Regulations:</strong> Compliance with new cryptocurrency laws</li>
+                                <li><strong>Regulatory Guidance:</strong> Implementation of new regulatory guidance</li>
+                                <li><strong>Cross-Border Rules:</strong> Changes in international data transfer regulations</li>
+                                <li><strong>Industry Standards:</strong> Adoption of new industry best practices</li>
+                            </ul>
+                        </div>
+
+                        <h3>11.7 Feedback & Input Opportunities</h3>
+                        <ul>
+                            <li><strong>Public Comment:</strong> Opportunities to provide feedback on proposed changes</li>
+                            <li><strong>User Surveys:</strong> Surveys to gather user input on privacy practices</li>
+                            <li><strong>Community Forums:</strong> Discussion forums for privacy-related topics</li>
+                            <li><strong>Advisory Groups:</strong> User advisory groups for significant policy changes</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="contact">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            12. Contact Information & Support
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>We are committed to addressing your privacy concerns and questions promptly and thoroughly. Our dedicated privacy team is available to assist you with any privacy-related matters.</p>
+
+                        <div class="contact-info">
+                            <h3>🔒 Privacy & Data Protection Contacts</h3>
+                            
+                            <div class="contact-grid">
+                                <div class="contact-item">
+                                    <h4>📧 Data Protection Officer</h4>
+                                    <p><strong>Email:</strong> dpo@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 48 hours</p>
+                                    <p>For all privacy rights requests and data protection inquiries</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>🛡️ Privacy Team</h4>
+                                    <p><strong>Email:</strong> privacy@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 24 hours</p>
+                                    <p>General privacy questions and policy clarifications</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>🚨 Security Incidents</h4>
+                                    <p><strong>Email:</strong> security@zephy.com</p>
+                                    <p><strong>Response Time:</strong> Immediate</p>
+                                    <p>Report security breaches and privacy incidents</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>⚖️ Legal & Compliance</h4>
+                                    <p><strong>Email:</strong> legal@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 72 hours</p>
+                                    <p>Legal requests and regulatory compliance matters</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>📞 Phone Support</h4>
+                                    <p><strong>US/Canada:</strong> +1 (555) 123-ZEPHY</p>
+                                    <p><strong>EU:</strong> +44 20 7946 0958</p>
+                                    <p><strong>APAC:</strong> +65 6808 7246</p>
+                                    <p>24/7 support for urgent privacy matters</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>📍 Postal Address</h4>
+                                    <p><strong>Zephy Technologies Ltd.</strong></p>
+                                    <p>Privacy Department</p>
+                                    <p>123 Blockchain Avenue</p>
+                                    <p>Crypto City, CC 12345</p>
+                                    <p>United States</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight" style="margin-top: var(--space-8); background: rgba(255, 255, 255, 0.2);">
+                                <h4>🌍 Regional Privacy Contacts</h4>
+                                <ul style="color: white; margin: 0;">
+                                    <li><strong>European Union:</strong> eu-privacy@zephy.com</li>
+                                    <li><strong>United Kingdom:</strong> uk-privacy@zephy.com</li>
+                                    <li><strong>Canada:</strong> ca-privacy@zephy.com</li>
+                                    <li><strong>Australia:</strong> au-privacy@zephy.com</li>
+                                    <li><strong>Singapore:</strong> sg-privacy@zephy.com</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>12.1 Privacy Request Process</h3>
+                        <ol>
+                            <li><strong>Submit Request:</strong> Send your privacy request via email or our privacy portal</li>
+                            <li><strong>Identity Verification:</strong> We may require identity verification for security</li>
+                            <li><strong>Request Processing:</strong> Our team reviews and processes your request</li>
+                            <li><strong>Response Delivery:</strong> We provide a comprehensive response within required timeframes</li>
+                            <li><strong>Follow-Up Support:</strong> Additional support if you need clarification or have concerns</li>
+                        </ol>
+
+                        <h3>12.2 Escalation Procedures</h3>
+                        <ul>
+                            <li><strong>Internal Escalation:</strong> Escalate to our Privacy Officer for complex matters</li>
+                            <li><strong>Management Review:</strong> Senior management review for unresolved issues</li>
+                            <li><strong>External Mediation:</strong> Third-party mediation services when appropriate</li>
+                            <li><strong>Regulatory Complaints:</strong> Guidance on filing complaints with data protection authorities</li>
+                        </ul>
+
+                        <h3>12.3 Additional Resources</h3>
+                        <ul>
+                            <li><strong>Privacy Portal:</strong> <a href="#">privacy.zephy.com</a></li>
+                            <li><strong>Help Center:</strong> <a href="#">help.zephy.com/privacy</a></li>
+                            <li><strong>Community Forum:</strong> <a href="#">community.zephy.com</a></li>
+                            <li><strong>Blog:</strong> <a href="#">blog.zephy.com/privacy</a></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="fab-container">
+        <button class="fab" onclick="scrollToTop()" id="backToTop" aria-label="Back to top">
+            ↑
+        </button>
+    </div>
+
+    <script>
+        // Enhanced JavaScript functionality
+        
+        // Progress bar functionality
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        }
+
+        // Section toggle functionality
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const section = header.parentElement;
+            const isCollapsed = content.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                content.classList.remove('collapsed');
+                section.classList.remove('collapsed');
+                header.setAttribute('aria-expanded', 'true');
+            } else {
+                content.classList.add('collapsed');
+                section.classList.add('collapsed');
+                header.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Navigation link management
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupIntersectionObserver() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        }
+
+        // Keyboard navigation
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close any open modals or overlays
+                    document.querySelectorAll('.section.collapsed').forEach(section => {
+                        const header = section.querySelector('.section-header');
+                        toggleSection(header);
+                    });
+                }
+                
+                if (e.ctrlKey && e.key === 'f') {
+                    // Enhanced search functionality could be added here
+                }
+            });
+
+            // Add keyboard support for section headers
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleSection(this);
+                    }
+                });
+            });
+        }
+
+        // Enhanced scroll management
+        let scrollTimeout;
+        function handleScroll() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                updateProgressBar();
+                updateActiveNavLink();
+                
+                // Show/hide back to top button
+                const backToTop = document.getElementById('backToTop');
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            }, 10);
+        }
+
+        // Navigation link click handlers
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Print functionality
+        function setupPrintStyles() {
+            const printButton = document.createElement('button');
+            printButton.innerHTML = '🖨️ Print';
+            printButton.className = 'print-button';
+            printButton.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary-600);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: var(--shadow-lg);
+            `;
+            
+            printButton.addEventListener('click', () => {
+                // Expand all sections before printing
+                document.querySelectorAll('.section-content.collapsed').forEach(content => {
+                    content.classList.remove('collapsed');
+                });
+                
+                setTimeout(() => {
+                    window.print();
+                }, 100);
+            });
+            
+            document.body.appendChild(printButton);
+        }
+
+        // Initialize all functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupIntersectionObserver();
+            setupKeyboardNavigation();
+            setupNavigation();
+            setupPrintStyles();
+            
+            // Initial calls
+            updateProgressBar();
+            updateActiveNavLink();
+            
+            // Add scroll listener with throttling
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Add resize listener for responsive adjustments
+            window.addEventListener('resize', () => {
+                updateProgressBar();
+                updateActiveNavLink();
+            });
+            
+            // Add focus management for accessibility
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('.nav-link')) {
+                    e.target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest'
+                    });
+                }
+            });
+            
+            // Performance optimization: Preload critical resources
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = 'https://privacy.zephy.com';
+            document.head.appendChild(link);
+        });
+
+        // Service Worker registration for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/privacy-sw.js')
+                    .then(function(registration) {
+                        console.log('Privacy Policy SW registered successfully');
+                    })
+                    .catch(function(error) {
+                        console.log('Privacy Policy SW registration failed');
+                    });
+            });
+        }
+
+        // Analytics tracking (privacy-compliant)
+        function trackPrivacyInteraction(action, section) {
+            // Only track if user has consented to analytics
+            if (localStorage.getItem('analytics-consent') === 'true') {
+                // Send privacy-compliant analytics data
+                console.log('Privacy interaction:', action, section);
+            }
+        }
+
+        // Add interaction tracking to sections
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const sectionId = this.parentElement.id;
+                trackPrivacyInteraction('section_toggle', sectionId);
+            });
+        });
+    </script>
+</body>
+</html>

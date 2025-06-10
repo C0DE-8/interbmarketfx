@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Crypto - Trading Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-blue-dark: #2563eb;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-border: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a202c 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(51, 65, 85, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .gradient-border {
+            background: linear-gradient(135deg, var(--primary-blue), #8b5cf6);
+            padding: 2px;
+            border-radius: 12px;
+        }
+
+        .gradient-border-inner {
+            background: var(--dark-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .crypto-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .conversion-arrow {
+            background: linear-gradient(135deg, var(--primary-blue), #8b5cf6);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .conversion-arrow:hover {
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .balance-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .balance-card:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .input-field {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--dark-border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-field {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--dark-border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-field:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, var(--success), #059669);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, var(--error), #dc2626);
+        }
+
+        .loading-spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 2px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .rate-loading {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 4px;
+            height: 20px;
+            width: 120px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen p-4">
+        <!-- Header -->
+        <div class="max-w-6xl mx-auto mb-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button onclick="goBack()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                            Convert Crypto
+                        </h1>
+                        <p class="text-slate-400 mt-1">Exchange your cryptocurrencies with real-time rates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Wallet Balances -->
+            <div class="lg:col-span-1">
+                <div class="glass-card rounded-xl p-6">
+                    <h2 class="text-xl font-semibold mb-6 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
+                            </svg>
+                        </div>
+                        Your Wallets
+                    </h2>
+                    
+                    <div id="walletBalances" class="space-y-3">
+                        <!-- Wallet balances will be loaded here -->
+                        <div class="flex justify-center py-8">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conversion Form -->
+            <div class="lg:col-span-2">
+                <div class="glass-card rounded-xl p-8">
+                    <h2 class="text-2xl font-semibold mb-8 flex items-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        Currency Conversion
+                    </h2>
+
+                    <form id="conversionForm" class="space-y-6">
+                        <!-- From Currency -->
+                        <div class="gradient-border">
+                            <div class="gradient-border-inner">
+                                <label class="block text-sm font-medium text-slate-300 mb-3">From</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <select id="fromCurrency" class="select-field" required>
+                                            <option value="">Select Currency</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <input type="number" id="fromAmount" class="input-field" placeholder="0.00" step="0.00000001" min="0" required>
+                                    </div>
+                                </div>
+                                <div id="fromBalance" class="text-sm text-slate-400 mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Conversion Arrow -->
+                        <div class="flex justify-center">
+                            <div class="conversion-arrow" onclick="swapCurrencies()">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- To Currency -->
+                        <div class="gradient-border">
+                            <div class="gradient-border-inner">
+                                <label class="block text-sm font-medium text-slate-300 mb-3">To</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <select id="toCurrency" class="select-field" required>
+                                            <option value="">Select Currency</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <input type="number" id="toAmount" class="input-field" placeholder="0.00" readonly>
+                                    </div>
+                                </div>
+                                <div id="toBalance" class="text-sm text-slate-400 mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Conversion Rate -->
+                        <div id="conversionRate" class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-300 hidden">
+                            <div class="text-sm">Live Exchange Rate</div>
+                            <div id="rateDisplay" class="text-lg font-semibold text-blue-400 mt-1">
+                                <div class="rate-loading mx-auto"></div>
+                            </div>
+                            <div id="lastUpdated" class="text-xs text-slate-500 mt-2"></div>
+                        </div>
+
+                        <!-- Convert Button -->
+                        <button type="submit" id="convertBtn" class="btn-primary" disabled>
+                            <span id="convertBtnText">Convert Crypto</span>
+                            <div id="convertBtnSpinner" class="loading-spinner mx-auto hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ————— Axios instance —————
+        const userApi = axios.create({
+            baseURL: "https://api.dainterbfx.xyz/api/users",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        // ————— Global Variables —————
+        let wallets = [];
+        let currentRates = {};
+        let rateUpdateInterval;
+
+        // ————— Utility Functions —————
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function getCryptoIcon(currency) {
+            const icons = {
+                'BTC': '₿',
+                'ETH': 'Ξ',
+                'USDT': '₮',
+                'USD': '$',
+                'BNB': 'B',
+                'ADA': '₳',
+                'DOT': '●',
+                'LINK': '⬡',
+                'LTC': 'Ł'
+            };
+            return icons[currency] || currency.charAt(0);
+        }
+
+        function formatBalance(balance) {
+            const num = parseFloat(balance);
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
+            if (num >= 1) return num.toFixed(4);
+            return num.toFixed(8);
+        }
+
+        function getCurrencyName(currency) {
+            const names = {
+                'BTC': 'Bitcoin',
+                'ETH': 'Ethereum',
+                'USDT': 'Tether',
+                'USD': 'US Dollar',
+                'BNB': 'Binance Coin',
+                'ADA': 'Cardano',
+                'DOT': 'Polkadot',
+                'LINK': 'Chainlink',
+                'LTC': 'Litecoin'
+            };
+            return names[currency] || currency;
+        }
+
+        // ————— Real-time Rate Functions —————
+        async function fetchRealTimeRates() {
+            try {
+                // Using CoinGecko API for real-time rates
+                const cryptoIds = {
+                    'BTC': 'bitcoin',
+                    'ETH': 'ethereum',
+                    'BNB': 'binancecoin',
+                    'ADA': 'cardano',
+                    'DOT': 'polkadot',
+                    'LINK': 'chainlink',
+                    'LTC': 'litecoin',
+                    'USDT': 'tether'
+                };
+
+                const ids = Object.values(cryptoIds).join(',');
+                const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+                
+                // Convert response to our format
+                currentRates = {};
+                for (const [symbol, id] of Object.entries(cryptoIds)) {
+                    if (response.data[id]) {
+                        currentRates[symbol] = response.data[id].usd;
+                    }
+                }
+                
+                // USDT and USD are essentially 1:1
+                currentRates['USDT'] = 1;
+                currentRates['USD'] = 1;
+                
+                // Check for missing rates and log them
+                const supportedCurrencies = Object.keys(currentRates);
+                const walletCurrencies = wallets.map(w => w.currency);
+                const unsupportedCurrencies = walletCurrencies.filter(currency => 
+                    currency !== 'USD' && !supportedCurrencies.includes(currency)
+                );
+
+                if (unsupportedCurrencies.length > 0) {
+                    console.warn('Unsupported currencies detected:', unsupportedCurrencies);
+                }
+                
+                updateLastUpdatedTime();
+                return true;
+            } catch (error) {
+                console.error('Error fetching real-time rates:', error);
+                // Fallback to static rates if API fails
+                currentRates = {
+                    'BTC': 45000,
+                    'ETH': 2800,
+                    'BNB': 300,
+                    'ADA': 0.45,
+                    'DOT': 7.5,
+                    'LINK': 15,
+                    'LTC': 150,
+                    'USDT': 1,
+                    'USD': 1
+                };
+                return false;
+            }
+        }
+
+        function updateLastUpdatedTime() {
+            const lastUpdatedDiv = document.getElementById('lastUpdated');
+            if (lastUpdatedDiv) {
+                lastUpdatedDiv.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+            }
+        }
+
+        function startRateUpdates() {
+            // Update rates immediately
+            fetchRealTimeRates();
+            
+            // Update rates every 30 seconds
+            rateUpdateInterval = setInterval(fetchRealTimeRates, 30000);
+        }
+
+        function stopRateUpdates() {
+            if (rateUpdateInterval) {
+                clearInterval(rateUpdateInterval);
+            }
+        }
+
+        // ————— API Functions —————
+        async function loadWallets() {
+            try {
+                const response = await userApi.get('/wallet');
+                wallets = response.data.wallets;
+                displayWallets();
+                populateCurrencyDropdowns();
+            } catch (error) {
+                console.error('Error loading wallets:', error);
+                showToast('Failed to load wallet data', 'error');
+            }
+        }
+
+        async function convertCrypto(fromCurrency, toCurrency, amount) {
+            try {
+                const convertBtn = document.getElementById('convertBtn');
+                const convertBtnText = document.getElementById('convertBtnText');
+                const convertBtnSpinner = document.getElementById('convertBtnSpinner');
+                
+                convertBtn.disabled = true;
+                convertBtnText.classList.add('hidden');
+                convertBtnSpinner.classList.remove('hidden');
+
+                const response = await userApi.post('/convert-crypto', {
+                    fromCurrency,
+                    toCurrency,
+                    amount: parseFloat(amount)
+                });
+
+                showToast('Conversion successful!', 'success');
+                
+                // Reset form and reload wallets
+                document.getElementById('conversionForm').reset();
+                document.getElementById('conversionRate').classList.add('hidden');
+                await loadWallets();
+                
+            } catch (error) {
+                console.error('Error converting crypto:', error);
+                
+                if (error.response?.status === 403) {
+                    showToast(`Conversion blocked: ${error.response.data.reason}`, 'error');
+                } else if (error.response?.status === 400) {
+                    showToast(error.response.data.message, 'error');
+                } else {
+                    showToast('Conversion failed. Please try again.', 'error');
+                }
+            } finally {
+                const convertBtn = document.getElementById('convertBtn');
+                const convertBtnText = document.getElementById('convertBtnText');
+                const convertBtnSpinner = document.getElementById('convertBtnSpinner');
+                
+                convertBtn.disabled = false;
+                convertBtnText.classList.remove('hidden');
+                convertBtnSpinner.classList.add('hidden');
+            }
+        }
+
+        // ————— Display Functions —————
+        function displayWallets() {
+            const container = document.getElementById('walletBalances');
+            
+            if (wallets.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                        <p>No wallets found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = wallets.map(wallet => {
+                const usdValue = currentRates[wallet.currency] ? 
+                    (parseFloat(wallet.balance) * currentRates[wallet.currency]).toFixed(2) : '0.00';
+                
+                return `
+                    <div class="balance-card">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="crypto-icon">
+                                    ${getCryptoIcon(wallet.currency)}
+                                </div>
+                                <div>
+                                    <div class="font-semibold">${wallet.currency}</div>
+                                    <div class="text-sm text-slate-400">${getCurrencyName(wallet.currency)}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-semibold">${formatBalance(wallet.balance)}</div>
+                                <div class="text-sm text-slate-400">≈ $${usdValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function populateCurrencyDropdowns() {
+            const fromSelect = document.getElementById('fromCurrency');
+            const toSelect = document.getElementById('toCurrency');
+            
+            // Add USD to wallets if not present for display purposes
+            const allCurrencies = [...wallets];
+            if (!wallets.find(w => w.currency === 'USD')) {
+                allCurrencies.push({ currency: 'USD', balance: '0' });
+            }
+            
+            const options = allCurrencies.map(wallet => 
+                `<option value="${wallet.currency}">${wallet.currency} - ${getCurrencyName(wallet.currency)}</option>`
+            ).join('');
+            
+            fromSelect.innerHTML = '<option value="">Select Currency</option>' + options;
+            toSelect.innerHTML = '<option value="">Select Currency</option>' + options;
+        }
+
+        function updateCurrencyOptions() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toSelect = document.getElementById('toCurrency');
+            const currentToValue = toSelect.value;
+            
+            // Clear and repopulate "To" dropdown based on "From" selection
+            if (fromCurrency === 'USD') {
+                // If from is USD, show all crypto currencies
+                const cryptoOptions = wallets
+                    .filter(wallet => wallet.currency !== 'USD')
+                    .map(wallet => 
+                        `<option value="${wallet.currency}">${wallet.currency} - ${getCurrencyName(wallet.currency)}</option>`
+                    ).join('');
+                toSelect.innerHTML = '<option value="">Select Currency</option>' + cryptoOptions;
+            } else if (fromCurrency && fromCurrency !== 'USD') {
+                // If from is any crypto, only show USD
+                toSelect.innerHTML = '<option value="">Select Currency</option><option value="USD">USD - US Dollar</option>';
+            } else {
+                // If no from currency selected, show all options
+                const allCurrencies = [...wallets];
+                if (!wallets.find(w => w.currency === 'USD')) {
+                    allCurrencies.push({ currency: 'USD', balance: '0' });
+                }
+                
+                const options = allCurrencies.map(wallet => 
+                    `<option value="${wallet.currency}">${wallet.currency} - ${getCurrencyName(wallet.currency)}</option>`
+                ).join('');
+                toSelect.innerHTML = '<option value="">Select Currency</option>' + options;
+            }
+            
+            // Restore previous selection if still valid
+            if (currentToValue && Array.from(toSelect.options).some(option => option.value === currentToValue)) {
+                toSelect.value = currentToValue;
+            }
+        }
+
+        function updateBalanceDisplay() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const fromBalanceDiv = document.getElementById('fromBalance');
+            const toBalanceDiv = document.getElementById('toBalance');
+            
+            if (fromCurrency) {
+                const wallet = wallets.find(w => w.currency === fromCurrency);
+                if (wallet) {
+                    const usdValue = currentRates[fromCurrency] ? 
+                        (parseFloat(wallet.balance) * currentRates[fromCurrency]).toFixed(2) : '0.00';
+                    fromBalanceDiv.textContent = `Available: ${formatBalance(wallet.balance)} ${fromCurrency} (≈ $${usdValue})`;
+                } else if (fromCurrency === 'USD') {
+                    fromBalanceDiv.textContent = 'Available: $0.00 USD';
+                } else {
+                    fromBalanceDiv.textContent = '';
+                }
+            } else {
+                fromBalanceDiv.textContent = '';
+            }
+            
+            if (toCurrency) {
+                const wallet = wallets.find(w => w.currency === toCurrency);
+                if (wallet) {
+                    const usdValue = currentRates[toCurrency] ? 
+                        (parseFloat(wallet.balance) * currentRates[toCurrency]).toFixed(2) : '0.00';
+                    toBalanceDiv.textContent = `Current: ${formatBalance(wallet.balance)} ${toCurrency} (≈ $${usdValue})`;
+                } else if (toCurrency === 'USD') {
+                    toBalanceDiv.textContent = 'Current: $0.00 USD';
+                } else {
+                    toBalanceDiv.textContent = '';
+                }
+            } else {
+                toBalanceDiv.textContent = '';
+            }
+        }
+
+        function calculateConversion() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const fromAmount = parseFloat(document.getElementById('fromAmount').value) || 0;
+            const toAmountInput = document.getElementById('toAmount');
+            const rateDiv = document.getElementById('conversionRate');
+            const rateDisplay = document.getElementById('rateDisplay');
+            const convertBtn = document.getElementById('convertBtn');
+            
+            if (fromCurrency && toCurrency && fromAmount > 0 && fromCurrency !== toCurrency) {
+                let convertedAmount = 0;
+                let rateText = '';
+                
+                if (fromCurrency === 'USD' && currentRates[toCurrency]) {
+                    // USD to Crypto
+                    convertedAmount = fromAmount / currentRates[toCurrency];
+                    rateText = `1 USD = ${(1 / currentRates[toCurrency]).toFixed(8)} ${toCurrency}`;
+                } else if (toCurrency === 'USD' && currentRates[fromCurrency]) {
+                    // Crypto to USD
+                    convertedAmount = fromAmount * currentRates[fromCurrency];
+                    rateText = `1 ${fromCurrency} = $${currentRates[fromCurrency].toFixed(2)} USD`;
+                }
+                
+                if (convertedAmount > 0) {
+                    toAmountInput.value = convertedAmount.toFixed(8);
+                    rateDisplay.innerHTML = rateText;
+                    rateDiv.classList.remove('hidden');
+                    
+                    // Check if user has sufficient balance
+                    const wallet = wallets.find(w => w.currency === fromCurrency);
+                    const hasBalance = wallet && parseFloat(wallet.balance) >= fromAmount;
+                    
+                    convertBtn.disabled = !hasBalance || fromCurrency === toCurrency;
+                    
+                    if (!hasBalance && fromCurrency !== 'USD') {
+                        showToast('Insufficient balance', 'error');
+                    }
+                } else {
+                    // Show not supported message
+                    toAmountInput.value = '';
+                    rateDisplay.innerHTML = `<span class="text-yellow-400">⚠️ ${fromCurrency} to ${toCurrency} conversion not supported in your region</span>`;
+                    rateDiv.classList.remove('hidden');
+                    convertBtn.disabled = true;
+                    
+                    if (fromCurrency && toCurrency && fromAmount > 0) {
+                        showToast(`${fromCurrency} to ${toCurrency} conversion not supported in your region`, 'error');
+                    }
+                }
+            } else {
+                toAmountInput.value = '';
+                rateDiv.classList.add('hidden');
+                convertBtn.disabled = true;
+            }
+        }
+
+        function swapCurrencies() {
+            const fromSelect = document.getElementById('fromCurrency');
+            const toSelect = document.getElementById('toCurrency');
+            
+            const fromValue = fromSelect.value;
+            const toValue = toSelect.value;
+            
+            // Only swap if both currencies are selected and swap is valid
+            if (fromValue && toValue) {
+                fromSelect.value = toValue;
+                updateCurrencyOptions();
+                toSelect.value = fromValue;
+                updateBalanceDisplay();
+                calculateConversion();
+            }
+        }
+
+        // ————— Event Listeners —————
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWallets();
+            startRateUpdates();
+            
+            // Form submission
+            document.getElementById('conversionForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const fromCurrency = document.getElementById('fromCurrency').value;
+                const toCurrency = document.getElementById('toCurrency').value;
+                const amount = document.getElementById('fromAmount').value;
+                
+                if (!fromCurrency || !toCurrency || !amount) {
+                    showToast('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (fromCurrency === toCurrency) {
+                    showToast('Cannot convert to the same currency', 'error');
+                    return;
+                }
+                
+                await convertCrypto(fromCurrency, toCurrency, amount);
+            });
+            
+            // Currency selection changes
+            document.getElementById('fromCurrency').addEventListener('change', function() {
+                updateCurrencyOptions();
+                updateBalanceDisplay();
+                calculateConversion();
+            });
+            
+            document.getElementById('toCurrency').addEventListener('change', function() {
+                updateBalanceDisplay();
+                calculateConversion();
+            });
+            
+            // Amount input changes
+            document.getElementById('fromAmount').addEventListener('input', calculateConversion);
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            stopRateUpdates();
+        });
+    </script>
+    <script src="../js/withAuth.js"></script>
+</body>
+</html>

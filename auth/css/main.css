@@ -1,0 +1,453 @@
+/* CSS Variables */
+:root {
+    --primary: #7b3fe4;
+    --primary-light: #9361f3;
+    --primary-dark: #5c2db0;
+    --secondary: #00e4d0;
+    --accent: #ff3e8e;
+    --dark: #0a0e17;
+    --darker: #050912;
+    --light: #f8f9fc;
+    --gray: #a0aec0;
+    --gray-dark: #2d3748;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --card-bg: rgba(13, 17, 28, 0.8);
+    --card-border: rgba(123, 63, 228, 0.15);
+    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    --gradient-accent: linear-gradient(135deg, var(--primary), var(--secondary));
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(123, 63, 228, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(0, 228, 208, 0.15), transparent 50%);
+    z-index: -1;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-light);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary);
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Header */
+header {
+    padding: 20px 0;
+    position: relative;
+    z-index: 10;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.header-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header-links a {
+    font-weight: 500;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 24px 0;
+        min-height: 60vh;
+    }
+}
+@media (max-width: 480px) {
+    .main-content {
+        padding: 16px 0;
+        min-height: 70vh;
+    }
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.login-subtitle {
+    color: var(--gray);
+    font-size: 1rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-label a {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.form-input {
+    background-color: rgba(45, 55, 72, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: var(--light);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(123, 63, 228, 0.2);
+}
+
+.form-input::placeholder {
+    color: var(--gray);
+    opacity: 0.7;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.password-toggle:hover {
+    color: var(--light);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.checkbox-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(123, 63, 228, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(123, 63, 228, 0.6);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--gray-dark);
+}
+
+.divider::before {
+    margin-right: 16px;
+}
+
+.divider::after {
+    margin-left: 16px;
+}
+
+.social-login {
+    display: flex;
+    gap: 16px;
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: rgba(45, 55, 72, 0.3);
+    border: 1px solid var(--card-border);
+    color: var(--light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.social-btn:hover {
+    background-color: rgba(45, 55, 72, 0.5);
+    transform: translateY(-2px);
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.95rem;
+    color: var(--gray);
+}
+
+.register-link a {
+    font-weight: 600;
+}
+
+/* Animated Background */
+.animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(123, 63, 228, 0.2);
+    animation: move 8s infinite linear;
+}
+
+@keyframes move {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Footer */
+footer {
+    padding: 24px 0;
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--gray-dark);
+    margin-top: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 30px 24px;
+        max-width: 100%;
+        margin: 0 16px;
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-title {
+        font-size: 1.75rem;
+    }
+    
+    .login-container {
+        padding: 24px 20px;
+    }
+    
+    .header-links {
+        gap: 12px;
+    }
+}
+  /* Simple loader & toast styling */
+    #loader {
+      display: none;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    #toast {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 0 0 4px 4px;
+      opacity: 0;
+      transition: opacity 0.3s, top 0.3s;
+      z-index: 1000;
+    }
+    #toast.success { background: #28a745; }
+    #toast.error   { background: #dc3545; }
+    #toast button  {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      position: absolute;
+      right: 0.5rem;
+      top: 0.2rem;
+      cursor: pointer;
+    }

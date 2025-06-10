@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - Zephy | Cryptocurrency Platform</title>
+    <meta name="description" content="Comprehensive terms and conditions for Zephy cryptocurrency platform. Understand your rights and obligations when using our services.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Primary Color System - Purple Theme */
+            --primary-50: #f3f1ff;
+            --primary-100: #ebe5ff;
+            --primary-200: #d9ccff;
+            --primary-300: #bea6ff;
+            --primary-400: #9f75ff;
+            --primary-500: #9361f3;
+            --primary-600: #5c2db0;
+            --primary-700: #4c1d95;
+            --primary-800: #3c1677;
+            --primary-900: #2e1065;
+            
+            --secondary-50: #faf5ff;
+            --secondary-100: #f3e8ff;
+            --secondary-200: #e9d5ff;
+            --secondary-300: #d8b4fe;
+            --secondary-400: #c084fc;
+            --secondary-500: #a855f7;
+            --secondary-600: #9333ea;
+            --secondary-700: #7c3aed;
+            --secondary-800: #6b21a8;
+            --secondary-900: #581c87;
+            
+            /* Dark Theme Colors */
+            --dark-bg: #1a1f2e;
+            --dark-card: #1a1f2e;
+            --dark-surface: #242938;
+            --dark-border: #2d3748;
+            --dark-text: #e2e8f0;
+            --dark-text-secondary: #a0aec0;
+            
+            /* Neutral Colors */
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+            
+            --success-500: #10b981;
+            --warning-500: #f59e0b;
+            --error-500: #ef4444;
+            
+            /* Typography Scale */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+            --text-5xl: 3rem;
+            --text-6xl: 3.75rem;
+            
+            /* Spacing Scale */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-3xl: 2rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            --shadow-purple: 0 20px 25px -5px rgb(92 45 176 / 0.3), 0 8px 10px -6px rgb(147 97 243 / 0.2);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--space-20);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: var(--text-base);
+            line-height: 1.7;
+            color: var(--dark-text);
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #0f1419 50%, var(--dark-bg) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Layout Grid */
+        .page-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-8);
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                grid-template-columns: 300px minmax(0, 1fr);
+                gap: var(--space-12);
+                padding: var(--space-8);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .main-content {
+                grid-template-columns: 350px minmax(0, 1fr);
+                gap: var(--space-16);
+            }
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-3xl);
+            padding: var(--space-8);
+            text-align: center;
+            box-shadow: var(--shadow-purple);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-600), var(--primary-500), var(--primary-600));
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        .logo {
+            font-size: var(--text-5xl);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-3);
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--dark-text-secondary);
+            font-size: var(--text-lg);
+            font-weight: 500;
+            margin-bottom: var(--space-4);
+        }
+
+        .header-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: linear-gradient(135deg, var(--primary-600)20, var(--primary-500)20);
+            border: 1px solid var(--primary-600);
+            border-radius: var(--radius-xl);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--primary-300);
+        }
+
+        /* Navigation Sidebar */
+        .navigation {
+            position: sticky;
+            top: var(--space-6);
+            height: fit-content;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-title {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 2px solid var(--primary-600);
+        }
+
+        .nav-list {
+            list-style: none;
+            space-y: var(--space-1);
+        }
+
+        .nav-item {
+            margin-bottom: var(--space-1);
+        }
+
+        .nav-link {
+            display: block;
+            padding: var(--space-3) var(--space-4);
+            color: var(--dark-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-600)20;
+            color: var(--primary-300);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--primary-500);
+            border-radius: 2px;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--dark-border);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-600), var(--primary-500));
+            width: 0%;
+            transition: width var(--transition-fast);
+        }
+
+        /* Content Area */
+        .content {
+            background: var(--dark-card);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-10);
+            box-shadow: var(--shadow-purple);
+            position: relative;
+        }
+
+        .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: linear-gradient(135deg, var(--success-500), #059669);
+            color: white;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-xl);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-title {
+            font-size: var(--text-5xl);
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: var(--space-8);
+            text-align: center;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: var(--space-12);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--dark-border);
+            background: var(--dark-surface);
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-purple);
+            transform: translateY(-2px);
+            border-color: var(--primary-600)50;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--dark-surface), var(--primary-600)10);
+            padding: var(--space-6);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border-bottom: 1px solid var(--dark-border);
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--primary-600)15, var(--primary-500)10);
+        }
+
+        .section-title {
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            color: var(--dark-text);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            letter-spacing: -0.01em;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform var(--transition-fast);
+            color: var(--primary-400);
+        }
+
+        .section.collapsed .section-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: var(--space-8);
+            max-height: 2000px;
+            overflow: hidden;
+            transition: all var(--transition-slow);
+            background: var(--dark-card);
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        /* Typography */
+        h3 {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--dark-text);
+            margin: var(--space-8) 0 var(--space-4) 0;
+            letter-spacing: -0.01em;
+        }
+
+        h3:first-child {
+            margin-top: 0;
+        }
+
+        h4 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--primary-300);
+            margin: var(--space-6) 0 var(--space-3) 0;
+        }
+
+        p {
+            margin-bottom: var(--space-5);
+            color: var(--dark-text-secondary);
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin: var(--space-4) 0 var(--space-6) 0;
+            padding-left: var(--space-6);
+        }
+
+        li {
+            margin-bottom: var(--space-3);
+            color: var(--dark-text-secondary);
+            line-height: 1.7;
+        }
+
+        li strong {
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        /* Special Content Blocks */
+        .highlight {
+            background: linear-gradient(135deg, var(--primary-600)15, var(--primary-500)10);
+            border: 1px solid var(--primary-600);
+            border-left: 4px solid var(--primary-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .highlight::before {
+            content: '⚖️';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+        }
+
+        .highlight p {
+            color: var(--dark-text);
+        }
+
+        .crypto-specific {
+            background: linear-gradient(135deg, var(--warning-500)15, #fbbf2410);
+            border: 1px solid var(--warning-500);
+            border-left: 4px solid var(--warning-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .crypto-specific::before {
+            content: '₿';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+            color: var(--warning-500);
+            font-weight: bold;
+        }
+
+        .crypto-specific p {
+            color: var(--dark-text);
+        }
+
+        .risk-notice {
+            background: linear-gradient(135deg, var(--error-500)15, #ef444410);
+            border: 1px solid var(--error-500);
+            border-left: 4px solid var(--error-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-6) 0;
+            position: relative;
+        }
+
+        .risk-notice::before {
+            content: '⚠️';
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            font-size: var(--text-lg);
+        }
+
+        .risk-notice p {
+            color: var(--dark-text);
+        }
+
+        /* Contact Section */
+        .contact-info {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            color: white;
+            padding: var(--space-10);
+            border-radius: var(--radius-2xl);
+            text-align: center;
+            margin-top: var(--space-12);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-purple);
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .contact-info h3 {
+            color: white;
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-6);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: var(--space-5);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item h4 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: white;
+        }
+
+        .contact-item p {
+            margin: 0;
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: var(--space-8);
+            right: var(--space-8);
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: var(--text-xl);
+            cursor: pointer;
+            box-shadow: var(--shadow-purple);
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+        }
+
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 25px 50px -12px rgb(92 45 176 / 0.5), 0 8px 10px -6px rgb(147 97 243 / 0.3);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary-400);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-300);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1023px) {
+            .navigation {
+                position: static;
+                margin-bottom: var(--space-6);
+            }
+            
+            .main-content {
+                padding: var(--space-4);
+            }
+            
+            .content {
+                padding: var(--space-6);
+            }
+            
+            .page-title {
+                font-size: var(--text-4xl);
+            }
+            
+            .logo {
+                font-size: var(--text-4xl);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header {
+                padding: var(--space-6);
+            }
+            
+            .content {
+                padding: var(--space-4);
+            }
+            
+            .section-content {
+                padding: var(--space-5);
+            }
+            
+            .page-title {
+                font-size: var(--text-3xl);
+            }
+            
+            .section-title {
+                font-size: var(--text-xl);
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .fab-container {
+                bottom: var(--space-4);
+                right: var(--space-4);
+            }
+        }
+
+        @media (max-width: 479px) {
+            .main-content {
+                padding: var(--space-2);
+            }
+            
+            .header {
+                padding: var(--space-4);
+            }
+            
+            .logo {
+                font-size: var(--text-3xl);
+            }
+            
+            .page-title {
+                font-size: var(--text-2xl);
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .navigation,
+            .fab-container,
+            .progress-container {
+                display: none;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .section-content {
+                max-height: none !important;
+                padding: var(--space-4) !important;
+            }
+            
+            .section {
+                break-inside: avoid;
+                margin-bottom: var(--space-6);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        .nav-link:focus,
+        .fab:focus,
+        .section-header:focus {
+            outline: 2px solid var(--primary-500);
+            outline-offset: 2px;
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .highlight,
+            .crypto-specific,
+            .risk-notice {
+                border-width: 2px;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-400));
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="page-container">
+        <main class="main-content">
+            <header class="header fade-in">
+                <h1 class="logo">Dainterbfx</h1>
+                <p class="subtitle">Advanced Cryptocurrency & Blockchain Platform</p>
+                <div class="header-badges">
+                    <span class="badge">
+                        <span>⚖️</span>
+                        <span>Legal Compliance</span>
+                    </span>
+                    <span class="badge">
+                        <span>🛡️</span>
+                        <span>User Protection</span>
+                    </span>
+                    <span class="badge">
+                        <span>🌐</span>
+                        <span>Global Standards</span>
+                    </span>
+                </div>
+            </header>
+
+            <nav class="navigation slide-in-left" role="navigation" aria-label="Terms and conditions sections">
+                <h2 class="nav-title">Table of Contents</h2>
+                <ul class="nav-list" role="list">
+                    <li class="nav-item"><a href="#acceptance" class="nav-link" data-section="acceptance">1. Acceptance of Terms</a></li>
+                    <li class="nav-item"><a href="#definitions" class="nav-link" data-section="definitions">2. Definitions</a></li>
+                    <li class="nav-item"><a href="#eligibility" class="nav-link" data-section="eligibility">3. Eligibility & Account</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link" data-section="services">4. Services Offered</a></li>
+                    <li class="nav-item"><a href="#user-obligations" class="nav-link" data-section="user-obligations">5. User Obligations</a></li>
+                    <li class="nav-item"><a href="#trading-risks" class="nav-link" data-section="trading-risks">6. Trading & Risks</a></li>
+                    <li class="nav-item"><a href="#fees" class="nav-link" data-section="fees">7. Fees & Payments</a></li>
+                    <li class="nav-item"><a href="#compliance" class="nav-link" data-section="compliance">8. Compliance & KYC</a></li>
+                    <li class="nav-item"><a href="#intellectual-property" class="nav-link" data-section="intellectual-property">9. Intellectual Property</a></li>
+                    <li class="nav-item"><a href="#limitation-liability" class="nav-link" data-section="limitation-liability">10. Limitation of Liability</a></li>
+                    <li class="nav-item"><a href="#termination" class="nav-link" data-section="termination">11. Termination</a></li>
+                    <li class="nav-item"><a href="#dispute-resolution" class="nav-link" data-section="dispute-resolution">12. Dispute Resolution</a></li>
+                    <li class="nav-item"><a href="#governing-law" class="nav-link" data-section="governing-law">13. Governing Law</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link" data-section="contact">14. Contact Information</a></li>
+                </ul>
+            </nav>
+
+            <div class="content fade-in">
+                <div class="last-updated" role="status" aria-live="polite">
+                    <span>📅</span>
+                    <span>Last Updated: January 15, 2025</span>
+                </div>
+                
+                <h1 class="page-title">Terms & Conditions</h1>
+
+                <section class="section" id="acceptance">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            1. Acceptance of Terms
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>Welcome to Zephy, a comprehensive cryptocurrency and blockchain technology platform. These Terms and Conditions ("Terms") constitute a legally binding agreement between you ("User," "you," or "your") and Zephy Technologies Ltd. ("Zephy," "we," "us," or "our").</p>
+
+                        <div class="highlight">
+                            <p><strong>Binding Agreement:</strong> By accessing, using, or registering for any of our services, you acknowledge that you have read, understood, and agree to be bound by these Terms, our Privacy Policy, and all applicable laws and regulations. If you do not agree to these Terms, you must not use our services.</p>
+                        </div>
+
+                        <h3>1.1 Scope of Agreement</h3>
+                        <p>These Terms apply to:</p>
+                        <ul>
+                            <li><strong>Platform Access:</strong> Use of our website, mobile applications, and APIs</li>
+                            <li><strong>Trading Services:</strong> Cryptocurrency trading, exchange, and conversion services</li>
+                            <li><strong>Wallet Services:</strong> Custodial and non-custodial wallet solutions</li>
+                            <li><strong>DeFi Services:</strong> Decentralized finance protocols and integrations</li>
+                            <li><strong>Staking Services:</strong> Cryptocurrency staking and delegation services</li>
+                            <li><strong>Educational Content:</strong> Market analysis, tutorials, and educational materials</li>
+                        </ul>
+
+                        <h3>1.2 Updates and Modifications</h3>
+                        <p>We reserve the right to modify these Terms at any time. Material changes will be communicated through:</p>
+                        <ul>
+                            <li>Email notifications to registered users</li>
+                            <li>Prominent notices on our platform</li>
+                            <li>In-app notifications</li>
+                            <li>Updates to this page with revised effective dates</li>
+                        </ul>
+
+                        <h3>1.3 Continued Use</h3>
+                        <p>Your continued use of our services after any modifications constitutes acceptance of the updated Terms. We recommend reviewing these Terms periodically to stay informed of any changes.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="definitions">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            2. Definitions
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>For the purposes of these Terms, the following definitions apply:</p>
+
+                        <h3>2.1 Platform and Technology Terms</h3>
+                        <ul>
+                            <li><strong>"Platform"</strong> - The Zephy website, mobile applications, APIs, and all related services</li>
+                            <li><strong>"Services"</strong> - All cryptocurrency-related services provided by Zephy</li>
+                            <li><strong>"Account"</strong> - Your registered user account on the Zephy platform</li>
+                            <li><strong>"Wallet"</strong> - Digital storage for cryptocurrencies, either custodial or non-custodial</li>
+                            <li><strong>"API"</strong> - Application Programming Interface for accessing our services</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>2.2 Cryptocurrency Terms</h3>
+                            <ul>
+                                <li><strong>"Cryptocurrency" or "Digital Asset"</strong> - Digital or virtual currency secured by cryptography</li>
+                                <li><strong>"Blockchain"</strong> - Distributed ledger technology underlying cryptocurrencies</li>
+                                <li><strong>"Smart Contract"</strong> - Self-executing contracts with terms directly written into code</li>
+                                <li><strong>"DeFi"</strong> - Decentralized Finance protocols and applications</li>
+                                <li><strong>"Staking"</strong> - Process of participating in proof-of-stake blockchain networks</li>
+                                <li><strong>"Yield Farming"</strong> - Practice of earning rewards by providing liquidity to DeFi protocols</li>
+                                <li><strong>"NFT"</strong> - Non-Fungible Token representing unique digital assets</li>
+                                <li><strong>"Gas Fees"</strong> - Transaction fees required for blockchain operations</li>
+                            </ul>
+                        </div>
+
+                        <h3>2.3 Trading Terms</h3>
+                        <ul>
+                            <li><strong>"Order"</strong> - Instruction to buy or sell cryptocurrency at specified conditions</li>
+                            <li><strong>"Market Order"</strong> - Order to buy or sell immediately at current market price</li>
+                            <li><strong>"Limit Order"</strong> - Order to buy or sell at a specific price or better</li>
+                            <li><strong>"Liquidity"</strong> - Ease of buying or selling an asset without affecting its price</li>
+                            <li><strong>"Slippage"</strong> - Difference between expected and actual execution price</li>
+                        </ul>
+
+                        <h3>2.4 Regulatory Terms</h3>
+                        <ul>
+                            <li><strong>"KYC"</strong> - Know Your Customer identity verification procedures</li>
+                            <li><strong>"AML"</strong> - Anti-Money Laundering compliance measures</li>
+                            <li><strong>"Sanctions"</strong> - Economic restrictions imposed by governments</li>
+                            <li><strong>"Jurisdiction"</strong> - Geographic area where specific laws apply</li>
+                        </ul>
+
+                        <h3>2.5 Financial Terms</h3>
+                        <ul>
+                            <li><strong>"Fiat Currency"</strong> - Government-issued currency (USD, EUR, etc.)</li>
+                            <li><strong>"Market Capitalization"</strong> - Total value of a cryptocurrency</li>
+                            <li><strong>"Volatility"</strong> - Degree of price fluctuation over time</li>
+                            <li><strong>"Portfolio"</strong> - Collection of cryptocurrency holdings</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="eligibility">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            3. Eligibility & Account Requirements
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>3.1 Age and Legal Capacity</h3>
+                        <p>To use our services, you must:</p>
+                        <ul>
+                            <li><strong>Minimum Age:</strong> Be at least 18 years old or the age of majority in your jurisdiction</li>
+                            <li><strong>Legal Capacity:</strong> Have the legal capacity to enter into binding agreements</li>
+                            <li><strong>Mental Capacity:</strong> Possess the mental capacity to understand these Terms</li>
+                            <li><strong>Authority:</strong> Have the authority to bind any entity you represent</li>
+                        </ul>
+
+                        <h3>3.2 Geographic Restrictions</h3>
+                        <div class="risk-notice">
+                            <p><strong>Prohibited Jurisdictions:</strong> Our services are not available to residents of certain jurisdictions, including but not limited to:</p>
+                            <ul>
+                                <li>Countries subject to comprehensive sanctions (North Korea, Iran, Syria, etc.)</li>
+                                <li>Jurisdictions where cryptocurrency services are prohibited</li>
+                                <li>Regions where we do not hold required licenses</li>
+                                <li>Areas where providing our services would violate local laws</li>
+                            </ul>
+                        </div>
+
+                        <h3>3.3 Account Registration</h3>
+                        <p>Account creation requires:</p>
+                        <ul>
+                            <li><strong>Accurate Information:</strong> Provide truthful and complete information</li>
+                            <li><strong>Valid Email:</strong> Maintain access to your registered email address</li>
+                            <li><strong>Secure Password:</strong> Create a strong, unique password</li>
+                            <li><strong>Two-Factor Authentication:</strong> Enable 2FA for enhanced security</li>
+                            <li><strong>Identity Verification:</strong> Complete KYC procedures as required</li>
+                        </ul>
+
+                        <h3>3.4 Account Security</h3>
+                        <p>You are responsible for:</p>
+                        <ul>
+                            <li><strong>Credential Security:</strong> Keeping login credentials confidential</li>
+                            <li><strong>Unauthorized Access:</strong> Immediately reporting suspicious activity</li>
+                            <li><strong>Device Security:</strong> Securing devices used to access your account</li>
+                            <li><strong>Regular Monitoring:</strong> Regularly reviewing account activity</li>
+                            <li><strong>Prompt Updates:</strong> Updating information when it changes</li>
+                        </ul>
+
+                        <h3>3.5 Account Limitations</h3>
+                        <ul>
+                            <li><strong>One Account:</strong> Each person may maintain only one account</li>
+                            <li><strong>No Sharing:</strong> Accounts are non-transferable and cannot be shared</li>
+                            <li><strong>Corporate Accounts:</strong> Business accounts require additional verification</li>
+                            <li><strong>Dormant Accounts:</strong> Inactive accounts may be subject to fees or closure</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Verification Requirements:</strong> Depending on your location and intended use, you may need to provide additional documentation including government-issued ID, proof of address, and source of funds verification.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="services">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            4. Services Offered
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>4.1 Trading Services</h3>
+                        <p>Zephy provides comprehensive cryptocurrency trading services:</p>
+                        <ul>
+                            <li><strong>Spot Trading:</strong> Buy and sell cryptocurrencies at current market prices</li>
+                            <li><strong>Advanced Orders:</strong> Limit orders, stop-loss, and take-profit orders</li>
+                            <li><strong>Market Making:</strong> Provide liquidity to earn trading fee rebates</li>
+                            <li><strong>OTC Trading:</strong> Over-the-counter trading for large transactions</li>
+                            <li><strong>Cross-Platform Trading:</strong> Access to multiple exchanges through our platform</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>4.2 DeFi Integration Services</h3>
+                            <ul>
+                                <li><strong>Yield Farming:</strong> Automated yield optimization across DeFi protocols</li>
+                                <li><strong>Liquidity Provision:</strong> Add liquidity to decentralized exchanges</li>
+                                <li><strong>Lending & Borrowing:</strong> Participate in decentralized lending markets</li>
+                                <li><strong>Governance Participation:</strong> Vote on protocol governance proposals</li>
+                                <li><strong>Cross-Chain Bridges:</strong> Transfer assets between different blockchains</li>
+                            </ul>
+                        </div>
+
+                        <h3>4.3 Staking Services</h3>
+                        <ul>
+                            <li><strong>Validator Staking:</strong> Stake with professional validators</li>
+                            <li><strong>Liquid Staking:</strong> Maintain liquidity while earning staking rewards</li>
+                            <li><strong>Multi-Asset Staking:</strong> Stake various proof-of-stake cryptocurrencies</li>
+                            <li><strong>Automatic Compounding:</strong> Reinvest rewards automatically</li>
+                            <li><strong>Flexible Terms:</strong> Various staking periods and conditions</li>
+                        </ul>
+
+                        <h3>4.4 Wallet Services</h3>
+                        <ul>
+                            <li><strong>Custodial Wallets:</strong> Secure storage with institutional-grade security</li>
+                            <li><strong>Non-Custodial Options:</strong> Self-custody solutions with hardware wallet integration</li>
+                            <li><strong>Multi-Signature Wallets:</strong> Enhanced security through multiple signatures</li>
+                            <li><strong>Cold Storage:</strong> Offline storage for maximum security</li>
+                            <li><strong>Mobile Wallets:</strong> Convenient mobile access to your funds</li>
+                        </ul>
+
+                        <h3>4.5 Educational and Analysis Services</h3>
+                        <ul>
+                            <li><strong>Market Analysis:</strong> Professional market research and insights</li>
+                            <li><strong>Educational Content:</strong> Tutorials, guides, and learning materials</li>
+                            <li><strong>Portfolio Analytics:</strong> Detailed performance tracking and analysis</li>
+                            <li><strong>Risk Assessment:</strong> Tools to evaluate and manage investment risk</li>
+                            <li><strong>News and Updates:</strong> Real-time market news and platform updates</li>
+                        </ul>
+
+                        <h3>4.6 API and Developer Services</h3>
+                        <ul>
+                            <li><strong>REST API:</strong> Programmatic access to trading and account functions</li>
+                            <li><strong>WebSocket Feeds:</strong> Real-time market data streams</li>
+                            <li><strong>Sandbox Environment:</strong> Testing environment for developers</li>
+                            <li><strong>Documentation:</strong> Comprehensive API documentation and examples</li>
+                            <li><strong>Rate Limiting:</strong> Fair usage policies for API access</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Service Availability:</strong> Not all services may be available in all jurisdictions. Service availability depends on local regulations, licensing requirements, and technical capabilities in your region.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="user-obligations">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            5. User Obligations & Prohibited Activities
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>5.1 General User Obligations</h3>
+                        <p>As a user of our platform, you agree to:</p>
+                        <ul>
+                            <li><strong>Comply with Laws:</strong> Follow all applicable local, national, and international laws</li>
+                            <li><strong>Provide Accurate Information:</strong> Ensure all information provided is truthful and current</li>
+                            <li><strong>Maintain Security:</strong> Protect your account credentials and report security issues</li>
+                            <li><strong>Use Services Appropriately:</strong> Use our services only for their intended purposes</li>
+                            <li><strong>Cooperate with Investigations:</strong> Assist with compliance and security investigations</li>
+                        </ul>
+
+                        <h3>5.2 Prohibited Activities</h3>
+                        <div class="risk-notice">
+                            <p><strong>Strictly Prohibited:</strong> The following activities are expressly forbidden:</p>
+                            <ul>
+                                <li><strong>Money Laundering:</strong> Using our services to launder money or finance illegal activities</li>
+                                <li><strong>Fraud and Deception:</strong> Engaging in fraudulent, deceptive, or manipulative practices</li>
+                                <li><strong>Market Manipulation:</strong> Attempting to manipulate cryptocurrency prices or markets</li>
+                                <li><strong>Unauthorized Access:</strong> Attempting to access accounts or systems without authorization</li>
+                                <li><strong>System Abuse:</strong> Overloading, attacking, or attempting to disrupt our systems</li>
+                            </ul>
+                        </div>
+
+                        <h3>5.3 Trading Conduct</h3>
+                        <ul>
+                            <li><strong>Fair Trading:</strong> Engage in fair and honest trading practices</li>
+                            <li><strong>No Wash Trading:</strong> Avoid artificial trading volume creation</li>
+                            <li><strong>Order Integrity:</strong> Place orders with genuine intent to trade</li>
+                            <li><strong>Rate Limits:</strong> Respect API rate limits and trading frequency restrictions</li>
+                            <li><strong>Market Impact:</strong> Consider the impact of large orders on market stability</li>
+                        </ul>
+
+                        <h3>5.4 Compliance Obligations</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>KYC Compliance:</strong> Complete identity verification when requested</li>
+                                <li><strong>Source of Funds:</strong> Provide documentation for the source of your funds</li>
+                                <li><strong>Tax Obligations:</strong> Report and pay taxes on cryptocurrency transactions</li>
+                                <li><strong>Sanctions Compliance:</strong> Ensure you are not subject to economic sanctions</li>
+                                <li><strong>Regulatory Reporting:</strong> Comply with applicable reporting requirements</li>
+                            </ul>
+                        </div>
+
+                        <h3>5.5 Content and Communication</h3>
+                        <ul>
+                            <li><strong>Appropriate Content:</strong> Share only appropriate, legal content</li>
+                            <li><strong>No Spam:</strong> Avoid sending unsolicited messages or content</li>
+                            <li><strong>Respectful Communication:</strong> Maintain respectful communication with other users</li>
+                            <li><strong>No Harassment:</strong> Refrain from harassing or threatening behavior</li>
+                            <li><strong>Intellectual Property:</strong> Respect intellectual property rights</li>
+                        </ul>
+
+                        <h3>5.6 Technical Obligations</h3>
+                        <ul>
+                            <li><strong>System Security:</strong> Maintain secure devices and networks</li>
+                            <li><strong>Software Updates:</strong> Keep software and applications updated</li>
+                            <li><strong>Backup Responsibilities:</strong> Maintain backups of important information</li>
+                            <li><strong>Network Stability:</strong> Use stable internet connections for trading</li>
+                            <li><strong>Error Reporting:</strong> Report technical issues promptly</li>
+                        </ul>
+
+                        <h3>5.7 Consequences of Violations</h3>
+                        <p>Violations of these obligations may result in:</p>
+                        <ul>
+                            <li><strong>Account Suspension:</strong> Temporary or permanent account suspension</li>
+                            <li><strong>Service Restrictions:</strong> Limitations on specific services or features</li>
+                            <li><strong>Fund Freezing:</strong> Temporary freezing of funds pending investigation</li>
+                            <li><strong>Legal Action:</strong> Referral to law enforcement or legal proceedings</li>
+                            <li><strong>Regulatory Reporting:</strong> Reporting to relevant regulatory authorities</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Due Process:</strong> We are committed to fair treatment and will provide appropriate notice and opportunity to respond before taking significant enforcement actions, except in cases requiring immediate action for security or legal reasons.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="trading-risks">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            6. Trading Risks & Disclaimers
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <div class="risk-notice">
+                            <p><strong>High-Risk Investment Warning:</strong> Cryptocurrency trading involves substantial risk of loss and is not suitable for all investors. You should carefully consider whether trading cryptocurrencies is appropriate for you in light of your experience, objectives, financial resources, and other relevant circumstances.</p>
+                        </div>
+
+                        <h3>6.1 Market Risks</h3>
+                        <ul>
+                            <li><strong>Price Volatility:</strong> Cryptocurrency prices can fluctuate dramatically and unpredictably</li>
+                            <li><strong>Market Manipulation:</strong> Markets may be subject to manipulation by large holders</li>
+                            <li><strong>Liquidity Risk:</strong> Some cryptocurrencies may have limited liquidity</li>
+                            <li><strong>Market Hours:</strong> Cryptocurrency markets operate 24/7 with no trading halts</li>
+                            <li><strong>Correlation Risk:</strong> Cryptocurrencies may move together during market stress</li>
+                        </ul>
+
+                        <h3>6.2 Technology Risks</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Blockchain Risks:</strong> Potential for blockchain forks, attacks, or failures</li>
+                                <li><strong>Smart Contract Risks:</strong> Bugs or vulnerabilities in smart contract code</li>
+                                <li><strong>Network Congestion:</strong> High gas fees and slow transaction times</li>
+                                <li><strong>Key Loss:</strong> Risk of losing access to funds if private keys are lost</li>
+                                <li><strong>Protocol Changes:</strong> Changes to underlying blockchain protocols</li>
+                            </ul>
+                        </div>
+
+                        <h3>6.3 Regulatory Risks</h3>
+                        <ul>
+                            <li><strong>Regulatory Changes:</strong> New regulations may affect cryptocurrency value or legality</li>
+                            <li><strong>Compliance Costs:</strong> Increasing compliance requirements may impact operations</li>
+                            <li><strong>Jurisdiction Risk:</strong> Different jurisdictions may have conflicting regulations</li>
+                            <li><strong>Tax Implications:</strong> Complex and evolving tax treatment of cryptocurrencies</li>
+                            <li><strong>Enforcement Actions:</strong> Regulatory enforcement may impact market confidence</li>
+                        </ul>
+
+                        <h3>6.4 Operational Risks</h3>
+                        <ul>
+                            <li><strong>Platform Downtime:</strong> Technical issues may prevent access to your account</li>
+                            <li><strong>Execution Risk:</strong> Orders may not execute at expected prices</li>
+                            <li><strong>Counterparty Risk:</strong> Risk of default by trading counterparties</li>
+                            <li><strong>Custody Risk:</strong> Risk associated with holding funds with third parties</li>
+                            <li><strong>Cybersecurity Risk:</strong> Potential for hacking or security breaches</li>
+                        </ul>
+
+                        <h3>6.5 Financial Risks</h3>
+                        <ul>
+                            <li><strong>Total Loss:</strong> You may lose your entire investment</li>
+                            <li><strong>Leverage Risk:</strong> Leveraged positions amplify both gains and losses</li>
+                            <li><strong>Funding Costs:</strong> Costs associated with maintaining leveraged positions</li>
+                            <li><strong>Currency Risk:</strong> Exchange rate fluctuations may affect returns</li>
+                            <li><strong>Opportunity Cost:</strong> Potential returns from alternative investments</li>
+                        </ul>
+
+                        <h3>6.6 DeFi-Specific Risks</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Impermanent Loss:</strong> Potential losses from providing liquidity</li>
+                                <li><strong>Protocol Risk:</strong> Risk of DeFi protocol failure or exploitation</li>
+                                <li><strong>Governance Risk:</strong> Risk from decentralized governance decisions</li>
+                                <li><strong>Composability Risk:</strong> Risks from interacting protocols</li>
+                                <li><strong>Oracle Risk:</strong> Risk from price feed manipulation or failure</li>
+                            </ul>
+                        </div>
+
+                        <h3>6.7 Risk Management Recommendations</h3>
+                        <div class="highlight">
+                            <p><strong>Risk Management Best Practices:</strong></p>
+                            <ul>
+                                <li><strong>Diversification:</strong> Don't invest all funds in a single cryptocurrency</li>
+                                <li><strong>Position Sizing:</strong> Only invest what you can afford to lose</li>
+                                <li><strong>Stop Losses:</strong> Use stop-loss orders to limit potential losses</li>
+                                <li><strong>Education:</strong> Continuously educate yourself about cryptocurrency markets</li>
+                                <li><strong>Professional Advice:</strong> Consider seeking professional financial advice</li>
+                            </ul>
+                        </div>
+
+                        <h3>6.8 No Investment Advice</h3>
+                        <p>Important disclaimers:</p>
+                        <ul>
+                            <li><strong>No Financial Advice:</strong> We do not provide investment, financial, or trading advice</li>
+                            <li><strong>Educational Purpose:</strong> Our content is for educational purposes only</li>
+                            <li><strong>Independent Research:</strong> Conduct your own research before making investment decisions</li>
+                            <li><strong>Past Performance:</strong> Past performance does not guarantee future results</li>
+                            <li><strong>Market Predictions:</strong> We do not make predictions about future market performance</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="fees">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            7. Fees & Payment Terms
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>7.1 Fee Structure</h3>
+                        <p>Zephy charges fees for various services as outlined in our current fee schedule:</p>
+                        <ul>
+                            <li><strong>Trading Fees:</strong> Percentage-based fees on completed trades</li>
+                            <li><strong>Deposit Fees:</strong> Fees for depositing fiat currency or cryptocurrencies</li>
+                            <li><strong>Withdrawal Fees:</strong> Fees for withdrawing funds from the platform</li>
+                            <li><strong>Conversion Fees:</strong> Fees for converting between different cryptocurrencies</li>
+                            <li><strong>Premium Services:</strong> Subscription fees for advanced features</li>
+                        </ul>
+
+                        <h3>7.2 Trading Fee Tiers</h3>
+                        <p>Our trading fees are structured based on:</p>
+                        <ul>
+                            <li><strong>Trading Volume:</strong> 30-day trading volume determines fee tier</li>
+                            <li><strong>Account Type:</strong> Different rates for retail and institutional accounts</li>
+                            <li><strong>Market Making:</strong> Reduced fees for providing liquidity</li>
+                            <li><strong>Token Holdings:</strong> Fee discounts for holding platform tokens</li>
+                            <li><strong>VIP Programs:</strong> Special rates for high-volume traders</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>7.3 Blockchain Network Fees</h3>
+                            <ul>
+                                <li><strong>Gas Fees:</strong> Network fees for Ethereum and other blockchain transactions</li>
+                                <li><strong>Miner Fees:</strong> Bitcoin and other UTXO-based blockchain fees</li>
+                                <li><strong>Bridge Fees:</strong> Fees for cross-chain transactions</li>
+                                <li><strong>Smart Contract Fees:</strong> Fees for interacting with DeFi protocols</li>
+                                <li><strong>Priority Fees:</strong> Optional fees for faster transaction processing</li>
+                            </ul>
+                        </div>
+
+                        <h3>7.4 Fee Calculation and Display</h3>
+                        <ul>
+                            <li><strong>Transparent Pricing:</strong> All fees are clearly displayed before confirmation</li>
+                            <li><strong>Real-Time Updates:</strong> Fees are updated in real-time based on network conditions</li>
+                            <li><strong>Fee Estimation:</strong> Estimated fees provided for complex transactions</li>
+                            <li><strong>Historical Records:</strong> Complete fee history available in your account</li>
+                            <li><strong>Tax Reporting:</strong> Fee information included in tax reporting documents</li>
+                        </ul>
+
+                        <h3>7.5 Payment Methods</h3>
+                        <p>Accepted payment methods include:</p>
+                        <ul>
+                            <li><strong>Bank Transfers:</strong> ACH, wire transfers, and SEPA payments</li>
+                            <li><strong>Credit/Debit Cards:</strong> Major credit and debit cards (subject to limits)</li>
+                            <li><strong>Cryptocurrency:</strong> Direct cryptocurrency deposits</li>
+                            <li><strong>Digital Wallets:</strong> Integration with popular digital wallet services</li>
+                            <li><strong>Stablecoins:</strong> USDC, USDT, and other stablecoin deposits</li>
+                        </ul>
+
+                        <h3>7.6 Fee Changes and Notifications</h3>
+                        <div class="highlight">
+                            <p><strong>Fee Modification Policy:</strong> We reserve the right to modify our fee structure with appropriate notice:</p>
+                            <ul>
+                                <li><strong>Advance Notice:</strong> 30 days notice for material fee increases</li>
+                                <li><strong>Immediate Changes:</strong> Network fees may change immediately based on blockchain conditions</li>
+                                <li><strong>Grandfathering:</strong> Existing orders may complete at original fee rates</li>
+                                <li><strong>Communication:</strong> Fee changes communicated via email and platform notifications</li>
+                            </ul>
+                        </div>
+
+                        <h3>7.7 Fee Disputes and Refunds</h3>
+                        <ul>
+                            <li><strong>Dispute Process:</strong> Clear process for disputing incorrect fees</li>
+                            <li><strong>Investigation Period:</strong> Reasonable time for fee dispute investigation</li>
+                            <li><strong>Refund Policy:</strong> Refunds for verified incorrect charges</li>
+                            <li><strong>Documentation:</strong> Requirement to provide supporting documentation</li>
+                            <li><strong>Resolution Timeline:</strong> Target resolution time for fee disputes</li>
+                        </ul>
+
+                        <h3>7.8 Tax Implications</h3>
+                        <ul>
+                            <li><strong>Tax Responsibility:</strong> Users responsible for their own tax obligations</li>
+                            <li><strong>Fee Deductibility:</strong> Trading fees may be tax-deductible in some jurisdictions</li>
+                            <li><strong>Record Keeping:</strong> Maintain records of all fees paid</li>
+                            <li><strong>Professional Advice:</strong> Consult tax professionals for guidance</li>
+                            <li><strong>Reporting Tools:</strong> Tools provided to help with tax reporting</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" id="compliance">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            8. Compliance & KYC Requirements
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>8.1 Regulatory Compliance Framework</h3>
+                        <p>Zephy operates under strict compliance with applicable regulations:</p>
+                        <ul>
+                            <li><strong>Financial Regulations:</strong> Compliance with financial services regulations</li>
+                            <li><strong>AML/CTF Laws:</strong> Anti-Money Laundering and Counter-Terrorism Financing</li>
+                            <li><strong>Data Protection:</strong> GDPR, CCPA, and other privacy regulations</li>
+                            <li><strong>Securities Laws:</strong> Compliance with applicable securities regulations</li>
+                            <li><strong>Tax Regulations:</strong> Adherence to tax reporting requirements</li>
+                        </ul>
+
+                        <div class="crypto-specific">
+                            <h3>8.2 Know Your Customer (KYC) Requirements</h3>
+                            <p>KYC verification is required for:</p>
+                            <ul>
+                                <li><strong>Account Registration:</strong> Basic identity verification for all users</li>
+                                <li><strong>Increased Limits:</strong> Enhanced verification for higher transaction limits</li>
+                                <li><strong>Fiat Transactions:</strong> Additional verification for fiat currency operations</li>
+                                <li><strong>Large Transactions:</strong> Enhanced due diligence for significant transactions</li>
+                                <li><strong>Suspicious Activity:</strong> Additional verification if suspicious activity is detected</li>
+                            </ul>
+                        </div>
+
+                        <h3>8.3 Required Documentation</h3>
+                        <p>KYC verification may require:</p>
+                        <ul>
+                            <li><strong>Government ID:</strong> Passport, driver's license, or national ID card</li>
+                            <li><strong>Proof of Address:</strong> Utility bill, bank statement, or government correspondence</li>
+                            <li><strong>Selfie Verification:</strong> Photo holding your ID for identity confirmation</li>
+                            <li><strong>Source of Funds:</strong> Documentation explaining the source of your funds</li>
+                            <li><strong>Business Documents:</strong> Additional documents for corporate accounts</li>
+                        </ul>
+
+                        <h3>8.4 Enhanced Due Diligence (EDD)</h3>
+                        <p>Enhanced verification may be required for:</p>
+                        <ul>
+                            <li><strong>High-Risk Jurisdictions:</strong> Users from certain geographic locations</li>
+                            <li><strong>Large Transactions:</strong> Transactions above specified thresholds</li>
+                            <li><strong>PEP Status:</strong> Politically Exposed Persons and their associates</li>
+                            <li><strong>Unusual Activity:</strong> Patterns that deviate from normal behavior</li>
+                            <li><strong>Regulatory Requests:</strong> Specific requests from regulatory authorities</li>
+                        </ul>
+
+                        <h3>8.5 Sanctions and Prohibited Persons</h3>
+                        <div class="risk-notice">
+                            <p><strong>Sanctions Compliance:</strong> We maintain strict compliance with international sanctions:</p>
+                            <ul>
+                                <li><strong>OFAC Sanctions:</strong> US Office of Foreign Assets Control sanctions lists</li>
+                                <li><strong>UN Sanctions:</strong> United Nations Security Council sanctions</li>
+                                <li><strong>EU Sanctions:</strong> European Union sanctions and restrictive measures</li>
+                                <li><strong>Local Sanctions:</strong> Sanctions imposed by relevant local authorities</li>
+                                <li><strong>Ongoing Monitoring:</strong> Continuous screening against updated sanctions lists</li>
+                            </ul>
+                        </div>
+
+                        <h3>8.6 Transaction Monitoring</h3>
+                        <ul>
+                            <li><strong>Automated Monitoring:</strong> AI-powered transaction monitoring systems</li>
+                            <li><strong>Pattern Recognition:</strong> Detection of unusual transaction patterns</li>
+                            <li><strong>Risk Scoring:</strong> Risk-based approach to transaction analysis</li>
+                            <li><strong>Manual Review:</strong> Human review of flagged transactions</li>
+                            <li><strong>Regulatory Reporting:</strong> Suspicious activity reporting to authorities</li>
+                        </ul>
+
+                        <h3>8.7 Compliance Cooperation</h3>
+                        <p>Users must cooperate with compliance efforts:</p>
+                        <ul>
+                            <li><strong>Information Requests:</strong> Respond promptly to requests for information</li>
+                            <li><strong>Document Provision:</strong> Provide requested documentation in a timely manner</li>
+                            <li><strong>Interview Participation:</strong> Participate in compliance interviews when required</li>
+                            <li><strong>Ongoing Updates:</strong> Keep information current and report material changes</li>
+                            <li><strong>Investigation Support:</strong> Assist with compliance and regulatory investigations</li>
+                        </ul>
+
+                        <h3>8.8 Consequences of Non-Compliance</h3>
+                        <ul>
+                            <li><strong>Account Restrictions:</strong> Limitations on account functionality</li>
+                            <li><strong>Transaction Blocks:</strong> Blocking of specific transactions or activities</li>
+                            <li><strong>Account Suspension:</strong> Temporary or permanent account suspension</li>
+                            <li><strong>Fund Freezing:</strong> Freezing of funds pending investigation</li>
+                            <li><strong>Regulatory Reporting:</strong> Reporting to relevant authorities</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Privacy Protection:</strong> While we collect information for compliance purposes, we are committed to protecting your privacy and will only use and share information as permitted by law and our Privacy Policy.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="intellectual-property">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            9. Intellectual Property Rights
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>9.1 Zephy's Intellectual Property</h3>
+                        <p>All intellectual property rights in our platform belong to Zephy:</p>
+                        <ul>
+                            <li><strong>Software and Code:</strong> All software, algorithms, and source code</li>
+                            <li><strong>Trademarks:</strong> Zephy name, logos, and other trademarks</li>
+                            <li><strong>Content:</strong> Educational materials, analysis, and platform content</li>
+                            <li><strong>Design Elements:</strong> User interface design and visual elements</li>
+                            <li><strong>Trade Secrets:</strong> Proprietary trading algorithms and business methods</li>
+                        </ul>
+
+                        <h3>9.2 License to Use</h3>
+                        <p>We grant you a limited, non-exclusive license to:</p>
+                        <ul>
+                            <li><strong>Platform Access:</strong> Access and use our platform for permitted purposes</li>
+                            <li><strong>Personal Use:</strong> Use our services for personal or business trading</li>
+                            <li><strong>API Usage:</strong> Use our APIs in accordance with our API terms</li>
+                            <li><strong>Educational Content:</strong> Access educational materials for learning purposes</li>
+                        </ul>
+
+                        <h3>9.3 Restrictions on Use</h3>
+                        <div class="risk-notice">
+                            <p><strong>Prohibited Activities:</strong> You may not:</p>
+                            <ul>
+                                <li><strong>Reverse Engineering:</strong> Reverse engineer, decompile, or disassemble our software</li>
+                                <li><strong>Copying:</strong> Copy, reproduce, or distribute our proprietary content</li>
+                                <li><strong>Modification:</strong> Modify, adapt, or create derivative works</li>
+                                <li><strong>Commercial Use:</strong> Use our content for commercial purposes without permission</li>
+                                <li><strong>Trademark Infringement:</strong> Use our trademarks without authorization</li>
+                            </ul>
+                        </div>
+
+                        <h3>9.4 User-Generated Content</h3>
+                        <p>Regarding content you provide to us:</p>
+                        <ul>
+                            <li><strong>Ownership:</strong> You retain ownership of content you create</li>
+                            <li><strong>License Grant:</strong> You grant us a license to use your content as necessary</li>
+                            <li><strong>Responsibility:</strong> You are responsible for ensuring you have rights to content</li>
+                            <li><strong>Compliance:</strong> Content must comply with our community guidelines</li>
+                            <li><strong>Removal Rights:</strong> We reserve the right to remove inappropriate content</li>
+                        </ul>
+
+                        <h3>9.5 Third-Party Content</h3>
+                        <ul>
+                            <li><strong>Market Data:</strong> Third-party market data subject to separate licenses</li>
+                            <li><strong>News and Analysis:</strong> Third-party content used under appropriate licenses</li>
+                            <li><strong>Integration Partners:</strong> Content from integration partners</li>
+                            <li><strong>Open Source:</strong> Open source components used under their respective licenses</li>
+                        </ul>
+
+                        <h3>9.6 DMCA and Copyright Protection</h3>
+                        <p>We respect intellectual property rights and comply with the DMCA:</p>
+                        <ul>
+                            <li><strong>Copyright Policy:</strong> Clear policy for handling copyright infringement claims</li>
+                            <li><strong>Takedown Process:</strong> Process for removing infringing content</li>
+                            <li><strong>Counter-Notification:</strong> Process for disputing takedown notices</li>
+                            <li><strong>Repeat Infringers:</strong> Policy for handling repeat copyright infringers</li>
+                        </ul>
+
+                        <h3>9.7 Patent Rights</h3>
+                        <ul>
+                            <li><strong>Patent Portfolio:</strong> We may hold patents on certain technologies</li>
+                            <li><strong>License Defense:</strong> We will defend our patent rights when necessary</li>
+                            <li><strong>Third-Party Patents:</strong> We respect third-party patent rights</li>
+                            <li><strong>Innovation Protection:</strong> We protect our technological innovations</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Reporting Infringement:</strong> If you believe your intellectual property rights have been infringed, please contact our legal team at legal@zephy.com with detailed information about the alleged infringement.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="limitation-liability">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            10. Limitation of Liability & Disclaimers
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <div class="risk-notice">
+                            <p><strong>Important Legal Notice:</strong> This section contains important limitations on our liability. Please read carefully as it affects your legal rights.</p>
+                        </div>
+
+                        <h3>10.1 Service Disclaimers</h3>
+                        <p>Our services are provided "as is" and "as available" without warranties:</p>
+                        <ul>
+                            <li><strong>No Warranties:</strong> We disclaim all warranties, express or implied</li>
+                            <li><strong>Merchantability:</strong> No warranty of merchantability or fitness for purpose</li>
+                            <li><strong>Accuracy:</strong> No guarantee of accuracy of market data or information</li>
+                            <li><strong>Availability:</strong> No guarantee of uninterrupted service availability</li>
+                            <li><strong>Error-Free Operation:</strong> No warranty that services will be error-free</li>
+                        </ul>
+
+                        <h3>10.2 Limitation of Liability</h3>
+                        <p>To the maximum extent permitted by law:</p>
+                        <ul>
+                            <li><strong>Direct Damages:</strong> Our liability for direct damages is limited</li>
+                            <li><strong>Indirect Damages:</strong> We are not liable for indirect, incidental, or consequential damages</li>
+                            <li><strong>Lost Profits:</strong> No liability for lost profits or business opportunities</li>
+                            <li><strong>Data Loss:</strong> Limited liability for data loss or corruption</li>
+                            <li><strong>Maximum Liability:</strong> Total liability limited to fees paid in the preceding 12 months</li>
+                        </ul>
+
+                        <h3>10.3 Trading-Specific Disclaimers</h3>
+                        <div class="crypto-specific">
+                            <ul>
+                                <li><strong>Market Risk:</strong> No liability for losses due to market volatility</li>
+                                <li><strong>Execution Risk:</strong> No guarantee of order execution at desired prices</li>
+                                <li><strong>Slippage:</strong> No liability for price slippage during order execution</li>
+                                <li><strong>Network Issues:</strong> No liability for blockchain network problems</li>
+                                <li><strong>Third-Party Protocols:</strong> No liability for DeFi protocol failures</li>
+                            </ul>
+                        </div>
+
+                        <h3>10.4 Force Majeure</h3>
+                        <p>We are not liable for delays or failures due to:</p>
+                        <ul>
+                            <li><strong>Natural Disasters:</strong> Earthquakes, floods, fires, and other natural events</li>
+                            <li><strong>Government Actions:</strong> Regulatory changes, sanctions, or government interference</li>
+                            <li><strong>Technical Failures:</strong> Internet outages, power failures, or system crashes</li>
+                            <li><strong>Cyber Attacks:</strong> DDoS attacks, hacking attempts, or security breaches</li>
+                            <li><strong>Labor Disputes:</strong> Strikes, lockouts, or other labor-related disruptions</li>
+                        </ul>
+
+                        <h3>10.5 Third-Party Services</h3>
+                        <ul>
+                            <li><strong>Integration Partners:</strong> No liability for third-party service failures</li>
+                            <li><strong>Payment Processors:</strong> Limited liability for payment processing issues</li>
+                            <li><strong>Market Data Providers:</strong> No liability for inaccurate market data</li>
+                            <li><strong>Blockchain Networks:</strong> No control over blockchain network operations</li>
+                            <li><strong>External Links:</strong> No responsibility for external website content</li>
+                        </ul>
+
+                        <h3>10.6 User Responsibility</h3>
+                        <p>Users are responsible for:</p>
+                        <ul>
+                            <li><strong>Investment Decisions:</strong> All trading and investment decisions</li>
+                            <li><strong>Risk Management:</strong> Implementing appropriate risk management strategies</li>
+                            <li><strong>Security Measures:</strong> Maintaining account and device security</li>
+                            <li><strong>Compliance:</strong> Ensuring compliance with applicable laws</li>
+                            <li><strong>Due Diligence:</strong> Conducting proper research before trading</li>
+                        </ul>
+
+                        <h3>10.7 Indemnification</h3>
+                        <p>You agree to indemnify and hold us harmless from:</p>
+                        <ul>
+                            <li><strong>User Violations:</strong> Claims arising from your violation of these Terms</li>
+                            <li><strong>Illegal Activities:</strong> Claims related to your illegal activities</li>
+                            <li><strong>Third-Party Claims:</strong> Claims by third parties related to your use</li>
+                            <li><strong>Negligence:</strong> Claims arising from your negligent acts</li>
+                            <li><strong>Misrepresentation:</strong> Claims related to false information you provide</li>
+                        </ul>
+
+                        <h3>10.8 Jurisdictional Variations</h3>
+                        <div class="highlight">
+                            <p><strong>Local Law Compliance:</strong> Some jurisdictions may not allow certain limitations of liability. In such cases, our liability will be limited to the maximum extent permitted by applicable law.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="termination">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            11. Termination & Account Closure
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>11.1 Voluntary Termination by User</h3>
+                        <p>You may terminate your account at any time:</p>
+                        <ul>
+                            <li><strong>Account Closure Request:</strong> Submit a closure request through your account settings</li>
+                            <li><strong>Fund Withdrawal:</strong> Withdraw all funds before account closure</li>
+                            <li><strong>Outstanding Obligations:</strong> Settle all outstanding obligations and fees</li>
+                            <li><strong>Data Retention:</strong> Some data may be retained for legal and regulatory purposes</li>
+                            <li><strong>Cooling-Off Period:</strong> Account may be suspended before permanent closure</li>
+                        </ul>
+
+                        <h3>11.2 Termination by Zephy</h3>
+                        <p>We may terminate or suspend your account for:</p>
+                        <ul>
+                            <li><strong>Terms Violation:</strong> Breach of these Terms and Conditions</li>
+                            <li><strong>Illegal Activity:</strong> Suspected illegal or fraudulent activity</li>
+                            <li><strong>Compliance Issues:</strong> Failure to comply with KYC/AML requirements</li>
+                            <li><strong>Risk Management:</strong> Risk management or security concerns</li>
+                            <li><strong>Regulatory Requirements:</strong> Compliance with regulatory orders</li>
+                        </ul>
+
+                        <h3>11.3 Immediate Termination</h3>
+                        <div class="risk-notice">
+                            <p><strong>Immediate Termination Circumstances:</strong> We may immediately terminate accounts in cases of:</p>
+                            <ul>
+                                <li><strong>Security Threats:</strong> Immediate security risks to the platform</li>
+                                <li><strong>Legal Orders:</strong> Court orders or regulatory directives</li>
+                                <li><strong>Sanctions Violations:</strong> Violations of sanctions or prohibited person lists</li>
+                                <li><strong>System Abuse:</strong> Attempts to compromise platform security</li>
+                                <li><strong>Fraud:</strong> Confirmed fraudulent activity</li>
+                            </ul>
+                        </div>
+
+                        <h3>11.4 Notice and Opportunity to Cure</h3>
+                        <p>Except in cases requiring immediate action:</p>
+                        <ul>
+                            <li><strong>Advance Notice:</strong> Reasonable advance notice of termination</li>
+                            <li><strong>Opportunity to Cure:</strong> Chance to remedy violations where possible</li>
+                            <li><strong>Explanation:</strong> General explanation of termination reasons</li>
+                            <li><strong>Appeal Process:</strong> Process for appealing termination decisions</li>
+                            <li><strong>Timeline:</strong> Reasonable timeline for response and cure</li>
+                        </ul>
+
+                        <h3>11.5 Effects of Termination</h3>
+                        <p>Upon termination:</p>
+                        <ul>
+                            <li><strong>Service Access:</strong> Immediate loss of access to platform services</li>
+                            <li><strong>Fund Access:</strong> Arrangements for fund withdrawal (subject to legal requirements)</li>
+                            <li><strong>Data Retention:</strong> Data retained as required by law and regulation</li>
+                            <li><strong>Ongoing Obligations:</strong> Certain obligations survive termination</li>
+                            <li><strong>License Termination:</strong> All licenses granted to you terminate</li>
+                        </ul>
+
+                        <h3>11.6 Fund Recovery Process</h3>
+                        <div class="crypto-specific">
+                            <p>For fund recovery after termination:</p>
+                            <ul>
+                                <li><strong>Verification Process:</strong> Identity verification may be required</li>
+                                <li><strong>Compliance Check:</strong> Final compliance and sanctions screening</li>
+                                <li><strong>Outstanding Fees:</strong> Deduction of any outstanding fees or obligations</li>
+                                <li><strong>Withdrawal Methods:</strong> Available withdrawal methods may be limited</li>
+                                <li><strong>Processing Time:</strong> Additional processing time may be required</li>
+                            </ul>
+                        </div>
+
+                        <h3>11.7 Survival of Terms</h3>
+                        <p>The following provisions survive termination:</p>
+                        <ul>
+                            <li><strong>Intellectual Property:</strong> Intellectual property rights and restrictions</li>
+                            <li><strong>Limitation of Liability:</strong> Liability limitations and disclaimers</li>
+                            <li><strong>Indemnification:</strong> Indemnification obligations</li>
+                            <li><strong>Dispute Resolution:</strong> Dispute resolution and governing law provisions</li>
+                            <li><strong>Data Protection:</strong> Data protection and privacy obligations</li>
+                        </ul>
+
+                        <h3>11.8 Reactivation</h3>
+                        <ul>
+                            <li><strong>Voluntary Closure:</strong> Possibility of reactivation for voluntarily closed accounts</li>
+                            <li><strong>Compliance Requirements:</strong> Updated KYC/AML verification may be required</li>
+                            <li><strong>Discretionary Decision:</strong> Reactivation is at our sole discretion</li>
+                            <li><strong>New Terms:</strong> Reactivated accounts subject to current Terms</li>
+                            <li><strong>Historical Data:</strong> Previous account history may not be restored</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Fair Treatment:</strong> We are committed to treating all users fairly during the termination process and will work to ensure legitimate fund recovery while maintaining compliance with all applicable laws and regulations.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="dispute-resolution">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            12. Dispute Resolution & Arbitration
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>12.1 Preferred Resolution Methods</h3>
+                        <p>We encourage resolving disputes through:</p>
+                        <ul>
+                            <li><strong>Direct Communication:</strong> Contact our customer support team first</li>
+                            <li><strong>Internal Escalation:</strong> Escalate to management for complex issues</li>
+                            <li><strong>Mediation:</strong> Voluntary mediation through neutral third parties</li>
+                            <li><strong>Ombudsman Services:</strong> Financial ombudsman services where available</li>
+                            <li><strong>Regulatory Complaints:</strong> Complaints to relevant regulatory authorities</li>
+                        </ul>
+
+                        <h3>12.2 Formal Dispute Process</h3>
+                        <p>For formal disputes:</p>
+                        <ol>
+                            <li><strong>Written Notice:</strong> Provide written notice of the dispute</li>
+                            <li><strong>Good Faith Negotiation:</strong> 60-day period for good faith resolution attempts</li>
+                            <li><strong>Documentation:</strong> Provide relevant documentation and evidence</li>
+                            <li><strong>Response Timeline:</strong> We will respond within reasonable timeframes</li>
+                            <li><strong>Resolution Attempts:</strong> Genuine attempts to resolve the matter</li>
+                        </ol>
+
+                        <h3>12.3 Arbitration Agreement</h3>
+                        <div class="highlight">
+                            <p><strong>Binding Arbitration:</strong> Subject to applicable law, disputes may be resolved through binding arbitration:</p>
+                            <ul>
+                                <li><strong>Arbitration Rules:</strong> Conducted under recognized arbitration rules</li>
+                                <li><strong>Neutral Arbitrator:</strong> Neutral arbitrator selected through established procedures</li>
+                                <li><strong>Location:</strong> Arbitration conducted in a mutually convenient location</li>
+                                <li><strong>Language:</strong> Proceedings conducted in English unless otherwise agreed</li>
+                                <li><strong>Costs:</strong> Arbitration costs shared according to arbitration rules</li>
+                            </ul>
+                        </div>
+
+                        <h3>12.4 Class Action Waiver</h3>
+                        <p>To the extent permitted by law:</p>
+                        <ul>
+                            <li><strong>Individual Disputes:</strong> Disputes must be brought individually</li>
+                            <li><strong>No Class Actions:</strong> Waiver of right to participate in class actions</li>
+                            <li><strong>No Representative Actions:</strong> No representative or collective actions</li>
+                            <li><strong>Individual Relief:</strong> Relief limited to individual circumstances</li>
+                            <li><strong>Severability:</strong> If waiver is unenforceable, arbitration may not apply</li>
+                        </ul>
+
+                        <h3>12.5 Exceptions to Arbitration</h3>
+                        <p>The following disputes are not subject to arbitration:</p>
+                        <ul>
+                            <li><strong>Intellectual Property:</strong> Intellectual property infringement claims</li>
+                            <li><strong>Injunctive Relief:</strong> Claims seeking injunctive or equitable relief</li>
+                            <li><strong>Small Claims:</strong> Disputes within small claims court jurisdiction</li>
+                            <li><strong>Regulatory Matters:</strong> Regulatory compliance and enforcement actions</li>
+                            <li><strong>Criminal Matters:</strong> Criminal law violations</li>
+                        </ul>
+
+                        <h3>12.6 International Dispute Resolution</h3>
+                        <div class="crypto-specific">
+                            <p>For international users:</p>
+                            <ul>
+                                <li><strong>Local Laws:</strong> Local dispute resolution laws may apply</li>
+                                <li><strong>International Arbitration:</strong> International arbitration institutions may be used</li>
+                                <li><strong>Enforcement:</strong> Awards enforceable under international conventions</li>
+                                <li><strong>Jurisdiction Selection:</strong> Mutual agreement on jurisdiction</li>
+                                <li><strong>Cultural Considerations:</strong> Consideration of cultural and legal differences</li>
+                            </ul>
+                        </div>
+
+                        <h3>12.7 Emergency Relief</h3>
+                        <ul>
+                            <li><strong>Temporary Relief:</strong> Courts may grant temporary relief pending arbitration</li>
+                            <li><strong>Asset Preservation:</strong> Orders to preserve assets or evidence</li>
+                            <li><strong>Security Measures:</strong> Emergency security measures</li>
+                            <li><strong>Irreparable Harm:</strong> Relief for irreparable harm</li>
+                            <li><strong>Status Quo:</strong> Maintenance of status quo pending resolution</li>
+                        </ul>
+
+                        <h3>12.8 Limitation Period</h3>
+                        <p>Time limits for bringing disputes:</p>
+                        <ul>
+                            <li><strong>General Limitation:</strong> One year from when dispute arose</li>
+                            <li><strong>Discovery Rule:</strong> From when you knew or should have known of the issue</li>
+                            <li><strong>Statutory Periods:</strong> Longer periods may apply under local law</li>
+                            <li><strong>Waiver:</strong> Failure to bring timely claims may result in waiver</li>
+                            <li><strong>Tolling:</strong> Limitation periods may be tolled during resolution attempts</li>
+                        </ul>
+
+                        <div class="risk-notice">
+                            <p><strong>Legal Rights:</strong> This section may affect your legal rights. Some jurisdictions may not allow certain limitations on dispute resolution. Please consult with legal counsel if you have questions about your rights.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="governing-law">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            13. Governing Law & Jurisdiction
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <h3>13.1 Governing Law</h3>
+                        <p>These Terms are governed by:</p>
+                        <ul>
+                            <li><strong>Primary Jurisdiction:</strong> Laws of [Primary Jurisdiction] without regard to conflict of law principles</li>
+                            <li><strong>Federal Laws:</strong> Applicable federal laws and regulations</li>
+                            <li><strong>International Treaties:</strong> Relevant international agreements and treaties</li>
+                            <li><strong>Regulatory Framework:</strong> Applicable financial services regulations</li>
+                            <li><strong>Consumer Protection:</strong> Applicable consumer protection laws</li>
+                        </ul>
+
+                        <h3>13.2 Jurisdiction and Venue</h3>
+                        <p>For disputes not subject to arbitration:</p>
+                        <ul>
+                            <li><strong>Exclusive Jurisdiction:</strong> Courts of [Primary Jurisdiction] have exclusive jurisdiction</li>
+                            <li><strong>Venue Selection:</strong> Venue in [Specific City/County]</li>
+                            <li><strong>Waiver of Objections:</strong> Waiver of objections to jurisdiction and venue</li>
+                            <li><strong>Service of Process:</strong> Acceptance of service of process</li>
+                            <li><strong>Enforcement:</strong> Enforcement of judgments in other jurisdictions</li>
+                        </ul>
+
+                        <h3>13.3 International Considerations</h3>
+                        <div class="crypto-specific">
+                            <p>For international users:</p>
+                            <ul>
+                                <li><strong>Local Law Compliance:</strong> Users must comply with local laws</li>
+                                <li><strong>Regulatory Variations:</strong> Different regulations may apply in different jurisdictions</li>
+                                <li><strong>Tax Obligations:</strong> Local tax obligations remain with users</li>
+                                <li><strong>Currency Regulations:</strong> Local currency and exchange control laws apply</li>
+                                <li><strong>Data Protection:</strong> Local data protection laws may provide additional rights</li>
+                            </ul>
+                        </div>
+
+                        <h3>13.4 Regulatory Compliance</h3>
+                        <ul>
+                            <li><strong>Financial Regulations:</strong> Compliance with financial services regulations</li>
+                            <li><strong>Securities Laws:</strong> Applicable securities regulations</li>
+                            <li><strong>Anti-Money Laundering:</strong> AML and CTF regulations</li>
+                            <li><strong>Data Protection:</strong> Privacy and data protection regulations</li>
+                            <li><strong>Consumer Protection:</strong> Consumer protection and fair trading laws</li>
+                        </ul>
+
+                        <h3>13.5 Conflict of Laws</h3>
+                        <p>In case of conflicts between different legal requirements:</p>
+                        <ul>
+                            <li><strong>Hierarchy:</strong> Federal law generally supersedes state/local law</li>
+                            <li><strong>Specific vs. General:</strong> Specific regulations supersede general provisions</li>
+                            <li><strong>Most Restrictive:</strong> Most restrictive applicable law may apply</li>
+                            <li><strong>User Location:</strong> User's location may determine applicable law</li>
+                            <li><strong>Service Location:</strong> Location where services are provided</li>
+                        </ul>
+
+                        <h3>13.6 Severability</h3>
+                        <ul>
+                            <li><strong>Invalid Provisions:</strong> Invalid provisions do not affect validity of remaining Terms</li>
+                            <li><strong>Modification:</strong> Invalid provisions may be modified to be enforceable</li>
+                            <li><strong>Partial Enforcement:</strong> Partial enforcement of provisions where possible</li>
+                            <li><strong>Essential Terms:</strong> Core terms remain enforceable</li>
+                            <li><strong>Replacement Provisions:</strong> Replacement of unenforceable provisions</li>
+                        </ul>
+
+                        <h3>13.7 Language and Translation</h3>
+                        <ul>
+                            <li><strong>Official Language:</strong> English is the official language of these Terms</li>
+                            <li><strong>Translations:</strong> Translations provided for convenience only</li>
+                            <li><strong>Conflicts:</strong> English version controls in case of conflicts</li>
+                            <li><strong>Interpretation:</strong> Terms interpreted according to English language meanings</li>
+                            <li><strong>Legal Proceedings:</strong> Legal proceedings conducted in English unless otherwise required</li>
+                        </ul>
+
+                        <div class="highlight">
+                            <p><strong>Legal Advice:</strong> These Terms are complex legal documents. We recommend consulting with qualified legal counsel in your jurisdiction to understand your rights and obligations, especially if you are a professional trader or institutional user.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="contact">
+                    <header class="section-header" onclick="toggleSection(this)" role="button" tabindex="0" aria-expanded="true">
+                        <h2 class="section-title">
+                            14. Contact Information & Support
+                            <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </h2>
+                    </header>
+                    <div class="section-content">
+                        <p>For questions, concerns, or support regarding these Terms and Conditions, please contact us through the appropriate channels below.</p>
+
+                        <div class="contact-info">
+                            <h3>📞 Legal & Compliance Contacts</h3>
+                            
+                            <div class="contact-grid">
+                                <div class="contact-item">
+                                    <h4>⚖️ Legal Department</h4>
+                                    <p><strong>Email:</strong> legal@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 5 business days</p>
+                                    <p>Terms and conditions questions, legal matters, and compliance issues</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>🛡️ Compliance Team</h4>
+                                    <p><strong>Email:</strong> compliance@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 3 business days</p>
+                                    <p>KYC/AML questions, sanctions inquiries, and regulatory matters</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>🎯 Customer Support</h4>
+                                    <p><strong>Email:</strong> support@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 24 hours</p>
+                                    <p>General questions, account issues, and technical support</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>🚨 Dispute Resolution</h4>
+                                    <p><strong>Email:</strong> disputes@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 48 hours</p>
+                                    <p>Formal disputes, complaints, and resolution requests</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>📋 Business Inquiries</h4>
+                                    <p><strong>Email:</strong> business@zephy.com</p>
+                                    <p><strong>Response Time:</strong> 2 business days</p>
+                                    <p>Partnership opportunities, institutional services, and business development</p>
+                                </div>
+
+                                <div class="contact-item">
+                                    <h4>📍 Corporate Address</h4>
+                                    <p><strong>Zephy Technologies Ltd.</strong></p>
+                                    <p>Legal Department</p>
+                                    <p>123 Blockchain Avenue</p>
+                                    <p>Crypto City, CC 12345</p>
+                                    <p>United States</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight" style="margin-top: var(--space-8); background: rgba(255, 255, 255, 0.2);">
+                                <h4>🌍 Regional Legal Contacts</h4>
+                                <ul style="color: white; margin: 0;">
+                                    <li><strong>European Union:</strong> eu-legal@zephy.com</li>
+                                    <li><strong>United Kingdom:</strong> uk-legal@zephy.com</li>
+                                    <li><strong>Canada:</strong> ca-legal@zephy.com</li>
+                                    <li><strong>Australia:</strong> au-legal@zephy.com</li>
+                                    <li><strong>Singapore:</strong> sg-legal@zephy.com</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>14.1 Support Channels</h3>
+                        <ul>
+                            <li><strong>Help Center:</strong> <a href="#">help.zephy.com</a> - Comprehensive self-service support</li>
+                            <li><strong>Live Chat:</strong> Available 24/7 for urgent matters</li>
+                            <li><strong>Phone Support:</strong> Available during business hours for verified users</li>
+                            <li><strong>Community Forum:</strong> <a href="#">community.zephy.com</a> - User community and discussions</li>
+                            <li><strong>Status Page:</strong> <a href="#">status.zephy.com</a> - Real-time platform status updates</li>
+                        </ul>
+
+                        <h3>14.2 Response Expectations</h3>
+                        <ul>
+                            <li><strong>Urgent Matters:</strong> Security issues and account lockouts - immediate response</li>
+                            <li><strong>General Support:</strong> Account questions and technical issues - 24 hours</li>
+                            <li><strong>Legal Matters:</strong> Terms questions and legal issues - 5 business days</li>
+                            <li><strong>Complex Issues:</strong> Investigations and research - up to 10 business days</li>
+                            <li><strong>Regulatory Matters:</strong> Compliance and regulatory issues - as required by law</li>
+                        </ul>
+
+                        <h3>14.3 Information to Include</h3>
+                        <p>When contacting us, please include:</p>
+                        <ul>
+                            <li><strong>Account Information:</strong> Your username or account ID (never include passwords)</li>
+                            <li><strong>Issue Description:</strong> Clear description of the issue or question</li>
+                            <li><strong>Relevant Documentation:</strong> Screenshots, transaction IDs, or other relevant information</li>
+                            <li><strong>Preferred Contact Method:</strong> How you would like us to respond</li>
+                            <li><strong>Urgency Level:</strong> Whether the matter is urgent or routine</li>
+                        </ul>
+
+                        <h3>14.4 Escalation Process</h3>
+                        <ol>
+                            <li><strong>First Contact:</strong> Contact appropriate department directly</li>
+                            <li><strong>Follow-Up:</strong> Allow reasonable time for initial response</li>
+                            <li><strong>Escalation:</strong> Request escalation to supervisor if needed</li>
+                            <li><strong>Management Review:</strong> Escalate to management for unresolved issues</li>
+                            <li><strong>External Resolution:</strong> Consider external dispute resolution if necessary</li>
+                        </ol>
+
+                        <div class="crypto-specific">
+                            <h3>14.5 Emergency Contacts</h3>
+                            <p>For urgent security or compliance matters:</p>
+                            <ul>
+                                <li><strong>Security Incidents:</strong> security@zephy.com - 24/7 monitoring</li>
+                                <li><strong>Fraud Reports:</strong> fraud@zephy.com - immediate investigation</li>
+                                <li><strong>Regulatory Emergencies:</strong> compliance@zephy.com - priority handling</li>
+                                <li><strong>System Outages:</strong> status@zephy.com - real-time updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <div class="fab-container">
+        <button class="fab" onclick="scrollToTop()" id="backToTop" aria-label="Back to top">
+            ↑
+        </button>
+    </div>
+
+    <script>
+        // Enhanced JavaScript functionality
+        
+        // Progress bar functionality
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        }
+
+        // Section toggle functionality
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const section = header.parentElement;
+            const isCollapsed = content.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                content.classList.remove('collapsed');
+                section.classList.remove('collapsed');
+                header.setAttribute('aria-expanded', 'true');
+            } else {
+                content.classList.add('collapsed');
+                section.classList.add('collapsed');
+                header.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Navigation link management
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    currentSection = section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupIntersectionObserver() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        }
+
+        // Keyboard navigation
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close any open modals or overlays
+                    document.querySelectorAll('.section.collapsed').forEach(section => {
+                        const header = section.querySelector('.section-header');
+                        toggleSection(header);
+                    });
+                }
+            });
+
+            // Add keyboard support for section headers
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleSection(this);
+                    }
+                });
+            });
+        }
+
+        // Enhanced scroll management
+        let scrollTimeout;
+        function handleScroll() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                updateProgressBar();
+                updateActiveNavLink();
+                
+                // Show/hide back to top button
+                const backToTop = document.getElementById('backToTop');
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            }, 10);
+        }
+
+        // Navigation link click handlers
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialize all functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupIntersectionObserver();
+            setupKeyboardNavigation();
+            setupNavigation();
+            
+            // Initial calls
+            updateProgressBar();
+            updateActiveNavLink();
+            
+            // Add scroll listener with throttling
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Add resize listener for responsive adjustments
+            window.addEventListener('resize', () => {
+                updateProgressBar();
+                updateActiveNavLink();
+            });
+        });
+    </script>
+</body>
+</html>

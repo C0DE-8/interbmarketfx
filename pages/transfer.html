@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Internal Transfer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Subdued purple palette */
+            --primary: #7c3aed;
+            --primary-light: #9d6bea;
+            --primary-dark: #6025c0;
+            --primary-gradient: linear-gradient(135deg, #7c3aed, #6025c0);
+            --primary-transparent: rgba(124, 58, 37, 0.1);
+            
+            /* Dark theme colors */
+            --background: #0f172a;
+            --card-bg: #1e293b;
+            --card-bg-hover: #263449;
+            --card-bg-secondary: #1a2234;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --input-bg: #0f172a;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            
+            /* Fancy effects */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(148, 163, 184, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            --highlight-glow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 20%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(124, 58, 237, 0.03) 0%, transparent 50%),
+                linear-gradient(225deg, rgba(124, 58, 237, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.025em;
+            position: relative;
+            display: inline-block;
+        }
+
+        header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .app-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 992px) {
+            .app-layout {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--glass-bg);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+            height: 100%;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--glass-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-transparent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background: var(--primary);
+            color: white;
+            box-shadow: var(--highlight-glow);
+        }
+
+        .transfer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .input-group {
+            margin-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background-color: var(--input-bg);
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-transparent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon input {
+            padding-right: 3rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .input-icon:hover {
+            color: var(--primary);
+        }
+
+        .account-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .account-option {
+            background-color: var(--card-bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .account-option:hover {
+            background-color: var(--card-bg-hover);
+            transform: translateY(-2px);
+        }
+
+        .account-option.active {
+            background-color: var(--primary-transparent);
+            border-color: var(--primary);
+        }
+
+        .account-option-icon {
+            width: 28px;
+            height: 28px;
+            margin: 0 auto 0.5rem;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .account-option-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .account-balance {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .account-growth {
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+        }
+
+        .growth-positive {
+            color: var(--success-color);
+        }
+
+        .growth-negative {
+            color: var(--error-color);
+        }
+
+        .transfer-summary {
+            margin-top: 1.25rem;
+            padding: 1.25rem;
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-header {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .summary-value {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .summary-total-label {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .summary-total-value {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary-light);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: all 0.6s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--card-bg-hover);
+            border-color: var(--text-secondary);
+        }
+
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .recent-transfers {
+            margin-top: 1rem;
+        }
+
+        .transfer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .transfer-item {
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .transfer-item:hover {
+            transform: translateX(5px);
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.1);
+        }
+
+        .transfer-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .transfer-type {
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .transfer-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .transfer-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .transfer-accounts {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .transfer-amount {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .transfer-status {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .status-completed {
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            color: var(--warning-color);
+        }
+
+        .status-failed {
+            color: var(--error-color);
+        }
+
+        .account-balances {
+            margin-top: 1rem;
+        }
+
+        .balance-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .balance-item {
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 0.6rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .balance-item:hover {
+            background-color: var(--card-bg-hover);
+            transform: translateX(5px);
+        }
+
+        .balance-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .balance-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .balance-name {
+            font-weight: 500;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .balance-value {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .balance-amount {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .balance-growth {
+            font-size: 0.75rem;
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .quick-transfer {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border-border);
+        }
+
+        .quick-transfer-header {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quick-transfer-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+        }
+
+        .quick-option {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.6rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .quick-option:hover {
+            background-color: var(--card-bg-hover);
+            transform: translateY(-2px);
+            border-color: var(--primary-dark);
+        }
+
+        .quick-option-title {
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-option-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .help-icon {
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+            cursor: help;
+        }
+
+        .swap-icon {
+            width: 36px;
+            height: 36px;
+            background-color: var(--card-bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem auto;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .swap-icon:hover {
+            background-color: var(--primary-transparent);
+            color: var(--primary);
+            transform: rotate(180deg);
+        }
+
+        .validation-message {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .validation-error {
+            color: var(--error-color);
+            display: block;
+        }
+
+        .validation-warning {
+            color: var(--warning-color);
+            display: block;
+        }
+
+        .validation-success {
+            color: var(--success-color);
+            display: block;
+        }
+
+        .security-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .security-indicator {
+            height: 4px;
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .security-indicator-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .security-low {
+            background-color: var(--error-color);
+        }
+
+        .security-medium {
+            background-color: var(--warning-color);
+        }
+
+        .security-high {
+            background-color: var(--success-color);
+        }
+
+        .security-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .accordion {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .accordion-header {
+            padding: 0.75rem 1rem;
+            background-color: var(--card-bg-secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: var(--card-bg-hover);
+        }
+
+        .accordion-title {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background-color: var(--card-bg-secondary);
+        }
+
+        .accordion.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion.active .accordion-content {
+            max-height: 500px; /* Adjust this value as needed */
+        }
+
+        .portfolio-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-info {
+            flex: 1;
+        }
+
+        .portfolio-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .portfolio-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+        }
+
+        .portfolio-change-positive {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .portfolio-change-negative {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+
+        .chart-container {
+            height: 80px;
+            width: 50%;
+            position: relative;
+        }
+
+        .mini-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .time-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            justify-content: flex-start;
+        }
+
+        .time-filter {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            background-color: var(--card-bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-filter.active {
+            background-color: var(--primary-transparent);
+            color: var(--primary-light);
+            border-color: var(--primary-dark);
+        }
+
+        .time-filter:hover {
+            background-color: var(--card-bg-hover);
+        }
+
+        .transfer-limit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .limit-bar {
+            flex: 1;
+            height: 6px;
+            background-color: var(--card-bg);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .limit-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .limit-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .limit-warning {
+            color: var(--warning-color);
+        }
+
+        .limit-danger {
+            color: var(--error-color);
+        }
+
+        .multi-tab {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .confirmation-content {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .confirmation-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background-color: var(--primary-transparent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .confirmation-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .confirmation-message {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation-details {
+            background-color: var(--card-bg-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .confirmation-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .confirmation-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .confirmation-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .confirmation-value {
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-align: right;
+        }
+
+        .security-code {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .security-code-input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+        }
+
+        .security-code-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .security-message {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .card {
+                padding: 1.25rem;
+            }
+            
+            .account-options {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .quick-transfer-options {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-container {
+                flex-direction: column;
+            }
+            
+            .chart-container {
+                width: 100%;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(124, 58, 237, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Crypto Internal Transfer</h1>
+            <p>Move your assets between different account balances</p>
+        </header>
+
+        <div class="app-layout">
+            <!-- Transfer Form Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Transfer Funds</div>
+                        <div class="card-subtitle">Move assets between your accounts</div>
+                    </div>
+                    <div class="card-icon" onclick="window.history.back();" style="cursor: pointer;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m17 3-5 5-5-5"/>
+                        <path d="M7 3h10"/>
+                        <path d="m7 21 5-5 5 5"/>
+                        <path d="M7 21h10"/>
+                        <path d="M3 7h4"/>
+                        <path d="M3 17h4"/>
+                        <path d="M21 7h-4"/>
+                        <path d="M21 17h-4"/>
+                      </svg>
+                    </div>
+                </div>
+
+                <form class="transfer-form" id="transfer-form">
+                    <!-- Asset Selection -->
+                    <div class="input-group">
+                        <label for="currency">Asset</label>
+                        <div class="select-wrapper">
+                            <select id="currency" name="currency">
+                              <option value="BTC">Bitcoin (BTC)</option>
+                              <option value="ETH">Ethereum (ETH)</option>
+                              <option value="USDT">USDT (USDT)</option>
+                              <option value="XRP">Ripple (XRP)</option>
+                              <option value="SOL">Solana (SOL)</option>
+                              <option value="BNB">Binance Coin (BNB)</option>
+                              <option value="Litecoin">Litecoin (LTC)</option>
+                              <option value="BCH">Bitcoin Cash (BCH)</option>
+                              <option value="USDC">USD Coin (USDC)</option>
+                              <option value="TRX">TRON (TRX)</option>
+                              <option value="USD">US Dollar (USD)</option>
+                          </select>
+                        </div>
+                    </div>
+
+                    <!-- From Account Selection -->
+                    <div class="input-group">
+                        <label>From Account</label>
+                        <div class="account-options" id="from-account-options">
+                            <div class="account-option active" data-account="currency_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Main</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option" data-account="wallet">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                        <line x1="2" x2="22" y1="10" y2="10"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Wallet</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option" data-account="earn_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2v20"/>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Earn</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option" data-account="trade_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3v18h18"/>
+                                        <path d="m19 9-5 5-4-4-3 3"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Trading</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Swap Icon -->
+                    <div class="swap-icon" id="swap-accounts">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m17 10-5-5-5 5"/>
+                            <path d="M7 14l5 5 5-5"/>
+                        </svg>
+                    </div>
+
+                    <!-- To Account Selection -->
+                    <div class="input-group">
+                        <label>To Account</label>
+                        <div class="account-options" id="to-account-options">
+                            <div class="account-option" data-account="currency_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 6v6l4 2"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Main</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option" data-account="wallet">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect width="20" height="14" x="2" y="5" rx="2"/>
+                                        <line x1="2" x2="22" y1="10" y2="10"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Wallet</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option active" data-account="earn_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2v20"/>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Earn</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                            <div class="account-option" data-account="trade_balance">
+                                <div class="account-option-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3v18h18"/>
+                                        <path d="m19 9-5 5-4-4-3 3"/>
+                                    </svg>
+                                </div>
+                                <div class="account-option-name">Trading</div>
+                                <div class="account-balance">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="input-group">
+                        <label for="amount">Amount <span class="help-icon tooltip">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 16v-4"/>
+                                <path d="M12 8h.01"/>
+                            </svg>
+                            <span class="tooltip-text" id="amount-tooltip">Enter the amount you want to transfer.</span>
+                        </span></label>
+                        <div class="input-with-icon">
+                            <input type="number" id="amount" name="amount" placeholder="0.00" step="0.00000001" value="0.5">
+                            <div class="input-icon" id="max-amount">MAX</div>
+                        </div>
+                        <div id="amount-validation" class="validation-message"></div>
+                        
+                        <!-- Transfer Limit Indicator -->
+                        <div class="transfer-limit">
+                            <div class="limit-bar">
+                                <div class="limit-fill" style="width: 25%;"></div>
+                            </div>
+                            <div class="limit-text">Daily limit: 0.5/2.0 BTC</div>
+                        </div>
+                    </div>
+
+                    <!-- Security Level -->
+                    <div class="security-level">
+                        <div class="security-indicator">
+                            <div class="security-indicator-fill security-medium" style="width: 60%;"></div>
+                        </div>
+                        <div class="security-text">Security: Medium</div>
+                    </div>
+
+                    <!-- Transfer Summary -->
+                    <!-- <div class="transfer-summary">
+                        <div class="summary-header">Transfer Summary</div>
+                        <div class="summary-row">
+                            <div class="summary-label">Asset</div>
+                            <div class="summary-value">Bitcoin (BTC)</div>
+                        </div>
+                        <div class="summary-row">
+                            <div class="summary-label">From Account</div>
+                            <div class="summary-value">Main</div>
+                        </div>
+                        <div class="summary-row">
+                            <div class="summary-label">To Account</div>
+                            <div class="summary-value">Earn</div>
+                        </div>
+                        <div class="summary-row">
+                            <div class="summary-label">Transfer Fee</div>
+                            <div class="summary-value">0.00 BTC</div>
+                        </div>
+                        <div class="summary-total">
+                            <div class="summary-total-label">Total Amount</div>
+                            <div class="summary-total-value">0.5 BTC</div>
+                        </div>
+                    </div> -->
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary" id="confirm-transfer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6 9 17l-5-5"/>
+                            </svg>
+                            Confirm Transfer
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div>
+                <!-- Portfolio Card - Compact -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Portfolio & Balances</div>
+                            <div class="card-subtitle">Your assets and accounts</div>
+                        </div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v20"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Multi-tab layout -->
+                    <div class="multi-tab">
+                        <div class="tab active" data-tab="portfolio">Portfolio</div>
+                        <div class="tab" data-tab="balances">Balances</div>
+                        <div class="tab" data-tab="transfers">Transfers</div>
+                    </div>
+
+                    <!-- Portfolio Tab -->
+                    <div class="tab-content active" id="portfolio-tab">
+                        <div class="portfolio-container">
+                            <div class="portfolio-info">
+                                <div class="portfolio-value" id="total-portfolio-value">Loading...</div>
+                                <div class="portfolio-change portfolio-change-positive">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m18 15-6-6-6 6"/>
+                                    </svg>
+                                    +4.8%
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <svg class="mini-chart" viewBox="0 0 100 50" preserveAspectRatio="none">
+                                    <path d="M0,50 L10,45 L20,48 L30,42 L40,40 L50,35 L60,30 L70,25 L80,20 L90,15 L100,10" stroke="var(--primary)" stroke-width="2" fill="none" />
+                                    <path d="M0,50 L10,45 L20,48 L30,42 L40,40 L50,35 L60,30 L70,25 L80,20 L90,15 L100,10 L100,50 L0,50" fill="url(#gradient)" fill-opacity="0.2" />
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.5" />
+                                            <stop offset="100%" stop-color="var(--primary)" stop-opacity="0" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="time-filters">
+                            <button class="time-filter" data-days="7">7D</button>
+                            <button class="time-filter active" data-days="30">30D</button>
+                            <button class="time-filter" data-days="90">90D</button>
+                            <button class="time-filter" data-days="365">1Y</button>
+                        </div>
+                        
+                        <!-- Quick Transfer Options -->
+                        <div class="quick-transfer">
+                            <div class="quick-transfer-header">Quick Transfer</div>
+                            <div class="quick-transfer-options">
+                                <div class="quick-option" data-from="currency_balance" data-to="trade_balance">
+                                    <div class="quick-option-title">Main → Trading</div>
+                                    <div class="quick-option-desc">For margin</div>
+                                </div>
+                                <div class="quick-option" data-from="wallet" data-to="currency_balance">
+                                    <div class="quick-option-title">Wallet → Main</div>
+                                    <div class="quick-option-desc">For trading</div>
+                                </div>
+                                <div class="quick-option" data-from="currency_balance" data-to="earn_balance">
+                                    <div class="quick-option-title">Main → Earn</div>
+                                    <div class="quick-option-desc">For staking</div>
+                                </div>
+                                <div class="quick-option" data-from="earn_balance" data-to="wallet">
+                                    <div class="quick-option-title">Earn → Wallet</div>
+                                    <div class="quick-option-desc">For withdrawals</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Balances Tab -->
+                    <div class="tab-content" id="balances-tab">
+                        <div class="balance-list" id="balance-list">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transfers Tab -->
+                    <div class="tab-content" id="transfers-tab">
+                        <div class="transfer-list" id="transfer-history">
+                            <div class="loading">
+                                <div class="loading-spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Confirm Transfer</div>
+                <button class="modal-close" id="close-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m17 3-5 5-5-5"/>
+                            <path d="M7 3h10"/>
+                            <path d="m7 21 5-5 5 5"/>
+                            <path d="M7 21h10"/>
+                            <path d="M3 7h4"/>
+                            <path d="M3 17h4"/>
+                            <path d="M21 7h-4"/>
+                            <path d="M21 17h-4"/>
+                        </svg>
+                    </div>
+                    <div class="confirmation-title">Confirm Your Transfer</div>
+                    <div class="confirmation-message">Please review the details below before confirming.</div>
+                    
+                    <div class="confirmation-details">
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Asset</div>
+                            <div class="confirmation-value" id="confirm-asset">Bitcoin (BTC)</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">From Account</div>
+                            <div class="confirmation-value" id="confirm-from">Main</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">To Account</div>
+                            <div class="confirmation-value" id="confirm-to">Earn</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Amount</div>
+                            <div class="confirmation-value" id="confirm-amount">0.5 BTC</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Fee</div>
+                            <div class="confirmation-value" id="confirm-fee">0.00 BTC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-transfer">Cancel</button>
+                <button class="btn btn-primary" id="execute-transfer">Confirm Transfer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Transfer Successful</div>
+                <button class="modal-close" id="close-success-modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon success-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="confirmation-title">Transfer Completed!</div>
+                    <div class="confirmation-message" id="success-message">Your transfer has been processed successfully.</div>
+                    
+                    <div class="confirmation-details">
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Asset</div>
+                            <div class="confirmation-value" id="success-asset">Bitcoin (BTC)</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">From Account</div>
+                            <div class="confirmation-value" id="success-from">Main</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">To Account</div>
+                            <div class="confirmation-value" id="success-to">Earn</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Amount</div>
+                            <div class="confirmation-value" id="success-amount">0.5 BTC</div>
+                        </div>
+                        <div class="confirmation-row">
+                            <div class="confirmation-label">Transaction ID</div>
+                            <div class="confirmation-value" id="success-transaction-id">TRX123456789</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="success-done-btn">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create API instance
+            const api = axios.create({
+                baseURL: " https://api.dainterbfx.xyz/api/users",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+
+            // DOM Elements
+            const transferForm = document.getElementById('transfer-form');
+            const currencySelect = document.getElementById('currency');
+            const amountInput = document.getElementById('amount');
+            const maxAmountBtn = document.getElementById('max-amount');
+            const swapAccountsBtn = document.getElementById('swap-accounts');
+            const fromAccountOptions = document.querySelectorAll('#from-account-options .account-option');
+            const toAccountOptions = document.querySelectorAll('#to-account-options .account-option');
+            const quickOptions = document.querySelectorAll('.quick-option');
+            const amountValidation = document.getElementById('amount-validation');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const amountTooltip = document.getElementById('amount-tooltip');
+            const totalPortfolioValue = document.getElementById('total-portfolio-value');
+            const balanceList = document.getElementById('balance-list');
+            
+            // Modal Elements
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const cancelTransferBtn = document.getElementById('cancel-transfer');
+            const executeTransferBtn = document.getElementById('execute-transfer');
+            const confirmAsset = document.getElementById('confirm-asset');
+            const confirmFrom = document.getElementById('confirm-from');
+            const confirmTo = document.getElementById('confirm-to');
+            const confirmAmount = document.getElementById('confirm-amount');
+            const confirmFee = document.getElementById('confirm-fee');
+            
+            // State variables
+            let userBalances = {
+                currency_balance: 0,
+                trade_balance: 0,
+                earn_balance: 0,
+                usd_wallet: 0
+            };
+
+            // Transfer charge percentage
+            let transferCharge = 0;
+
+            // Currency conversion rates and symbols
+            const currencies = {
+                'BTC': { symbol: '₿', rate: 65000 },
+                'ETH': { symbol: 'Ξ', rate: 3500 },
+                'USDT': { symbol: '$', rate: 1 },
+                'XRP': { symbol: 'XRP ', rate: 0.52 },
+                'SOL': { symbol: 'SOL ', rate: 148 },
+                'BNB': { symbol: 'BNB ', rate: 590 },
+                'Litecoin': { symbol: 'LTC ', rate: 88 },
+                'BCH': { symbol: 'BCH ', rate: 380 },
+                'USDC': { symbol: '$', rate: 1 },
+                'TRX': { symbol: 'TRX ', rate: 0.12 },
+                'USD': { symbol: '$', rate: 1 }
+            };
+
+            // Fetch user balances
+            async function fetchBalances() {
+                try {
+                    const response = await api.get('/balances');
+                    userBalances = response.data.balances;
+                    
+                    // Update UI with real balances
+                    updateBalancesUI();
+                    
+                    // Calculate total portfolio value
+                    refreshPortfolio();
+                    
+                    // Update tooltip
+                    updateAmountTooltip();
+                    
+                } catch (error) {
+                    console.error('Error fetching balances:', error);
+                    alert('Failed to load balances. Please try again later.');
+                }
+            }
+
+            // Fetch transfer history
+            async function fetchTransferHistory() {
+                try {
+                    const transferHistory = document.getElementById('transfer-history');
+                    transferHistory.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+                    
+                    const response = await api.get('/transfer/history');
+                    const history = response.data.history;
+                    
+                    if (history && history.length > 0) {
+                        transferHistory.innerHTML = '';
+                        
+                        history.forEach(transfer => {
+                            const transferItem = createTransferHistoryItem(transfer);
+                            transferHistory.appendChild(transferItem);
+                        });
+                    } else {
+                        transferHistory.innerHTML = '<div style="text-align: center; padding: 1rem; color: var(--text-secondary);">No transfer history found.</div>';
+                    }
+                } catch (error) {
+                    console.error('Error fetching transfer history:', error);
+                    document.getElementById('transfer-history').innerHTML = 
+                        '<div style="text-align: center; padding: 1rem; color: var(--error-color);">Failed to load transfer history.</div>';
+                }
+            }
+
+            // Fetch transfer charge
+            
+
+            // Create a transfer history item
+            function createTransferHistoryItem(transfer) {
+                // Get friendly names for accounts
+                const accountNames = {
+                    'currency_balance': 'Main',
+                    'wallet': 'Wallet',
+                    'earn_balance': 'Earn',
+                    'trade_balance': 'Trading'
+                };
+                
+                const fromName = accountNames[transfer.from_balance] || transfer.from_balance;
+                const toName = accountNames[transfer.to_balance] || transfer.to_balance;
+                
+                const currencyInfo = currencies[transfer.currency] || { symbol: '$', rate: 1 };
+                
+                // Format date
+                const transferDate = new Date(transfer.transfer_date);
+                const formattedDate = transferDate.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                // Create transfer item element
+                const transferItem = document.createElement('div');
+                transferItem.className = 'transfer-item';
+                transferItem.dataset.transferId = transfer.transfer_id;
+                
+                transferItem.innerHTML = `
+                    <div class="transfer-header">
+                        <div class="transfer-type">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m17 7-9.2 9.2"/>
+                                <path d="M17 17V7H7"/>
+                            </svg>
+                            ${transfer.currency} Transfer
+                        </div>
+                        <div class="transfer-date">${formattedDate}</div>
+                    </div>
+                    <div class="transfer-details">
+                        <div class="transfer-accounts">${fromName} → ${toName}</div>
+                        <div class="transfer-amount">${currencyInfo.symbol}${parseFloat(transfer.amount).toFixed(transfer.currency === 'BTC' || transfer.currency === 'ETH' ? 8 : 2)}</div>
+                    </div>
+                    <div class="transfer-status status-completed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        Completed
+                    </div>
+                `;
+                
+                return transferItem;
+            }
+
+            // Update amount tooltip based on selected account
+            function updateAmountTooltip() {
+                const activeFromAccount = document.querySelector('#from-account-options .account-option.active');
+                if (activeFromAccount) {
+                    const accountType = activeFromAccount.dataset.account;
+                    const accountName = activeFromAccount.querySelector('.account-option-name').textContent;
+                    const balance = accountType === 'wallet' ? userBalances.usd_wallet : userBalances[accountType];
+                    const selectedCurrency = currencySelect.value;
+                    const currencyInfo = currencies[selectedCurrency] || { symbol: '$', rate: 1 };
+                    const convertedBalance = balance / currencyInfo.rate;
+                    
+                    amountTooltip.textContent = `Enter the amount you want to transfer. Your available balance in ${accountName} account is ${currencyInfo.symbol}${convertedBalance.toFixed(selectedCurrency === 'BTC' || selectedCurrency === 'ETH' ? 8 : 2)}.`;
+                }
+            }
+            
+            // Update UI with real balances
+            function updateBalancesUI() {
+                // Update account options in the transfer form
+                updateAccountOptionBalances('from-account-options');
+                updateAccountOptionBalances('to-account-options');
+                
+                // Update balances tab
+                balanceList.innerHTML = '';
+                
+                // Main Balance
+                balanceList.appendChild(createBalanceItem('M', 'Main Account', 'Available for trading', userBalances.currency_balance, '+5.2%'));
+                
+                // Wallet Balance
+                balanceList.appendChild(createBalanceItem('W', 'Wallet', 'For deposits/withdrawals', userBalances.usd_wallet, '+2.1%'));
+                
+                // Earn Balance
+                balanceList.appendChild(createBalanceItem('E', 'Earn Account', 'Earning 5.2% APY', userBalances.earn_balance, '+8.5%'));
+                
+                // Trading Balance
+                balanceList.appendChild(createBalanceItem('T', 'Trading Account', 'For futures and margin', userBalances.trade_balance, '-1.3%'));
+            }
+            
+            // Create a balance item for the balances tab
+            function createBalanceItem(icon, name, description, amount, growth) {
+                const growthClass = growth.startsWith('+') ? 'growth-positive' : 'growth-negative';
+                const selectedCurrency = currencySelect.value;
+                const currencyInfo = currencies[selectedCurrency] || { symbol: '$', rate: 1 };
+                const convertedAmount = amount / currencyInfo.rate;
+                
+                const balanceItem = document.createElement('div');
+                balanceItem.className = 'balance-item';
+                balanceItem.innerHTML = `
+                    <div class="balance-icon">${icon}</div>
+                    <div class="balance-info">
+                        <div class="balance-name">${name}</div>
+                        <div class="balance-value">${description}</div>
+                    </div>
+                    <div>
+                        <div class="balance-amount">${currencyInfo.symbol}${convertedAmount.toFixed(selectedCurrency === 'BTC' || selectedCurrency === 'ETH' ? 8 : 2)}</div>
+                        <span class="balance-growth ${growthClass}">${growth}</span>
+                    </div>
+                `;
+                
+                return balanceItem;
+            }
+            
+            // Update account option balances in the transfer form
+            function updateAccountOptionBalances(containerId) {
+                const container = document.getElementById(containerId);
+                const options = container.querySelectorAll('.account-option');
+                const selectedCurrency = currencySelect.value;
+                const currencyInfo = currencies[selectedCurrency] || { symbol: '$', rate: 1 };
+                
+                options.forEach(option => {
+                    const accountType = option.dataset.account;
+                    const balanceElement = option.querySelector('.account-balance');
+                    
+                    let balance;
+                    if (accountType === 'wallet') {
+                        balance = userBalances.usd_wallet;
+                    } else {
+                        balance = userBalances[accountType];
+                    }
+                    
+                    const convertedBalance = balance / currencyInfo.rate;
+                    balanceElement.textContent = `${currencyInfo.symbol}${convertedBalance.toFixed(selectedCurrency === 'BTC' || selectedCurrency === 'ETH' ? 8 : 2)}`;
+                });
+            }
+            
+            // Setup account selectors
+            function setupAccountSelectors(options) {
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        // Remove active class from all options in the same group
+                        const parent = option.parentElement;
+                        parent.querySelectorAll('.account-option').forEach(opt => {
+                            opt.classList.remove('active');
+                        });
+                        // Add active class to clicked option
+                        option.classList.add('active');
+                        
+                        // Update tooltip if this is a from account
+                        if (parent.id === 'from-account-options') {
+                            const accountType = option.dataset.account;
+                            const accountName = option.querySelector('.account-option-name').textContent;
+                            const balance = accountType === 'wallet' ? userBalances.usd_wallet : userBalances[accountType];
+                            amountTooltip.textContent = `Enter the amount you want to transfer. Your available balance in ${accountName} account is $${balance.toFixed(2)}.`;
+                        }
+                        
+                        // Update summary
+                        updateSummary().then(() => validateForm());
+                    });
+                });
+            }
+            
+            setupAccountSelectors(fromAccountOptions);
+            setupAccountSelectors(toAccountOptions);
+            
+            // Swap accounts button
+            swapAccountsBtn.addEventListener('click', () => {
+                const fromActive = document.querySelector('#from-account-options .account-option.active');
+                const toActive = document.querySelector('#to-account-options .account-option.active');
+                
+                if (fromActive && toActive) {
+                    const fromAccount = fromActive.getAttribute('data-account');
+                    const toAccount = toActive.getAttribute('data-account');
+                    
+                    // Swap selections
+                    document.querySelector(`#from-account-options [data-account="${toAccount}"]`).classList.add('active');
+                    document.querySelector(`#to-account-options [data-account="${fromAccount}"]`).classList.add('active');
+                    
+                    fromActive.classList.remove('active');
+                    toActive.classList.remove('active');
+                    
+                    // Update tooltip
+                    const newFromActive = document.querySelector('#from-account-options .account-option.active');
+                    const accountType = newFromActive.dataset.account;
+                    const accountName = newFromActive.querySelector('.account-option-name').textContent;
+                    const balance = accountType === 'wallet' ? userBalances.usd_wallet : userBalances[accountType];
+                    amountTooltip.textContent = `Enter the amount you want to transfer. Your available balance in ${accountName} account is $${balance.toFixed(2)}.`;
+                    
+                    // Update summary
+                    updateSummary().then(() => validateForm());
+                }
+            });
+            
+            // Max amount button
+            maxAmountBtn.addEventListener('click', () => {
+                const fromActive = document.querySelector('#from-account-options .account-option.active');
+                if (fromActive) {
+                    const accountType = fromActive.dataset.account;
+                    const balance = accountType === 'wallet' ? userBalances.usd_wallet : userBalances[accountType];
+                    amountInput.value = balance;
+                    updateSummary().then(() => {
+                        validateForm();
+                        updateSecurityLevel();
+                    });
+                }
+            });
+            
+            // Quick transfer options
+            quickOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const fromAccount = option.getAttribute('data-from');
+                    const toAccount = option.getAttribute('data-to');
+                    
+                    // Set from account
+                    document.querySelector(`#from-account-options [data-account="${fromAccount}"]`).click();
+                    
+                    // Set to account
+                    document.querySelector(`#to-account-options [data-account="${toAccount}"]`).click();
+                });
+            });
+            
+            // Tab navigation
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                    
+                    // If switching to the balances tab, refresh the balances
+                    if (tabId === 'balances') {
+                        updateBalancesUI();
+                    }
+                    
+                    // If switching to the transfers tab, fetch transfer history
+                    if (tabId === 'transfers') {
+                        fetchTransferHistory();
+                    }
+                });
+            });
+            
+            // Input event listeners
+            currencySelect.addEventListener('change', () => {
+                updateSummary().then(() => validateForm());
+            });
+            
+            amountInput.addEventListener('input', () => {
+                updateSummary().then(() => {
+                    validateForm();
+                    updateSecurityLevel();
+                });
+            });
+            
+            // Modal event listeners
+            closeModalBtn.addEventListener('click', () => {
+                confirmationModal.classList.remove('active');
+            });
+            
+            cancelTransferBtn.addEventListener('click', () => {
+                confirmationModal.classList.remove('active');
+            });
+            
+            // Form submission
+            transferForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    // Show confirmation modal
+                    updateConfirmationModal();
+                    confirmationModal.classList.add('active');
+                }
+            });
+            
+
+            executeTransferBtn.addEventListener('click', async () => {
+                try {
+                    // Get form values
+                    const currency = currencySelect.value;
+                    const from = document.querySelector('#from-account-options .account-option.active').dataset.account;
+                    const to = document.querySelector('#to-account-options .account-option.active').dataset.account;
+                    const amount = parseFloat(amountInput.value);
+                    
+                    // Calculate fee based on real transfer charge percentage
+                    const fee = (amount * transferCharge / 100);
+                    
+                    // Disable button and show loading state
+                    executeTransferBtn.disabled = true;
+                    executeTransferBtn.textContent = 'Processing...';
+                    
+                    // Call API with real fee data
+                    const response = await api.post('/transfer', {
+                        from,
+                        to,
+                        amount,
+                        currency,
+                        fee
+                    });
+                    
+                    // Close confirmation modal
+                    confirmationModal.classList.remove('active');
+                    
+                    // Update success modal with transfer details
+                    document.getElementById('success-asset').textContent = currencySelect.options[currencySelect.selectedIndex].text;
+                    document.getElementById('success-from').textContent = document.querySelector('#from-account-options .account-option.active').querySelector('.account-option-name').textContent;
+                    document.getElementById('success-to').textContent = document.querySelector('#to-account-options .account-option.active').querySelector('.account-option-name').textContent;
+                    document.getElementById('success-amount').textContent = `${amount.toFixed(currency === 'BTC' || currency === 'ETH' ? 8 : 2)} ${currency}`;
+                    document.getElementById('success-transaction-id').textContent = response.data.transaction_id || 'TRX' + Math.floor(Math.random() * 1000000000);
+                    document.getElementById('success-message').textContent = response.data.message || 'Your transfer has been processed successfully.';
+                    
+                    // Show success modal
+                    document.getElementById('success-modal').classList.add('active');
+                    
+                    // Reset form
+                    amountInput.value = '';
+                    
+                    // Refresh balances and transfer history
+                    await fetchBalances();
+                    
+                    // Update the quick transfer options to reflect new balance states
+                    updateQuickTransferOptions();
+                    
+                } catch (error) {
+                    // Show error message
+                    const errorMessage = error.response?.data?.error || 'An error occurred during the transfer.';
+                    alert(errorMessage);
+                    
+                    // Close confirmation modal
+                    confirmationModal.classList.remove('active');
+                } finally {
+                    // Reset button state
+                    executeTransferBtn.disabled = false;
+                    executeTransferBtn.textContent = 'Confirm Transfer';
+                }
+            });
+            
+            // Helper functions
+            async function updateSummary() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const currency = currencySelect.options[currencySelect.selectedIndex].text;
+                const currencyCode = currencySelect.value;
+                const fromActive = document.querySelector('#from-account-options .account-option.active');
+                const toActive = document.querySelector('#to-account-options .account-option.active');
+                
+                const fromAccount = fromActive ? fromActive.querySelector('.account-option-name').textContent : '';
+                const toAccount = toActive ? toActive.querySelector('.account-option-name').textContent : '';
+                
+                // Fetch real-time transfer charge data
+                try {
+                    const response = await api.get('/get-transfer-charge');
+                    transferCharge = response.data.transfer_charge;
+                    
+                    // Calculate fee based on real-time transfer charge percentage
+                    const fee = (amount * transferCharge / 100);
+                    const feeDisplay = fee.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2);
+                    const total = amount; // Total amount being transferred
+                    
+                    // Update summary elements with real data
+                    document.querySelector('.summary-row:nth-child(1) .summary-value').textContent = currency;
+                    document.querySelector('.summary-row:nth-child(2) .summary-value').textContent = fromAccount;
+                    document.querySelector('.summary-row:nth-child(3) .summary-value').textContent = toAccount;
+                    document.querySelector('.summary-row:nth-child(4) .summary-value').textContent = `${feeDisplay} ${currencyCode}`;
+                    document.querySelector('.summary-total-value').textContent = `${total.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2)} ${currencyCode}`;
+                } catch (error) {
+                    console.error('Error fetching transfer charge:', error);
+                    // Use the last known transfer charge if available, or default to 0
+                    const fee = (amount * (transferCharge || 0) / 100);
+                    const feeDisplay = fee.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2);
+                    const total = amount;
+                    
+                    // Update summary elements with available data
+                    document.querySelector('.summary-row:nth-child(1) .summary-value').textContent = currency;
+                    document.querySelector('.summary-row:nth-child(2) .summary-value').textContent = fromAccount;
+                    document.querySelector('.summary-row:nth-child(3) .summary-value').textContent = toAccount;
+                    document.querySelector('.summary-row:nth-child(4) .summary-value').textContent = `${feeDisplay} ${currencyCode}`;
+                    document.querySelector('.summary-total-value').textContent = `${total.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2)} ${currencyCode}`;
+                }
+            }
+            
+            function validateForm() {
+                const amount = parseFloat(amountInput.value);
+                const fromActive = document.querySelector('#from-account-options .account-option.active');
+                const toActive = document.querySelector('#to-account-options .account-option.active');
+                
+                // Reset validation message
+                amountValidation.textContent = '';
+                amountValidation.className = 'validation-message';
+                
+                // Check if amount is valid
+                if (isNaN(amount) || amount <= 0) {
+                    amountValidation.textContent = 'Please enter a valid amount greater than zero.';
+                    amountValidation.classList.add('validation-error');
+                    return false;
+                }
+                
+                // Check if from and to accounts are different
+                if (fromActive && toActive && fromActive.getAttribute('data-account') === toActive.getAttribute('data-account')) {
+                    amountValidation.textContent = 'From and To accounts cannot be the same.';
+                    amountValidation.classList.add('validation-error');
+                    return false;
+                }
+                
+                // Check if amount is within balance
+                if (fromActive) {
+                    const accountType = fromActive.dataset.account;
+                    const balance = accountType === 'wallet' ? userBalances.usd_wallet : userBalances[accountType];
+                    
+                    if (amount > balance) {
+                        amountValidation.textContent = 'Insufficient balance for this transfer.';
+                        amountValidation.classList.add('validation-error');
+                        return false;
+                    }
+                    
+                    // Show warning if amount is more than 80% of balance
+                    if (amount > balance * 0.8) {
+                        amountValidation.textContent = 'Warning: You are transferring more than 80% of your balance.';
+                        amountValidation.classList.add('validation-warning');
+                    }
+                }
+                
+                return true;
+            }
+            
+            function updateSecurityLevel() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const securityFill = document.querySelector('.security-indicator-fill');
+                const securityText = document.querySelector('.security-text');
+                
+                // Remove all classes
+                securityFill.classList.remove('security-low', 'security-medium', 'security-high');
+                
+                // Set security level based on amount
+                if (amount > 1.0) {
+                    securityFill.style.width = '30%';
+                    securityFill.classList.add('security-low');
+                    securityText.textContent = 'Security: Low';
+                } else if (amount > 0.5) {
+                    securityFill.style.width = '60%';
+                    securityFill.classList.add('security-medium');
+                    securityText.textContent = 'Security: Medium';
+                } else {
+                    securityFill.style.width = '100%';
+                    securityFill.classList.add('security-high');
+                    securityText.textContent = 'Security: High';
+                }
+            }
+            
+            function updateConfirmationModal() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const currency = currencySelect.options[currencySelect.selectedIndex].text;
+                const currencyCode = currencySelect.value;
+                const fromActive = document.querySelector('#from-account-options .account-option.active');
+                const toActive = document.querySelector('#to-account-options .account-option.active');
+                
+                const fromAccount = fromActive ? fromActive.querySelector('.account-option-name').textContent : '';
+                const toAccount = toActive ? toActive.querySelector('.account-option-name').textContent : '';
+                
+                // Calculate fee based on transfer charge percentage
+                const fee = (amount * transferCharge / 100);
+                const feeDisplay = fee.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2);
+                
+                // Update confirmation modal with real data
+                confirmAsset.textContent = currency;
+                confirmFrom.textContent = fromAccount;
+                confirmTo.textContent = toAccount;
+                confirmAmount.textContent = `${amount.toFixed(currencyCode === 'BTC' || currencyCode === 'ETH' ? 8 : 2)} ${currencyCode}`;
+                confirmFee.textContent = `${feeDisplay} ${currencyCode}`;
+            }
+            
+            function addTransferToHistory(from, to, amount, currency) {
+                // Get friendly names for accounts
+                const accountNames = {
+                    'currency_balance': 'Main',
+                    'wallet': 'Wallet',
+                    'earn_balance': 'Earn',
+                    'trade_balance': 'Trading'
+                };
+                
+                const fromName = accountNames[from] || from;
+                const toName = accountNames[to] || to;
+                
+                const currencyInfo = currencies[currency] || { symbol: '$', rate: 1 };
+                
+                // Create new transfer item
+                const transferItem = document.createElement('div');
+                transferItem.className = 'transfer-item';
+                
+                // Get current date and time
+                const now = new Date();
+                const formattedDate = now.toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true,
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                transferItem.innerHTML = `
+                    <div class="transfer-header">
+                        <div class="transfer-type">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m17 7-9.2 9.2"/>
+                                <path d="M17 17V7H7"/>
+                            </svg>
+                            ${currency} Transfer
+                        </div>
+                        <div class="transfer-date">${formattedDate}</div>
+                    </div>
+                    <div class="transfer-details">
+                        <div class="transfer-accounts">${fromName} → ${toName}</div>
+                        <div class="transfer-amount">${currencyInfo.symbol}${amount.toFixed(currency === 'BTC' || currency === 'ETH' ? 8 : 2)} ${currency}</div>
+                    </div>
+                    <div class="transfer-status status-completed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        Completed
+                    </div>
+                `;
+                
+                // Add to transfer history
+                const transferHistory = document.getElementById('transfer-history');
+                transferHistory.insertBefore(transferItem, transferHistory.firstChild);
+                
+                // Switch to transfers tab to show the new transfer
+                document.querySelector('.tab[data-tab="transfers"]').click();
+            }
+            
+            function refreshPortfolio() {
+                const selectedCurrency = currencySelect.value;
+                const currencyInfo = currencies[selectedCurrency] || { symbol: '$', rate: 1 };
+                
+                // Update portfolio value
+                const totalValue = Object.values(userBalances).reduce((sum, balance) => sum + balance, 0);
+                const convertedValue = totalValue / currencyInfo.rate;
+                totalPortfolioValue.innerHTML = `${currencyInfo.symbol}${convertedValue.toFixed(selectedCurrency === 'BTC' || selectedCurrency === 'ETH' ? 8 : 2)} <span style="font-size: 0.8rem; opacity: 0.7">${selectedCurrency}</span>`;
+                
+                // Update balances tab with new currency
+                updateBalancesUI();
+            }
+
+            // Add event listener to currency select to update portfolio
+            currencySelect.addEventListener('change', refreshPortfolio);
+
+            // Update quick transfer options based on available balances
+            function updateQuickTransferOptions() {
+                quickOptions.forEach(option => {
+                    const fromAccount = option.getAttribute('data-from');
+                    const fromAccountBalance = fromAccount === 'wallet' ? userBalances.usd_wallet : userBalances[fromAccount];
+                    
+                    // Disable options where the from account has insufficient balance
+                    if (fromAccountBalance <= 0) {
+                        option.classList.add('disabled');
+                        option.style.opacity = '0.5';
+                        option.style.cursor = 'not-allowed';
+                    } else {
+                        option.classList.remove('disabled');
+                        option.style.opacity = '1';
+                        option.style.cursor = 'pointer';
+                    }
+                });
+            }
+            
+
+            // Success modal event listeners
+            const successModal = document.getElementById('success-modal');
+            const closeSuccessModalBtn = document.getElementById('close-success-modal');
+            const successDoneBtn = document.getElementById('success-done-btn');
+
+            closeSuccessModalBtn.addEventListener('click', () => {
+                successModal.classList.remove('active');
+                // Switch to transfers tab to show the new transfer
+                document.querySelector('.tab[data-tab="transfers"]').click();
+            });
+
+            successDoneBtn.addEventListener('click', () => {
+                successModal.classList.remove('active');
+                // Switch to transfers tab to show the new transfer
+                document.querySelector('.tab[data-tab="transfers"]').click();
+            });
+
+            // Initialize
+            fetchBalances();
+            updateSummary().then(() => {
+                updateSecurityLevel();
+                validateForm();
+            });
+
+            // Initial fetch of transfer history if transfers tab is active
+            if (document.querySelector('.tab[data-tab="transfers"]').classList.contains('active')) {
+                fetchTransferHistory();
+            }
+        });
+    </script>
+    <script src="../js/withAuth.js"></script>
+</body>
+</html>

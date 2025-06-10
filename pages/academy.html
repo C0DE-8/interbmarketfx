@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Academy - Professional Learning Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background: #121218;
+            --surface: #121218;
+            --surface-hover: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #7a7ce1 100%);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .balance-card {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Course Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .course-card {
+            background: var(--surface);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .course-banner {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--gradient-primary);
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .course-author {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .course-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-available {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-purchased {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .course-details {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .detail-section {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-disabled {
+            background: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .question-card {
+            background: var(--background);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .options-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background: #eff6ff;
+        }
+
+        .option-radio {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            position: relative;
+        }
+
+        .option-item.selected .option-radio {
+            border-color: var(--primary-color);
+        }
+
+        .option-item.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Score Display */
+        .score-card {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-percentage {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+
+        /* Loading States */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--surface);
+            border-radius: 0.5rem;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: 400px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast-error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        .toast-warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                max-height: calc(100vh - 2rem);
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .course-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-container {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .course-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Trading Academy
+            </div>
+            <div class="user-info">
+                <div class="balance-card">
+                    <i class="fas fa-wallet"></i>
+                    Balance: $<span id="userBalance">0.00</span>
+                </div>
+                <a class="btn btn-outline" href="dashboard.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Trading Academy</h1>
+            <p class="page-subtitle">
+                Master the art of trading with our comprehensive courses taught by industry experts. 
+                Learn at your own pace and become a successful trader.
+            </p>
+        </div>
+
+        <!-- Courses Grid -->
+        <div id="coursesGrid" class="courses-grid">
+            <!-- Courses will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Course Details Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title">Course Details</h2>
+                <button class="close-btn" onclick="closeCourseModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="courseDetailsContent">
+                    <!-- Course details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Course Quiz</h2>
+                <button class="close-btn" onclick="closeQuizModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="quizContent">
+                    <!-- Quiz content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // ————— Axios instance —————
+        const userApi = axios.create({
+            baseURL: "https://new.api.zephyrequi.com/api/users",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        // Global State
+        let currentCourse = null;
+        let purchasedCourses = new Set();
+        let quizAnswers = {};
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!localStorage.getItem("token")) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            await loadUserBalance();
+            await loadCourses();
+        });
+
+        // Load User Balance
+        async function loadUserBalance() {
+            try {
+                const response = await userApi.get('/currency-balance');
+                if (response.data.currency_balance !== undefined) {
+                    document.getElementById('userBalance').textContent = 
+                        parseFloat(response.data.currency_balance).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                }
+            } catch (error) {
+                console.error('Error loading user balance:', error);
+            }
+        }
+
+        // Load Courses
+        async function loadCourses() {
+            try {
+                showLoading('coursesGrid');
+                const response = await userApi.get('/courses');
+                
+                if (response.data.success) {
+                    displayCourses(response.data.courses);
+                } else {
+                    showError('Failed to load courses');
+                }
+            } catch (error) {
+                console.error('Error loading courses:', error);
+                showError('Error loading courses');
+            }
+        }
+
+        // Display Courses
+        function displayCourses(courses) {
+            const grid = document.getElementById('coursesGrid');
+            
+            if (courses.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-graduation-cap text-6xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2">No Courses Available</h3>
+                        <p class="text-gray-500">Check back later for new courses.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = courses.map(course => `
+                <div class="course-card" onclick="openCourseDetails(${course.id})">
+                    <div class="course-banner" style="background-image: url('${course.bannerImg ? `https://new.api.zephyrequi.com${course.bannerImg}` : '/placeholder.svg?height=200&width=350&text=Course+Banner'}')"></div>
+                    <div class="course-content">
+                        <h3 class="course-title">${course.title}</h3>
+                        <p class="course-author">
+                            <i class="fas fa-user"></i>
+                            ${course.author_name}
+                        </p>
+                        <div class="course-price">
+                            $${parseFloat(course.price).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}
+                        </div>
+                        <span class="course-status status-available">
+                            <i class="fas fa-shopping-cart"></i>
+                            Available
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open Course Details Modal
+        async function openCourseDetails(courseId) {
+            try {
+                showLoading('courseDetailsContent');
+                document.getElementById('courseModal').classList.add('active');
+                
+                const response = await userApi.get(`/courses/${courseId}`);
+                
+                if (response.data.success) {
+                    currentCourse = response.data.course;
+                    displayCourseDetails(response.data.course);
+                } else {
+                    showError('Failed to load course details');
+                }
+            } catch (error) {
+                console.error('Error loading course details:', error);
+                showError('Error loading course details');
+            }
+        }
+
+        // Display Course Details
+        function displayCourseDetails(course) {
+            const content = document.getElementById('courseDetailsContent');
+            const isPurchased = course.link !== undefined; // If link exists, user has purchased
+            
+            document.getElementById('modalTitle').textContent = course.title;
+            
+            content.innerHTML = `
+                <div class="course-details">
+                    <div class="detail-section">
+                        <h3 class="section-title">Course Information</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <strong>Author:</strong> ${course.author_name || 'Unknown'}
+                            </div>
+                            <div>
+                                <strong>Price:</strong> $${parseFloat(course.price).toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${isPurchased ? `
+                        <div class="detail-section">
+                            <h3 class="section-title">Course Access</h3>
+                            <p class="text-green-600 mb-4">
+                                <i class="fas fa-check-circle"></i>
+                                You have purchased this course!
+                            </p>
+                            <div class="flex gap-3">
+                                <button class="btn btn-primary" onclick="accessCourse(${course.id})">
+                                    <i class="fas fa-play"></i>
+                                    Access Course
+                                </button>
+                                <button class="btn btn-outline" onclick="startQuiz(${course.id})">
+                                    <i class="fas fa-question-circle"></i>
+                                    Take Quiz
+                                </button>
+                                <button class="btn btn-outline" onclick="viewScore(${course.id})">
+                                    <i class="fas fa-chart-line"></i>
+                                    View Score
+                                </button>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="detail-section">
+                            <h3 class="section-title">Purchase Course</h3>
+                            <p class="text-gray-600 mb-4">
+                                Get lifetime access to this course and start learning today!
+                            </p>
+                            <button class="btn btn-primary" onclick="purchaseCourse(${course.id})">
+                                <i class="fas fa-shopping-cart"></i>
+                                Purchase for $${parseFloat(course.price).toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
+                            </button>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // Purchase Course
+        async function purchaseCourse(courseId) {
+            try {
+                const response = await userApi.post(`/courses/${courseId}/pay`, {});
+                
+                if (response.data.success) {
+                    showSuccess('Course purchased successfully!');
+                    await loadUserBalance(); // Refresh balance
+                    await openCourseDetails(courseId); // Refresh course details
+                } else {
+                    showError(response.data.message || 'Failed to purchase course');
+                }
+            } catch (error) {
+                console.error('Error purchasing course:', error);
+                showError('Error purchasing course');
+            }
+        }
+
+        // Access Course - Play video inline instead of opening external link
+        async function accessCourse(courseId) {
+            try {
+                const response = await userApi.get(`/courses/${courseId}/link`);
+                
+                if (response.data.success && response.data.link) {
+                    displayCourseVideo(response.data.link);
+                } else {
+                    showError('Course link not available');
+                }
+            } catch (error) {
+                console.error('Error accessing course:', error);
+                showError('Error accessing course');
+            }
+        }
+
+        // Add new function to display course video
+        function displayCourseVideo(videoUrl) {
+            const content = document.getElementById('courseDetailsContent');
+            
+            // Extract video ID from YouTube URL if it's a YouTube link
+            let embedUrl = videoUrl;
+            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                const videoId = extractYouTubeId(videoUrl);
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            content.innerHTML = `
+                <div class="video-container">
+                    <h3 class="section-title mb-4">Course Video</h3>
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="${embedUrl}" 
+                            frameborder="0" 
+                            allowfullscreen
+                            class="course-video"
+                        ></iframe>
+                    </div>
+                    <div class="mt-4 flex gap-3">
+                        <button class="btn btn-outline" onclick="openCourseDetails(${currentCourse.id})">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Course
+                        </button>
+                        <button class="btn btn-primary" onclick="startQuiz(${currentCourse.id})">
+                            <i class="fas fa-question-circle"></i>
+                            Take Quiz
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper function to extract YouTube video ID
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        // Start Quiz
+        async function startQuiz(courseId) {
+            try {
+                showLoading('quizContent');
+                document.getElementById('quizModal').classList.add('active');
+                
+                const response = await userApi.get(`/courses/${courseId}/questions`);
+                
+                if (response.data.success) {
+                    displayQuiz(response.data.questions, courseId);
+                } else {
+                    showError('Failed to load quiz questions');
+                    closeQuizModal();
+                }
+            } catch (error) {
+                console.error('Error loading quiz:', error);
+                showError('Error loading quiz');
+                closeQuizModal();
+            }
+        }
+
+        // Display Quiz
+        function displayQuiz(questions, courseId, isRetry = false) {
+            const content = document.getElementById('quizContent');
+            quizAnswers = {};
+            
+            content.innerHTML = `
+                <div class="quiz-container">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-2">
+                            ${isRetry ? 'Retry Wrong Questions' : 'Course Quiz'}
+                        </h3>
+                        <p class="text-gray-600">
+                            ${isRetry ? 'Answer the questions you got wrong previously.' : 'Answer all questions and submit to get your score.'}
+                        </p>
+                    </div>
+                    
+                    ${questions.map((question, index) => `
+                        <div class="question-card">
+                            <div class="question-title">
+                                Question ${index + 1}: ${question.question}
+                            </div>
+                            <div class="options-list">
+                                ${['A', 'B', 'C', 'D'].map(option => `
+                                    <div class="option-item" onclick="selectOption(${question.id}, '${option}')">
+                                        <div class="option-radio"></div>
+                                        <span>${question['option' + option]}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                    
+                    <div class="text-center mt-6">
+                        <button class="btn btn-primary" onclick="submitQuiz(${courseId})">
+                            <i class="fas fa-check"></i>
+                            ${isRetry ? 'Submit Retry' : 'Submit Quiz'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Select Quiz Option
+        function selectOption(questionId, option) {
+            // Remove previous selection
+            document.querySelectorAll(`[onclick*="${questionId}"]`).forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.closest('.option-item').classList.add('selected');
+            
+            // Store answer
+            quizAnswers[questionId] = option;
+        }
+
+        // Submit Quiz
+        async function submitQuiz(courseId) {
+            try {
+                const answers = Object.entries(quizAnswers).map(([questionId, selectedOption]) => ({
+                    questionId: parseInt(questionId),
+                    selectedOption
+                }));
+                
+                if (answers.length === 0) {
+                    showWarning('Please answer at least one question');
+                    return;
+                }
+                
+                const response = await userApi.post(`/courses/${courseId}/submit-answers`, { answers });
+        
+                if (response.data.success) {
+                    // All questions answered correctly
+                    showSuccess('Congratulations! You have answered all questions correctly!');
+                    displayQuizResults(response.data, true);
+                } else {
+                    // Some answers are wrong, show partial results
+                    showWarning('Some answers are still wrong. Please review and try again.');
+                    displayPartialResults(response.data);
+                }
+            } catch (error) {
+                console.error('Error submitting quiz:', error);
+                showError('Error submitting quiz');
+            }
+        }
+
+        // Display Quiz Results
+        function displayQuizResults(results) {
+            const content = document.getElementById('quizContent');
+            const percentage = Math.round((results.score / results.totalQuestions) * 100);
+            
+            content.innerHTML = `
+                <div class="score-card">
+                    <div class="score-title">Quiz Results</div>
+                    <div class="score-value">${results.score}/${results.totalQuestions}</div>
+                    <div class="score-percentage">${percentage}% Score</div>
+                    <div class="mt-4">
+                        <button class="btn btn-primary" onclick="closeQuizModal()">
+                            <i class="fas fa-check"></i>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Display Partial Quiz Results (when some answers are wrong)
+        function displayPartialResults(results) {
+            const content = document.getElementById('quizContent');
+            const percentage = Math.round((results.score / results.totalQuestions) * 100);
+            
+            content.innerHTML = `
+                <div class="quiz-container">
+                    <div class="score-card" style="background: var(--gradient-secondary);">
+                        <div class="score-title">Quiz Progress</div>
+                        <div class="score-value">${results.score}/${results.totalQuestions}</div>
+                        <div class="score-percentage">${percentage}% Complete</div>
+                        <p class="mt-4 text-sm opacity-90">
+                            ${results.message}
+                        </p>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <h4 class="section-title">Review Your Answers</h4>
+                        <div class="space-y-3">
+                            ${results.results.map(result => `
+                                <div class="flex items-center gap-3 p-3 rounded-lg ${result.correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                    <i class="fas fa-${result.correct ? 'check-circle' : 'times-circle'}"></i>
+                                    <span>Question ${result.questionId}: ${result.correct ? 'Correct' : 'Incorrect'}</span>
+                                    ${result.message ? `<span class="text-sm opacity-75">(${result.message})</span>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-6 space-x-3">
+                        <button class="btn btn-primary" onclick="retryWrongQuestions(${results.wrongQuestions})">
+                            <i class="fas fa-redo"></i>
+                            Retry Wrong Questions
+                        </button>
+                        <button class="btn btn-outline" onclick="closeQuizModal()">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Retry only the wrong questions
+        async function retryWrongQuestions(wrongQuestionIds) {
+            try {
+                showLoading('quizContent');
+                
+                const response = await userApi.get(`/courses/${currentCourse.id}/questions`);
+                
+                if (response.data.success) {
+                    // Filter to show only wrong questions
+                    const wrongQuestions = response.data.questions.filter(q => 
+                        wrongQuestionIds.includes(q.id)
+                    );
+                    displayQuiz(wrongQuestions, currentCourse.id, true);
+                } else {
+                    showError('Failed to load questions');
+                    closeQuizModal();
+                }
+            } catch (error) {
+                console.error('Error loading retry questions:', error);
+                showError('Error loading questions');
+                closeQuizModal();
+            }
+        }
+
+        // Modal Controls
+        function closeCourseModal() {
+            document.getElementById('courseModal').classList.remove('active');
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quizModal').classList.remove('active');
+        }
+
+        // Navigation
+        function goBack() {
+            window.history.back();
+        }
+
+        // Utility Functions
+        function showLoading(elementId) {
+            document.getElementById(elementId).innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            `;
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            showToast(message, 'success');
+        }
+
+        function showError(message) {
+            showToast(message, 'error');
+        }
+
+        function showWarning(message) {
+            showToast(message, 'warning');
+        }
+
+        function showInfo(message) {
+            showToast(message, 'success');
+        }
+
+        // Close modals on outside click
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+    </script>
+       <script src="../js/withAuth.js"></script>
+</body>
+</html>

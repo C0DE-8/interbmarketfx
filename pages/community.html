@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - dainterbfx Trading Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --card-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --gradient-start: #3b82f6;
+            --gradient-end: #8b5cf6;
+            --my-message-bg: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --other-message-bg: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .chat-subtitle {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .refresh-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .refresh-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .online-indicator {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, var(--primary-bg), var(--secondary-bg));
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            animation: messageSlideIn 0.3s ease;
+            word-wrap: break-word;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .message:hover {
+            transform: translateY(-1px);
+        }
+
+        .message.self {
+            background: var(--my-message-bg);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .message.self:hover {
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .message.other {
+            background-color: var(--other-message-bg);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.other:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-sender {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        .message.self .message-sender {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .message.other .message-sender {
+            color: var(--accent-color);
+        }
+
+        .message-content {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .message-timestamp {
+            font-size: 10px;
+            opacity: 0.7;
+            text-align: right;
+        }
+
+        .message.other .message-timestamp {
+            text-align: left;
+        }
+
+        .date-separator {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .date-separator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .date-separator span {
+            background: var(--secondary-bg);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background-color: var(--other-message-bg);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 70%;
+            align-self: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 3px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--text-muted);
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .compose-area {
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .message-form {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .message-input-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            min-height: 44px;
+            max-height: 120px;
+            padding: 12px 16px;
+            border-radius: 22px;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            resize: none;
+            transition: border-color 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .message-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .send-btn {
+            background: var(--my-message-bg);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            max-width: 300px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s linear infinite;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .toast.warning {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        /* Delete Modal */
+        .delete-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .delete-modal.show {
+            display: flex;
+        }
+
+        .delete-modal-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .delete-modal h3 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .delete-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .delete-modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .modal-btn.cancel {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+        }
+
+        .modal-btn.delete {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: 100vh;
+            }
+
+            .chat-header {
+                padding: 12px 15px;
+            }
+
+            .messages-container {
+                padding: 15px;
+            }
+
+            .message {
+                max-width: 85%;
+                padding: 10px 14px;
+            }
+
+            .compose-area {
+                padding: 12px 15px;
+            }
+
+            .message-input {
+                min-height: 40px;
+                padding: 10px 14px;
+            }
+
+            .send-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+
+            .delete-modal-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-title {
+                font-size: 16px;
+            }
+
+            .message {
+                max-width: 90%;
+                font-size: 13px;
+            }
+
+            .message-input {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <button class="back-button" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div>
+                    <div class="chat-title">Trading Community</div>
+                    <div class="chat-subtitle" id="online-status">Community Chat</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="online-indicator"></div>
+                <button class="refresh-btn" onclick="loadAllMessages()" title="Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="messages-container" id="messages-container">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+            <span style="font-size: 12px; color: var(--text-muted);">Someone is typing</span>
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <!-- Compose Area -->
+        <div class="compose-area">
+            <form class="message-form" id="message-form">
+                <div class="message-input-container">
+                    <textarea class="message-input" id="message-input" placeholder="Type a message..." required rows="1"></textarea>
+                </div>
+                <button type="submit" class="send-btn" id="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="delete-modal" id="delete-modal">
+        <div class="delete-modal-content">
+            <h3>Delete Message</h3>
+            <p>Are you sure you want to delete this message? This action cannot be undone.</p>
+            <div class="delete-modal-actions">
+                <button class="modal-btn cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="modal-btn delete" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // ————— Axios instance —————
+        const userApi = axios.create({
+            baseURL: "https://api.dainterbfx.xyz/api/users",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        // Global variables
+        let allMessages = [];
+        let currentUser = null;
+        let autoRefreshInterval;
+        let messageToDelete = null;
+        const AUTO_REFRESH_INTERVAL = 10000; // 10 seconds for more real-time feel
+
+        // DOM Elements
+        const messagesContainer = document.getElementById('messages-container');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const onlineStatus = document.getElementById('online-status');
+        const toast = document.getElementById('toast');
+        const deleteModal = document.getElementById('delete-modal');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get current user info from token
+            getCurrentUser();
+
+            // Set up message form submission
+            messageForm.addEventListener('submit', sendMessage);
+
+            // Auto-resize textarea
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+
+            // Load initial data
+            loadAllMessages();
+            
+            // Set up auto-refresh
+            startAutoRefresh();
+
+            // Update online status
+            updateOnlineStatus();
+
+            // Close modal when clicking outside
+            deleteModal.addEventListener('click', (e) => {
+                if (e.target === deleteModal) {
+                    closeDeleteModal();
+                }
+            });
+        });
+
+        // Get current user from token
+        function getCurrentUser() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    currentUser = payload.username;
+                } catch (error) {
+                    console.error('Error parsing token:', error);
+                }
+            }
+        }
+
+        // Auto-refresh messages
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            
+            autoRefreshInterval = setInterval(() => {
+                loadAllMessages(false);
+            }, AUTO_REFRESH_INTERVAL);
+        }
+
+        // Load all messages (both user's and community)
+        async function loadAllMessages(showLoading = true) {
+            if (showLoading) {
+                messagesContainer.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
+            }
+            
+            try {
+                // Load both user's messages and community messages
+                const [myRes, otherRes] = await Promise.allSettled([
+                    userApi.get('/get-my-messages'),
+                    userApi.get('/get-other-messages')
+                ]);
+
+                // Combine messages with type indicator
+                const all = [
+                    ...(myRes.status === 'fulfilled' ? (myRes.value.data.messages || []).map(m => ({ ...m, type: 'self' })) : []),
+                    ...(otherRes.status === 'fulfilled' ? (otherRes.value.data.messages || []).map(m => ({ ...m, type: 'other' })) : [])
+                ];
+
+                // Sort all messages by timestamp
+                allMessages = all.sort((a, b) => {
+                    const timeA = new Date(a.created_at || a.timestamp);
+                    const timeB = new Date(b.created_at || b.timestamp);
+                    return timeA - timeB;
+                });
+
+                renderAllMessages();
+                updateOnlineStatus();
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                showToast('Error loading messages. Please try again.', 'error');
+                renderEmptyState();
+            }
+        }
+
+        // Send a new message
+        async function sendMessage(e) {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            if (!message) {
+                showToast('Please enter a message.', 'warning');
+                return;
+            }
+            
+            // Disable the send button
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            try {
+                const response = await userApi.post('/send-message', { message });
+                
+                // Clear the input
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                
+                // Show success message
+                showToast('Message sent!', 'success');
+                
+                // Reload messages to show the new one
+                loadAllMessages(false);
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showToast('Failed to send message. Please try again.', 'error');
+            } finally {
+                // Re-enable the send button
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+            }
+        }
+
+        // Show delete confirmation modal
+        function showDeleteModal(messageId) {
+            messageToDelete = messageId;
+            deleteModal.classList.add('show');
+        }
+
+        // Close delete modal
+        function closeDeleteModal() {
+            deleteModal.classList.remove('show');
+            messageToDelete = null;
+        }
+
+        // Confirm delete message
+        async function confirmDelete() {
+            if (!messageToDelete) return;
+            
+            try {
+                await userApi.delete(`/delete-message/${messageToDelete}`);
+                
+                // Show success message
+                showToast('Message deleted successfully.', 'success');
+                
+                // Close modal
+                closeDeleteModal();
+                
+                // Reload messages to reflect the deletion
+                loadAllMessages(false);
+            } catch (error) {
+                console.error('Error deleting message:', error);
+                showToast('Failed to delete message. Please try again.', 'error');
+            }
+        }
+
+        // Handle message click
+        function handleMessageClick(message) {
+            // Only allow deletion of own messages
+            if (message.type === 'self') {
+                showDeleteModal(message.id);
+            }
+        }
+
+        // Render all messages in chronological order
+        function renderAllMessages() {
+            if (!allMessages || allMessages.length === 0) {
+                renderEmptyState();
+                return;
+            }
+            
+            messagesContainer.innerHTML = '';
+            let lastDate = null;
+
+            allMessages.forEach((message, index) => {
+                const messageDate = new Date(message.created_at || message.timestamp);
+                const currentDate = messageDate.toDateString();
+
+                // Add date separator if date changed
+                if (currentDate !== lastDate) {
+                    const dateSeparator = document.createElement('div');
+                    dateSeparator.className = 'date-separator';
+                    dateSeparator.innerHTML = `<span>${formatDate(messageDate)}</span>`;
+                    messagesContainer.appendChild(dateSeparator);
+                    lastDate = currentDate;
+                }
+
+                const messageEl = document.createElement('div');
+                messageEl.className = `message ${message.type}`;
+                
+                const timestamp = messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                // Add click event for self messages
+                if (message.type === 'self') {
+                    messageEl.addEventListener('click', () => handleMessageClick(message));
+                    messageEl.style.cursor = 'pointer';
+                }
+                
+                messageEl.innerHTML = `
+                    ${message.type === 'other' ? `<div class="message-sender">${message.sender}</div>` : ''}
+                    <div class="message-content">${message.message}</div>
+                    <div class="message-timestamp">${timestamp}</div>
+                `;
+                
+                messagesContainer.appendChild(messageEl);
+            });
+            
+            // Scroll to bottom
+            scrollToBottom();
+        }
+
+        // Format date for separator
+        function formatDate(date) {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            if (date.toDateString() === today.toDateString()) {
+                return 'Today';
+            } else if (date.toDateString() === yesterday.toDateString()) {
+                return 'Yesterday';
+            } else {
+                return date.toLocaleDateString([], { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+            }
+        }
+
+        // Scroll to bottom of messages
+        function scrollToBottom() {
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        }
+
+        // Render empty state
+        function renderEmptyState() {
+            messagesContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-comments"></i>
+                    <h3>Welcome to Trading Community</h3>
+                    <p>Start the conversation! Send your first message to connect with other traders.</p>
+                </div>
+            `;
+        }
+
+        // Update online status
+        function updateOnlineStatus() {
+            const messageCount = allMessages.length;
+            onlineStatus.textContent = `${messageCount} message${messageCount !== 1 ? 's' : ''}`;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info'}"></i>
+                ${message}
+            `;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+        });
+
+        // Handle visibility change for better performance
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (autoRefreshInterval) {
+                    clearInterval(autoRefreshInterval);
+                }
+            } else {
+                startAutoRefresh();
+                loadAllMessages(false);
+            }
+        });
+
+        // Handle escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && deleteModal.classList.contains('show')) {
+                closeDeleteModal();
+            }
+        });
+    </script>
+    <script src="../js/withAuth.js"></script>
+</body>
+</html>
