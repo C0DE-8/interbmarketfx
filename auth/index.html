@@ -117,13 +117,15 @@
 
 
 <!-- JavaScript -->
+<!-- JavaScript -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm      = document.getElementById("loginForm");
-  const loader         = document.getElementById("loader");
-  const passwordInput  = document.getElementById("password");
-  const toastContainer = document.getElementById("toast-container");
-  const baseURL        = "https://api.dainterbfx.xyz/api/auth";
+  const loginForm         = document.getElementById("loginForm");
+  const loader            = document.getElementById("loader");
+  const passwordToggleBtn = document.getElementById("password-toggle");
+  const passwordInput     = document.getElementById("password");
+  const toastContainer    = document.getElementById("toast-container");
+  const baseURL           = "https://api.dainterbfx.xyz/api/auth";
 
   // Ensure loader is hidden on initial load
   loader?.classList.remove("visible");
@@ -137,6 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function hideLoader() {
     loader?.classList.remove("visible");
   }
+
+  // Toggle password visibility
+  passwordToggleBtn?.addEventListener("click", () => {
+    if (passwordInput) {
+      passwordInput.type =
+        passwordInput.type === "password" ? "text" : "password";
+    }
+  });
 
   // Handle login form submission
   loginForm?.addEventListener("submit", async (e) => {
@@ -213,7 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
-
 
 
 <script>
@@ -294,4 +303,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
    </script>
 </body>
-</html> 
+</html>
