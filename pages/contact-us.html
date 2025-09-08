@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - dainterbfx</title>
+<style>
+  /* CSS Reset and Base Styles */
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #1a1f2e;
+    --bg-tertiary: #2a3441;
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #06b6d4;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #0ea5e9;
+    --border-color: #2a3441;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+    --transition: all 0.2s ease;
+    --sidebar-width: 280px;
+    --header-height: 70px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Dashboard Layout */
+  .dashboard {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-primary) var(--bg-secondary);
+  }
+
+  .sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--accent-primary);
+    border-radius: 6px;
+  }
+
+  .sidebar-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+  }
+
+  .sidebar-content {
+    padding: 1.5rem 0;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-section-title {
+    padding: 0 1.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .nav-list {
+    list-style: none;
+  }
+
+  .nav-item {
+    margin-bottom: 0.25rem;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition);
+    border-radius: 0;
+  }
+
+  .nav-link:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--text-primary);
+  }
+
+  .nav-link.active {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-primary);
+    border-right: 3px solid var(--accent-primary);
+  }
+
+  .nav-icon {
+    margin-right: 0.75rem;
+    font-size: 1.25rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .nav-text {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .nav-badge {
+    background: var(--accent-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .logout-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+  }
+
+  .header {
+    height: var(--header-height);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-toggle {
+    display: none;
+    margin-right: 1rem;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .header-icon {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    position: relative;
+    transition: var(--transition);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .header-icon:hover {
+    color: var(--text-primary);
+  }
+
+  .notification-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 8px;
+    height: 8px;
+    background: var(--danger);
+    border-radius: 50%;
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .user-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+
+  .header-logout-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+  }
+
+  .header-logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+  }
+
+  /* Content Area */
+  .content {
+    padding: 2rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Contact Cards */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary);
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  }
+
+  .contact-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-role {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .contact-details {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+
+  .contact-item:hover {
+    background: rgba(139, 92, 246, 0.1);
+  }
+
+  .contact-item-icon {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+    width: 20px;
+    text-align: center;
+  }
+
+  .contact-item-text {
+    flex: 1;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .contact-item-text:hover {
+    color: var(--accent-primary);
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+  }
+
+  .btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+  }
+
+  /* Contact Form */
+  .contact-form-section {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--accent-primary);
+  }
+
+  .form-subtitle {
+    color: var(--text-secondary);
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    transition: var(--transition);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  /* Loading States */
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--bg-tertiary);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .error-container {
+    padding: 2rem;
+    text-align: center;
+    color: var(--danger);
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-message {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  /* Toast Notifications */
+  .toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toast {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
+    font-weight: 500;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    min-width: 300px;
+  }
+
+  .toast.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .toast-success {
+    border-left: 4px solid var(--success);
+  }
+
+  .toast-error {
+    border-left: 4px solid var(--danger);
+  }
+
+  .toast-warning {
+    border-left: 4px solid var(--warning);
+  }
+
+  .toast-info {
+    border-left: 4px solid var(--info);
+  }
+
+  /* Sidebar Overlay */
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .main-content {
+      margin-left: 0;
+    }
+
+    .mobile-toggle {
+      display: block;
+    }
+
+    .user-info {
+      display: block;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 0 1rem;
+    }
+
+    .content {
+      padding: 1rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+    }
+
+    .contact-card {
+      padding: 1.5rem;
+    }
+
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+
+    .page-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .contact-grid {
+      gap: 1rem;
+    }
+
+    .contact-actions {
+      flex-direction: column;
+    }
+  }
+
+  /* Utility Classes */
+  .text-center { text-align: center; }
+  .text-success { color: var(--success); }
+  .text-warning { color: var(--warning); }
+  .text-danger { color: var(--danger); }
+  .text-info { color: var(--info); }
+  .text-muted { color: var(--text-muted); }
+  .mb-1 { margin-bottom: 0.25rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-3 { margin-bottom: 1rem; }
+  .mt-3 { margin-top: 1rem; }
+  .d-flex { display: flex; }
+  .align-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-1 { gap: 0.25rem; }
+  .gap-2 { gap: 0.5rem; }
+  .w-100 { width: 100%; }
+  .h-100 { height: 100%; }
+</style>
+</head>
+<body>
+<div class="dashboard">
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>dainterbfx</span>
+      </div>
+    </div>
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Main</h3>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="dashboard.html" class="nav-link">
+              <div class="nav-icon">🏠</div>
+              <span class="nav-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="profile.html" class="nav-link">
+              <div class="nav-icon">👤</div>
+              <span class="nav-text">Profile</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="notices-page.html" class="nav-link">
+              <div class="nav-icon">🔔</div>
+              <span class="nav-text">Notice Board</span>
+              <span class="nav-badge">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="portfolio.html" class="nav-link">
+              <div class="nav-icon">📊</div>
+              <span class="nav-text">Portfolio</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Transactions</h3>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="transfer.html" class="nav-link">
+              <div class="nav-icon">💸</div>
+              <span class="nav-text">Transfer</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="convert.html" class="nav-link">
+              <div class="nav-icon">🔄</div>
+              <span class="nav-text">Convert</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Earn</h3>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="academy.html" class="nav-link">
+              <div class="nav-icon">🎓</div>
+              <span class="nav-text">Academy</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="trade.html" class="nav-link">
+              <div class="nav-icon">📈</div>
+              <span class="nav-text">Trade</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="signals.html" class="nav-link">
+              <div class="nav-icon">📡</div>
+              <span class="nav-text">Trade Signals</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="community.html" class="nav-link">
+              <div class="nav-icon">👥</div>
+              <span class="nav-text">Community</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="mining.html" class="nav-link">
+              <div class="nav-icon">⛏️</div>
+              <span class="nav-text">Mining</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="investment.html" class="nav-link">
+              <div class="nav-icon">💰</div>
+              <span class="nav-text">Investment</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Management</h3>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="withdraw.html" class="nav-link">
+              <div class="nav-icon">📤</div>
+              <span class="nav-text">Withdraw</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="withdraw-history.html" class="nav-link">
+              <div class="nav-icon">📜</div>
+              <span class="nav-text">Withdrawal History</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="deposit.html" class="nav-link">
+              <div class="nav-icon">📥</div>
+              <span class="nav-text">Deposit</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="deposit-history.html" class="nav-link">
+              <div class="nav-icon">📜</div>
+              <span class="nav-text">Deposit History</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Settings</h3>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="Terms-and-Conditions.html" class="nav-link">
+              <div class="nav-icon">📋</div>
+              <span class="nav-text">Terms & Conditions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="privacy-policy.html" class="nav-link">
+              <div class="nav-icon">🔒</div>
+              <span class="nav-text">Privacy Policy</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="contact-us.html" class="nav-link active">
+              <div class="nav-icon">📞</div>
+              <span class="nav-text">Help & Support</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Logout Button in Sidebar -->
+      <button class="logout-btn" onclick="logout()">
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="header">
+      <div class="header-left">
+        <button class="mobile-toggle" id="mobile-toggle">☰</button>
+      </div>
+      <div class="header-right">
+        <button class="header-icon" onclick="window.location.href='notifications.html';">
+          🔔
+          <span class="notification-indicator"></span>
+        </button>
+        <div class="user-profile">
+          <div class="avatar">JD</div>
+          <div class="user-info">
+            <div class="user-name">jon demo</div>
+          </div>
+        </div>
+        <!-- Logout Button in Header -->
+        <button class="header-logout-btn" onclick="logout()">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Help & Support</h1>
+          <p class="page-subtitle">Get in touch with our support team for assistance</p>
+        </div>
+      </div>
+
+      <!-- Support Contacts Grid -->
+      <div class="contact-grid" id="contacts-container">
+        <!-- Loading state -->
+        <div class="loading-container">
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+
+      <!-- Empty State (hidden by default) -->
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-icon">📞</div>
+        <h3 class="empty-title">No Support Contacts Available</h3>
+        <p class="empty-message">Our support team information is currently being updated. Please check back later.</p>
+        <button class="btn btn-primary" onclick="loadContacts()">
+          🔄 Refresh Contacts
+        </button>
+      </div>
+
+      <!-- Contact Form Section -->
+      <div class="contact-form-section">
+        <div class="form-header">
+          <h2 class="form-title">📧 Send us a Message</h2>
+          <p class="form-subtitle">Fill out the form below and we'll get back to you as soon as possible</p>
+        </div>
+        
+        <form class="contact-form" id="contact-form" onsubmit="submitContactForm(event)">
+          <div class="form-group">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" id="name" name="name" class="form-input" required placeholder="Enter your full name">
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" required placeholder="Enter your email address">
+          </div>
+          
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <select id="subject" name="subject" class="form-select" required>
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="technical">Technical Support</option>
+              <option value="account">Account Issues</option>
+              <option value="trading">Trading Support</option>
+              <option value="billing">Billing & Payments</option>
+              <option value="feedback">Feedback & Suggestions</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="priority" class="form-label">Priority Level</label>
+            <select id="priority" name="priority" class="form-select" required>
+              <option value="">Select priority</option>
+              <option value="low">Low - General question</option>
+              <option value="medium">Medium - Need assistance</option>
+              <option value="high">High - Urgent issue</option>
+              <option value="critical">Critical - Account compromised</option>
+            </select>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-textarea" required placeholder="Please describe your issue or question in detail..."></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+              📤 Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  // API Configuration
+  const api = axios.create({
+    baseURL: "https://api.dainterbfx.xyz/api",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+  });
+
+  // Global variables
+  let contacts = [];
+
+  // Initialize page
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      // Fetch user profile
+      const response = await api.get("/users/profile");
+      const user = response.data.user;
+      const username = user.name;
+
+      // Update UI with user info
+      document.querySelector(".user-name").textContent = username;
+      const initials = username.split(' ').map(word => word[0]).join('').toUpperCase();
+      document.querySelector(".avatar").textContent = initials;
+
+      // Load support contacts
+      await loadContacts();
+
+    } catch (error) {
+      console.error("Failed to initialize page:", error);
+      showToast('Failed to load page data', 'error');
+    }
+  });
+
+  // Load support contacts
+  async function loadContacts() {
+    try {
+      const container = document.getElementById('contacts-container');
+      const emptyState = document.getElementById('empty-state');
+      
+      // Show loading
+      container.innerHTML = `
+        <div class="loading-container">
+          <div class="loading-spinner"></div>
+        </div>
+      `;
+      emptyState.style.display = 'none';
+
+      // Use public endpoint (no auth required)
+      const response = await axios.get("https://api.dainterbfx.xyz/api/users/support-info");
+      contacts = response.data;
+
+      if (contacts.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      // Render contacts
+      container.innerHTML = '';
+      contacts.forEach(contact => {
+        const contactCard = createContactCard(contact);
+        container.appendChild(contactCard);
+      });
+
+    } catch (error) {
+      console.error("Failed to load support contacts:", error);
+      document.getElementById('contacts-container').innerHTML = `
+        <div class="error-container">
+          <h3>Failed to Load Support Contacts</h3>
+          <p>Unable to fetch support information. Please try again later.</p>
+          <button class="btn btn-primary mt-3" onclick="loadContacts()">
+            🔄 Retry
+          </button>
+        </div>
+      `;
+      showToast('Failed to load support contacts', 'error');
+    }
+  }
+
+  // Create contact card element
+  function createContactCard(contact) {
+    const card = document.createElement('div');
+    card.className = 'contact-card';
+    
+    const initials = contact.support_name.split(' ').map(word => word[0]).join('').toUpperCase();
+    
+    card.innerHTML = `
+      <div class="contact-header">
+        <div class="contact-icon">${initials}</div>
+        <div class="contact-info">
+          <h3>${contact.support_name}</h3>
+          <p class="contact-role">Support Specialist</p>
+        </div>
+      </div>
+
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <a href="mailto:${contact.support_email}" class="contact-item-text">
+            ${contact.support_email}
+          </a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕒</div>
+          <span class="contact-item-text">Available 24/7</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⚡</div>
+          <span class="contact-item-text">Quick Response Time</span>
+        </div>
+      </div>
+
+      <div class="contact-actions">
+        <a href="mailto:${contact.support_email}" class="btn btn-primary">
+          📧 Send Email
+        </a>
+        <button class="btn btn-secondary" onclick="fillContactForm('${contact.support_name}', '${contact.support_email}')">
+          📝 Quick Message
+        </button>
+      </div>
+    `;
+
+    return card;
+  }
+
+  // Fill contact form with selected contact
+  function fillContactForm(name, email) {
+    document.getElementById('subject').value = 'general';
+    document.getElementById('priority').value = 'medium';
+    document.getElementById('message').value = `Hello ${name},\n\nI would like to get in touch regarding...\n\n`;
+    document.getElementById('message').focus();
+    
+    // Scroll to form
+    document.querySelector('.contact-form-section').scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+    
+    showToast(`Form prepared for ${name}`, 'info');
+  }
+
+  // Submit contact form
+  async function submitContactForm(event) {
+  event.preventDefault();
+  
+  const submitBtn = document.getElementById('submit-btn');
+  const originalText = submitBtn.textContent;
+  
+  try {
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ Sending...';
+    
+    const formData = new FormData(event.target);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      priority: formData.get('priority'),
+      message: formData.get('message')
+    };
+    
+    // Submit to actual backend endpoint
+    const response = await api.post("/users/contact", data);
+    
+    showToast(response.data.message || 'Message sent successfully! We\'ll get back to you soon.', 'success');
+    
+    // Reset form
+    event.target.reset();
+    
+  } catch (error) {
+    console.error("Failed to submit contact form:", error);
+    
+    let errorMessage = 'Failed to send message. Please try again.';
+    if (error.response?.data?.message) {
+      errorMessage = error.response.data.message;
+    }
+    
+    showToast(errorMessage, 'error');
+  } finally {
+    // Reset button
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
+}
+
+  // Logout function
+  function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      showToast('Logged out successfully', 'success');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1000);
+    }
+  }
+
+  // Utility function to show toast notifications
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 100);
+
+    // Remove toast after 4 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 300);
+    }, 4000);
+  }
+
+  // Sidebar toggle functionality
+  const sidebar = document.getElementById('sidebar');
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  function toggleSidebarVisibility() {
+    sidebar.classList.toggle('active');
+    sidebarOverlay.classList.toggle('active');
+  }
+
+  mobileToggle.addEventListener('click', toggleSidebarVisibility);
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+  });
+
+  // Responsive handling
+  function handleResize() {
+    if (window.innerWidth < 992) {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    }
+  }
+
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('DOMContentLoaded', handleResize);
+</script>
+
+<!-- Authentication Script -->
+<script src="../js/withAuth.js"></script>
+
+<!-- Google Translate Widget -->
+<div id="google_translate_element"></div>
+
+<script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+  }
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+  // Preserve translation by checking the cookie on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    const lang = getCookie("googtrans");
+    if (lang && lang !== "/en/en") {
+      document.cookie = `googtrans=${lang}; path=/`;
+    }
+  });
+
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+</script>
+</body>
+</html>

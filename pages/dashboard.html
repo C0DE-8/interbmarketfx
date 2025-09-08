@@ -3,36 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>dainterbfx</title>
+<title>Dashboard - dainterbfx</title>
 <!-- Add Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="css/toaster.css">
 <style>
   /* CSS Reset and Base Styles */
   :root {
     --bg-primary: #0a0e1a;
     --bg-secondary: #1a1f2e;
-    --bg-tertiary: #2d2d2d;
-    --accent-primary: #6366f1;
-    --accent-secondary: #818cf8;
-    --accent-tertiary: #6366f1;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --success: #10b981;
+    --bg-tertiary: #2a3441;
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #06b6d4;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --success: #22c55e;
     --warning: #f59e0b;
     --danger: #ef4444;
-    --info: #3b82f6;
-    --card-bg: #1a1f2e;
-    --border-color: rgba(148, 163, 184, 0.2);
+    --info: #0ea5e9;
+    --border-color: #2a3441;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
     --transition: all 0.2s ease;
     --sidebar-width: 280px;
-    --sidebar-collapsed-width: 80px;
     --header-height: 70px;
-    
   }
 
   * {
@@ -41,77 +36,25 @@
     box-sizing: border-box;
   }
 
-  html {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-  }
-
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: var(--bg-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
-    min-height: 100%;
-    width: 100%;
+    min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
   }
 
-  a {
-    color: var(--text-primary);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-
-  button {
-    cursor: pointer;
-    font-family: inherit;
-    border: none;
-    background: none;
-    transition: var(--transition);
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Typography */
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.75rem;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-  }
-
-  h4 {
-    font-size: 1.25rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  /* Layout */
+  /* Dashboard Layout */
   .dashboard {
     display: flex;
     min-height: 100vh;
-    position: relative;
-    width: 100%;
   }
 
   /* Sidebar */
   .sidebar {
     width: var(--sidebar-width);
-    background-color: var(--bg-secondary);
+    background: var(--bg-secondary);
     border-right: 1px solid var(--border-color);
     height: 100vh;
     position: fixed;
@@ -120,10 +63,8 @@
     z-index: 1000;
     transition: transform 0.3s ease;
     overflow-y: auto;
-    overflow-x: hidden;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-primary) var(--bg-secondary);
-    -webkit-overflow-scrolling: touch;
   }
 
   .sidebar::-webkit-scrollbar {
@@ -150,42 +91,22 @@
   .logo {
     font-size: 24px;
     font-weight: 700;
-    background: linear-gradient(to right, var(--accent-primary), var(--accent-tertiary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent-primary);
     display: flex;
     align-items: center;
     gap: 8px;
-        }
+  }
 
   .logo-icon {
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
-    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-weight: bold;
-  }
-
-  .toggle-sidebar {
-    color: var(--text-muted);
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    transition: var(--transition);
-  }
-
-  .toggle-sidebar:hover {
-    background-color: var(--bg-tertiary);
-    color: var(--text-primary);
   }
 
   .sidebar-content {
@@ -203,6 +124,7 @@
     letter-spacing: 0.05em;
     color: var(--text-muted);
     margin-bottom: 0.75rem;
+    font-weight: 600;
   }
 
   .nav-list {
@@ -218,18 +140,20 @@
     align-items: center;
     padding: 0.75rem 1.5rem;
     color: var(--text-secondary);
-    border-left: 3px solid transparent;
+    text-decoration: none;
     transition: var(--transition);
+    border-radius: 0;
   }
 
-  .nav-link:hover, .nav-link.active {
-    background-color: var(--bg-tertiary);
+  .nav-link:hover {
+    background: rgba(139, 92, 246, 0.1);
     color: var(--text-primary);
-    border-left-color: var(--accent-primary);
   }
 
   .nav-link.active {
-    font-weight: 500;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-primary);
+    border-right: 3px solid var(--accent-primary);
   }
 
   .nav-icon {
@@ -245,15 +169,38 @@
 
   .nav-text {
     flex: 1;
+    font-weight: 500;
   }
 
   .nav-badge {
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     color: white;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
+    border-radius: 12px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .logout-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
   }
 
   /* Main Content */
@@ -261,13 +208,12 @@
     flex: 1;
     margin-left: var(--sidebar-width);
     transition: margin-left 0.3s ease;
-    width: calc(100% - var(--sidebar-width));
     min-height: 100vh;
   }
 
   .header {
     height: var(--header-height);
-    background-color: var(--bg-secondary);
+    background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -276,7 +222,6 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    width: 100%;
   }
 
   .header-left {
@@ -290,37 +235,8 @@
     color: var(--text-muted);
     font-size: 1.5rem;
     cursor: pointer;
-  }
-
-  .search-bar {
-    position: relative;
-    width: 300px;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 0.5rem 1rem 0.5rem 2.5rem;
-    background-color: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    border-radius: 9999px;
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    transition: var(--transition);
-  }
-
-  .search-input:focus {
-    outline: none;
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    font-size: 1rem;
+    background: none;
+    border: none;
   }
 
   .header-right {
@@ -334,6 +250,9 @@
     font-size: 1.25rem;
     position: relative;
     transition: var(--transition);
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
   .header-icon:hover {
@@ -346,7 +265,7 @@
     right: -5px;
     width: 8px;
     height: 8px;
-    background-color: var(--danger);
+    background: var(--danger);
     border-radius: 50%;
   }
 
@@ -360,7 +279,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -378,15 +297,26 @@
     font-size: 0.875rem;
   }
 
-  .user-role {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+  .header-logout-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.875rem;
+  }
+
+  .header-logout-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
   }
 
   /* Content Area */
   .content {
     padding: 2rem;
-    width: 100%;
   }
 
   .welcome-header {
@@ -394,40 +324,48 @@
   }
 
   .welcome-title {
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .welcome-subtitle {
     color: var(--text-secondary);
+    font-size: 1.1rem;
   }
 
   .grid-container {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 1.5rem;
-    width: 100%;
   }
 
   /* Admin Notices */
   .admin-notices {
     grid-column: span 12;
     margin-bottom: 1.5rem;
-    width: 100%;
   }
 
   .notice {
-    background-color: var(--card-bg);
-    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
     border-left: 4px solid var(--warning);
-    padding: 1rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
     box-shadow: var(--shadow-md);
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+  }
+
+  .notice:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
   }
 
   .notice-icon {
@@ -438,62 +376,63 @@
 
   .notice-content {
     flex: 1;
-    min-width: 0;
   }
 
   .notice-title {
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
   }
 
   .notice-message {
     color: var(--text-secondary);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .notice-actions {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    gap: 0.75rem;
+    margin-top: 1rem;
     flex-wrap: wrap;
   }
 
   .notice-btn {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
-    background-color: transparent;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: transparent;
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
     transition: var(--transition);
+    cursor: pointer;
+    font-weight: 500;
   }
 
   .notice-btn:hover {
-    background-color: var(--bg-tertiary);
+    background: var(--bg-tertiary);
     color: var(--text-primary);
   }
 
   .notice-btn.primary {
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     color: white;
     border-color: var(--accent-primary);
   }
 
   .notice-btn.primary:hover {
-    background-color: var(--accent-secondary);
-  }
-
-  .notice-btn.active {
-    background-color: var(--accent-primary);
-    color: white;
-    border-color: var(--accent-primary);
+    background: #7c3aed;
   }
 
   .notice-close {
     color: var(--text-muted);
-    font-size: 1rem;
+    font-size: 1.25rem;
     flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
   }
 
   .notice-close:hover {
@@ -502,8 +441,8 @@
 
   /* Dashboard Cards */
   .card {
-    background-color: var(--card-bg);
-    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: 16px;
     border: 1px solid var(--border-color);
     padding: 1.5rem;
     box-shadow: var(--shadow-md);
@@ -514,7 +453,7 @@
   }
 
   .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
   }
 
@@ -529,26 +468,27 @@
 
   .card-title {
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
   }
 
   .card-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(99, 102, 241, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(139, 92, 246, 0.1);
     color: var(--accent-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
   }
 
   .card-content {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     flex: 1;
-    overflow: hidden;
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 
   .card-footer {
@@ -566,37 +506,198 @@
 
   .stat-value {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
   }
 
   .stat-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .card-action {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    text-align: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  .card-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+  }
+
+  /* Balance Refresh Button */
+  .balance-refresh-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .balance-refresh-btn:hover {
+    background: var(--accent-primary);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .balance-refresh-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .balance-refresh-btn.loading {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .balance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .balance-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .balance-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .balance-updated {
     font-size: 0.75rem;
     color: var(--text-muted);
   }
 
-  .card-action {
-    padding: 0.5rem 1rem;
-    background-color: var(--accent-primary);
-    color: white;
-    border-radius: 0.25rem;
+  .balance-status {
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
     font-weight: 500;
-    font-size: 0.875rem;
-    transition: var(--transition);
-    text-align: center;
   }
 
-  .card-action:hover {
-    background-color: var(--accent-secondary);
+  .balance-status.cached {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+  }
+
+  .balance-status.fresh {
+    background: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+  }
+
+  /* Balance Breakdown Section */
+  .balance-breakdown {
+    grid-column: span 12;
+    margin-bottom: 2rem;
+  }
+
+  .balance-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .balance-card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .balance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .balance-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  }
+
+  .balance-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .balance-card-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  .balance-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+
+  .balance-card-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+    margin-bottom: 0.5rem;
+  }
+
+  .balance-card-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
   }
 
   /* Quick Actions */
   .quick-actions {
     grid-column: span 12;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    width: 100%;
+    margin-bottom: 2rem;
   }
 
   /* Market Overview */
@@ -607,65 +708,58 @@
   .table-container {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 0.5rem;
+    border-radius: 12px;
+    background: var(--bg-secondary);
   }
 
   .coin-list {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    min-width: 650px;
+    min-width: 700px;
   }
 
   .coin-list th {
     text-align: left;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     font-weight: 600;
     color: var(--text-muted);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
-    background-color: rgba(30, 30, 30, 0.5);
+    background: rgba(42, 52, 65, 0.5);
   }
 
   .coin-list th:first-child {
-    border-top-left-radius: 0.5rem;
+    border-top-left-radius: 12px;
   }
 
   .coin-list th:last-child {
-    border-top-right-radius: 0.5rem;
+    border-top-right-radius: 12px;
   }
 
   .coin-list td {
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
     font-size: 0.875rem;
-  }
-
-  .coin-list tr:last-child td {
-    border-bottom: none;
-  }
-
-  .coin-list tr:last-child td:first-child {
-    border-bottom-left-radius: 0.5rem;
-  }
-
-  .coin-list tr:last-child td:last-child {
-    border-bottom-right-radius: 0.5rem;
   }
 
   .coin-list tbody tr {
     cursor: pointer;
     transition: var(--transition);
-    background-color: rgba(30, 30, 30, 0.3);
   }
 
   .coin-list tbody tr:hover {
-    background-color: var(--bg-tertiary);
+    background: rgba(139, 92, 246, 0.05);
+  }
+
+  .coin-list tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+  }
+
+  .coin-list tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
   }
 
   .coin-name {
@@ -675,18 +769,17 @@
   }
 
   .coin-icon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background-color: var(--bg-tertiary);
+    background: var(--bg-tertiary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     flex-shrink: 0;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .coin-icon img {
@@ -698,7 +791,6 @@
   .coin-info {
     display: flex;
     flex-direction: column;
-    min-width: 0;
   }
 
   .coin-symbol {
@@ -718,25 +810,19 @@
     gap: 0.25rem;
     font-weight: 600;
     font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
   }
 
   .change-positive {
     color: var(--success);
-    background-color: rgba(16, 185, 129, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
+    background: rgba(34, 197, 94, 0.1);
   }
 
   .change-negative {
     color: var(--danger);
-    background-color: rgba(239, 68, 68, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-  }
-
-  .coin-chart {
-    width: 100px;
-    height: 40px;
+    background: rgba(239, 68, 68, 0.1);
   }
 
   .coin-actions {
@@ -746,20 +832,22 @@
   }
 
   .coin-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--bg-tertiary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--bg-tertiary);
     color: var(--text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
     transition: var(--transition);
+    border: none;
+    cursor: pointer;
   }
 
   .coin-btn:hover {
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     color: white;
     transform: translateY(-2px);
   }
@@ -768,13 +856,14 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
 
   .market-filter {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background-color: var(--bg-tertiary);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
     font-size: 0.875rem;
     font-weight: 500;
@@ -782,25 +871,23 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    border: none;
+    cursor: pointer;
   }
 
   .market-filter:hover {
-    background-color: rgba(99, 102, 241, 0.2);
+    background: rgba(139, 92, 246, 0.2);
   }
 
   .market-filter.active {
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     color: white;
-  }
-
-  .market-filter i {
-    font-size: 1rem;
   }
 
   .market-summary {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
   }
@@ -812,13 +899,14 @@
 
   .market-stat-value {
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
   }
 
   .market-stat-label {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
+    margin-bottom: 0.25rem;
   }
 
   .market-stat-change {
@@ -829,13 +917,12 @@
     margin-top: 0.25rem;
   }
 
-  /* Loading state */
+  /* Loading States */
   .loading-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    width: 100%;
+    padding: 3rem;
   }
 
   .loading-spinner {
@@ -847,135 +934,79 @@
     animation: spin 1s linear infinite;
   }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
   .error-container {
     padding: 2rem;
     text-align: center;
     color: var(--danger);
   }
 
-  /* Portfolio Summary */
-  .portfolio-summary {
-    grid-column: span 4;
-  }
-
-  .portfolio-chart {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 1rem;
-  }
-
-  .portfolio-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .portfolio-stat {
-    background-color: var(--bg-tertiary);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stat-title {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-  }
-
   /* Academy Section */
   .academy-section {
-    grid-column: span 12;
+    grid-column: span 4;
   }
 
   .course-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .course-card {
-    background-color: var(--card-bg);
-    border-radius: 0.5rem;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 1rem;
     transition: var(--transition);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    cursor: pointer;
   }
 
   .course-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .course-image {
     width: 100%;
-    height: 160px;
-    background-color: var(--bg-tertiary);
-    position: relative;
+    height: 120px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    margin-bottom: 1rem;
     overflow: hidden;
+    position: relative;
   }
 
   .course-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition);
-  }
-
-  .course-card:hover .course-image img {
-    transform: scale(1.05);
   }
 
   .course-level {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background-color: rgba(15, 23, 42, 0.8);
-    color: var(--text-primary);
+    top: 0.5rem;
+    left: 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
     font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-  }
-
-  .course-content {
-    padding: 1.5rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
   }
 
   .course-title {
     font-weight: 600;
     margin-bottom: 0.5rem;
+    font-size: 1rem;
   }
 
   .course-description {
     color: var(--text-secondary);
     font-size: 0.875rem;
     margin-bottom: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
+    line-height: 1.4;
   }
 
   .course-meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
   }
 
   .course-author {
@@ -988,14 +1019,13 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background-color: var(--accent-primary);
+    background: var(--accent-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.75rem;
     color: white;
     font-weight: 600;
-    flex-shrink: 0;
   }
 
   .author-name {
@@ -1003,22 +1033,20 @@
     color: var(--text-muted);
   }
 
-  .course-rating {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    color: var(--warning);
-    font-size: 0.75rem;
+  .course-price {
+    font-weight: 600;
+    color: var(--accent-primary);
+    font-size: 0.875rem;
   }
 
-  /* Overlay for mobile sidebar */
+  /* Sidebar Overlay */
   .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     opacity: 0;
     visibility: hidden;
@@ -1030,386 +1058,188 @@
     visibility: visible;
   }
 
-  /* Coin Detail Modal */
-  .modal-overlay {
+  /* Modal Styles */
+  .admin-notice-overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
     z-index: 1100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    backdrop-filter: blur(5px);
   }
 
-  .modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .coin-detail-modal {
-    background-color: var(--bg-secondary);
-    border-radius: 0.75rem;
-    border: 1px solid var(--border-color);
+  .admin-notice-modal {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    max-width: 500px;
     width: 90%;
-    max-width: 1000px;
-    max-height: 90vh;
-    overflow-y: auto;
+    border-radius: 16px;
     box-shadow: var(--shadow-lg);
-    transform: translateY(20px);
-    transition: transform 0.3s ease;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
   }
 
-  .modal-overlay.active .coin-detail-modal {
-    transform: translateY(0);
-  }
-
-  .modal-header {
+  .admin-notice-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 1.5rem;
+    align-items: center;
     border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .modal-title {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  .admin-notice-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
   }
 
-  .modal-close {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--bg-tertiary);
+  .admin-notice-close {
+    background: none;
+    border: none;
     color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
     transition: var(--transition);
   }
 
-  .modal-close:hover {
-    background-color: var(--accent-primary);
-    color: white;
+  .admin-notice-close:hover {
+    color: var(--text-primary);
   }
 
-  .modal-body {
-    padding: 1.5rem;
+  .admin-notice-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
 
-  .coin-price-info {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .coin-current-price {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .coin-price-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
-  }
-
-  .coin-price-change {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    margin-top: 0.5rem;
-  }
-
-  .coin-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .coin-stat {
-    background-color: var(--bg-tertiary);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    transition: var(--transition);
-  }
-
-  .coin-stat:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .coin-stat-value {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
-  }
-
-  .coin-stat-label {
-    font-size: 0.75rem;
+  .admin-notice-meta {
+    font-size: 0.875rem;
     color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+    margin-bottom: 1rem;
   }
 
-  .info-icon {
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    cursor: help;
-  }
-
-  .chart-container {
-    width: 100%;
-    height: 400px;
-    margin-bottom: 1.5rem;
-    position: relative;
-    background-color: var(--bg-tertiary);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-  }
-
-  .chart-loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(30, 30, 30, 0.8);
-    z-index: 10;
-  }
-
-  .chart-loading-text {
+  .admin-notice-expandable {
+    display: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
     margin-top: 1rem;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-  }
-
-  .chart-canvas {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-  }
-
-  .chart-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .chart-timeframes {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .timeframe-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: var(--transition);
-  }
-
-  .timeframe-btn:hover, .timeframe-btn.active {
-    background-color: var(--accent-primary);
-    color: white;
-  }
-
-  .chart-options {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-
-  .chart-type-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .chart-type-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .chart-type-btn:hover, .chart-type-btn.active {
-    background-color: var(--accent-primary);
-    color: white;
-  }
-
-  .chart-indicators {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .indicator-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .indicator-btn:hover, .indicator-btn.active {
-    background-color: var(--accent-primary);
-    color: white;
-  }
-
-  .coin-actions-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-  }
-
-  .coin-action-btn {
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    background-color: var(--bg-tertiary);
-    color: var(--text-primary);
-    font-weight: 500;
-    text-align: center;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .coin-action-btn:hover {
-    background-color: var(--accent-primary);
-    color: white;
-    transform: translateY(-2px);
-  }
-
-  .coin-action-btn.buy {
-    background-color: var(--success);
-    color: white;
-  }
-
-  .coin-action-btn.buy:hover {
-    background-color: #0ea271;
-  }
-
-  .coin-action-btn.sell {
-    background-color: var(--danger);
-    color: white;
-  }
-
-  .coin-action-btn.sell:hover {
-    background-color: #dc3030;
-  }
-
-  .coin-detail-tabs {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .coin-detail-tab {
-    padding: 0.75rem 1rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: var(--transition);
-    position: relative;
-  }
-
-  .coin-detail-tab:hover {
-    color: var(--text-primary);
-  }
-
-  .coin-detail-tab.active {
-    color: var(--accent-primary);
-  }
-
-  .coin-detail-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--accent-primary);
-  }
-
-  .coin-detail-content {
-    margin-top: 1.5rem;
-  }
-
-  .coin-detail-section {
-    margin-bottom: 2rem;
-  }
-
-  .coin-detail-section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .coin-detail-section-content {
-    color: var(--text-secondary);
     line-height: 1.6;
   }
 
-  /* Responsive Styles */
+  .admin-notice-read-more {
+    background: none;
+    border: none;
+    color: var(--accent-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    transition: var(--transition);
+  }
+
+  .admin-notice-read-more:hover {
+    color: var(--accent-secondary);
+  }
+
+  .admin-notice-read-more-icon {
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .admin-notice-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+  }
+
+  .admin-notice-button {
+    background: var(--accent-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .admin-notice-button:hover {
+    background: #7c3aed;
+    transform: translateY(-2px);
+  }
+
+  /* Toast Notifications */
+  .toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toast {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    color: var(--text-primary);
+    font-weight: 500;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .toast.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .toast-success {
+    border-left: 4px solid var(--success);
+  }
+
+  .toast-error {
+    border-left: 4px solid var(--danger);
+  }
+
+  .toast-warning {
+    border-left: 4px solid var(--warning);
+  }
+
+  .toast-info {
+    border-left: 4px solid var(--info);
+  }
+
+  /* Responsive Design */
   @media (max-width: 1200px) {
     .market-overview {
       grid-column: span 12;
     }
 
-    .portfolio-summary {
+    .academy-section {
       grid-column: span 12;
+    }
+
+    .course-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
   }
 
   @media (max-width: 992px) {
     .sidebar {
       transform: translateX(-100%);
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar.active {
@@ -1418,7 +1248,6 @@
 
     .main-content {
       margin-left: 0;
-      width: 100%;
     }
 
     .mobile-toggle {
@@ -1428,6 +1257,14 @@
     .user-info {
       display: block;
     }
+
+    .quick-actions {
+      grid-template-columns: 1fr;
+    }
+
+    .balance-cards {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
   }
 
   @media (max-width: 768px) {
@@ -1435,16 +1272,8 @@
       padding: 0 1rem;
     }
 
-    .search-bar {
-      display: none;
-    }
-
     .content {
       padding: 1rem;
-    }
-
-    .quick-actions {
-      grid-template-columns: 1fr;
     }
 
     .welcome-title {
@@ -1465,20 +1294,26 @@
       align-items: flex-start;
     }
 
-    .card-action {
-      width: 100%;
+    .market-summary {
+      gap: 1rem;
     }
 
-    .coin-detail-modal {
-      width: 95%;
+    .market-stat {
+      min-width: 120px;
     }
 
-    .coin-stats {
-      grid-template-columns: 1fr 1fr;
+    .admin-notice-modal {
+      padding: 1.5rem;
     }
 
-    .coin-actions-container {
-      grid-template-columns: 1fr 1fr;
+    .balance-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .balance-cards {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -1487,347 +1322,43 @@
       gap: 1rem;
     }
 
-    .course-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .portfolio-stats {
-      grid-template-columns: 1fr;
-    }
-
     .notice {
       flex-direction: column;
-    }
-
-    .notice-icon {
-      margin-bottom: 0.5rem;
-    }
-
-    .notice-actions {
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-    }
-
-    .notice-btn {
-      width: 100%;
       text-align: center;
     }
 
-    .coin-stats {
-      grid-template-columns: 1fr;
+    .notice-actions {
+      justify-content: center;
     }
 
-    .coin-actions-container {
+    .market-summary {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .course-grid {
       grid-template-columns: 1fr;
     }
   }
 
   /* Utility Classes */
-  .mb-1 {
-    margin-bottom: 0.25rem;
-  }
-
-  .mb-2 {
-    margin-bottom: 0.5rem;
-  }
-
-  .mb-3 {
-    margin-bottom: 1rem;
-  }
-
-  .mb-4 {
-    margin-bottom: 1.5rem;
-  }
-
-  .mb-5 {
-    margin-bottom: 2rem;
-  }
-
-  .mt-1 {
-    margin-top: 0.25rem;
-  }
-
-  .mt-2 {
-    margin-top: 0.5rem;
-  }
-
-  .mt-3 {
-    margin-top: 1rem;
-  }
-
-  .mt-4 {
-    margin-top: 1.5rem;
-  }
-
-  .mt-5 {
-    margin-top: 2rem;
-  }
-
-  .text-success {
-    color: var(--success);
-  }
-
-  .text-warning {
-    color: var(--warning);
-  }
-
-  .text-danger {
-    color: var(--danger);
-  }
-
-  .text-info {
-    color: var(--info);
-  }
-
-  .text-muted {
-    color: var(--text-muted);
-  }
-
-  .text-center {
-    text-align: center;
-  }
-
-  .d-flex {
-    display: flex;
-  }
-
-  .align-center {
-    align-items: center;
-  }
-
-  .justify-between {
-    justify-content: space-between;
-  }
-
-  .gap-1 {
-    gap: 0.25rem;
-  }
-
-  .gap-2 {
-    gap: 0.5rem;
-  }
-
-  .gap-3 {
-    gap: 1rem;
-  }
-
-  .w-100 {
-    width: 100%;
-  }
-
-  .h-100 {
-    height: 100%;
-  }
-
-  .rounded {
-    border-radius: 0.25rem;
-  }
-
-  .rounded-circle {
-    border-radius: 50%;
-  }
-
-  .bg-success {
-    background-color: var(--success);
-  }
-
-  .bg-warning {
-    background-color: var(--warning);
-  }
-
-  .bg-danger {
-    background-color: var(--danger);
-  }
-
-  .bg-info {
-    background-color: var(--info);
-  }
-
-  .bg-primary {
-    background-color: var(--accent-primary);
-  }
-
-  .bg-secondary {
-    background-color: var(--bg-secondary);
-  }
-
-  .bg-tertiary {
-    background-color: var(--bg-tertiary);
-  }
-
-  /* Animations */
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  .pulse {
-    animation: pulse 2s infinite;
-  }
-
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--bg-tertiary);
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-primary);
-  }
-
-  /* modal Glass effect styling */
-.admin-notice-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(10px); /* Glass effect */
-}
-
-.admin-notice-modal {
-  background: rgba(99, 102, 241, 0.1); /* Base color with opacity for glass effect */
-  padding: 25px;
-  max-width: 500px;
-  width: 100%;
-  border-radius: 16px; /* Rounded corners for a smoother look */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
-  backdrop-filter: blur(2.7px); /* Glass effect on the modal */
-  -webkit-backdrop-filter: blur(2.7px); /* For Safari */
-  border: 1px solid rgba(99, 102, 241, 0.17); /* Border matching base color */
-  color: #fff; /* White text color for contrast */
-}
-
-.admin-notice-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Soft separator */
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-
-.admin-notice-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #f2f2f2; /* Light grey color */
-  margin: 0;
-}
-
-.admin-notice-close {
-  background: none;
-  border: none;
-  color: #f2f2f2;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.admin-notice-body {
-  margin-bottom: 15px;
-}
-
-.admin-notice-content {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.admin-notice-meta {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.admin-notice-expandable {
-  display: none;
-  color: #ddd; /* Lighter text color for the expanded details */
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
-
-.admin-notice-read-more {
-  background: none;
-  border: none;
-  color: #6366f1; /* Base color for the button */
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.admin-notice-read-more-icon {
-  margin-left: 5px;
-  font-size: 1.2rem;
-  transition: transform 0.2s ease-in-out;
-}
-
-.admin-notice-read-more:hover .admin-notice-read-more-icon {
-  transform: rotate(180deg); /* Smooth rotation effect */
-}
-
-.admin-notice-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.admin-notice-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.admin-notice-button {
-  background: #6366f1; /* Primary color */
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-}
-
-.admin-notice-button:hover {
-  background: #5c5ecb; /* Darker shade for hover effect */
-}
-
-.admin-notice-button-primary {
-  background: #6366f1;
-}
-
-.admin-notice-button-secondary {
-  background: #f6b93b;
-}
-
-.admin-notice-button-primary:hover {
-  background: #6366f1;
-}
-
-.admin-notice-button-secondary:hover {
-  background: #e8a91a;
-}
-
+  .text-center { text-align: center; }
+  .text-success { color: var(--success); }
+  .text-warning { color: var(--warning); }
+  .text-danger { color: var(--danger); }
+  .text-info { color: var(--info); }
+  .text-muted { color: var(--text-muted); }
+  .mb-1 { margin-bottom: 0.25rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-3 { margin-bottom: 1rem; }
+  .mt-3 { margin-top: 1rem; }
+  .d-flex { display: flex; }
+  .align-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-1 { gap: 0.25rem; }
+  .gap-2 { gap: 0.5rem; }
+  .w-100 { width: 100%; }
+  .h-100 { height: 100%; }
 </style>
 </head>
 <body>
@@ -1839,40 +1370,37 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="logo">
-        <div class="logo-icon">Z</div>
-        <span>dainterbfx</span>
+        <div class="logo-icon">⚡</div>
+        <span>Dashboard - dainterbfx</span>
       </div>
-      <button class="toggle-sidebar" id="toggle-sidebar">
-        <i class="fas">&#xf053;</i>
-      </button>
     </div>
     <div class="sidebar-content">
       <div class="sidebar-section">
         <h3 class="sidebar-section-title">Main</h3>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#" class="nav-link active" onclick="window.location.href='dashboard.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf015;</i>
-              </div>
+            <a href="dashboard.html" class="nav-link active">
+              <div class="nav-icon">🏠</div>
               <span class="nav-text">Dashboard</span>
             </a>
           </li>
-            <li class="nav-item"></li>
-            <a href="#" class="nav-link" onclick="window.location.href='profile.html'; return false;">
-              <div class="nav-icon">
-              <i class="fas">&#xf007;</i>
-              </div>
+          <li class="nav-item">
+            <a href="profile.html" class="nav-link">
+              <div class="nav-icon">👤</div>
               <span class="nav-text">Profile</span>
             </a>
-            </li>
+          </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='notices-page.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf0a1;</i>
-              </div>
+            <a href="notices-page.html" class="nav-link">
+              <div class="nav-icon">🔔</div>
               <span class="nav-text">Notice Board</span>
               <span class="nav-badge">0</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="portfolio.html" class="nav-link">
+              <div class="nav-icon">📊</div>
+              <span class="nav-text">Portfolio</span>
             </a>
           </li>
         </ul>
@@ -1881,18 +1409,14 @@
         <h3 class="sidebar-section-title">Transactions</h3>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='transfer.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf362;</i>
-              </div>
+            <a href="transfer.html" class="nav-link">
+              <div class="nav-icon">💸</div>
               <span class="nav-text">Transfer</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='convert.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf0ec;</i>
-              </div>
+            <a href="convert.html" class="nav-link">
+              <div class="nav-icon">🔄</div>
               <span class="nav-text">Convert</span>
             </a>
           </li>
@@ -1901,57 +1425,69 @@
       <div class="sidebar-section">
         <h3 class="sidebar-section-title">Earn</h3>
         <ul class="nav-list">
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='academy.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf19d;</i>
-              </div>
+          <li class="nav-item">
+            <a href="academy.html" class="nav-link">
+              <div class="nav-icon">🎓</div>
               <span class="nav-text">Academy</span>
-            </a>
-          </li> -->
-            <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='trade.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf19d;</i>
-              </div>
-              <span class="nav-text">Trade</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='community.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf0c0;</i>
-              </div>
+            <a href="trade.html" class="nav-link">
+              <div class="nav-icon">📈</div>
+              <span class="nav-text">Trade</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="signals.html" class="nav-link active">
+              <div class="nav-icon">📡</div>
+              <span class="nav-text">Trade Signals</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="community.html" class="nav-link">
+              <div class="nav-icon">👥</div>
               <span class="nav-text">Community</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='mining.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf3a5;</i>
-              </div>
+            <a href="mining.html" class="nav-link">
+              <div class="nav-icon">⛏️</div>
               <span class="nav-text">Mining</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="investment.html" class="nav-link">
+              <div class="nav-icon">💰</div>
+              <span class="nav-text">Investment</span>
             </a>
           </li>
         </ul>
       </div>
-           <div class="sidebar-section">
+      <div class="sidebar-section">
         <h3 class="sidebar-section-title">Management</h3>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#" class="nav-link onclick="window.location.href='withdraw.html'; return false;"">
-              <div class="nav-icon">
-                <i class="fas">&#xf013;</i>
-              </div>
+            <a href="withdraw.html" class="nav-link">
+              <div class="nav-icon">📤</div>
               <span class="nav-text">Withdraw</span>
             </a>
+            <li class="nav-item">
+            <a href="withdraw-history.html" class="nav-link">
+              <div class="nav-icon">📜</div>
+              <span class="nav-text">Withdrawal History</span>
+            </a>
+          </li>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='deposit.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf023;</i>
-              </div>
+            <a href="deposit.html" class="nav-link">
+              <div class="nav-icon">📥</div>
               <span class="nav-text">Deposit</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="deposit-history.html" class="nav-link">
+              <div class="nav-icon">📜</div>
+              <span class="nav-text">Deposit History</span>
             </a>
           </li>
         </ul>
@@ -1960,31 +1496,31 @@
         <h3 class="sidebar-section-title">Settings</h3>
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='Terms-and-Conditions.html'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf013;</i>
-              </div>
-              <span class="nav-text">Terms and Conditions</span>
+            <a href="Terms-and-Conditions.html" class="nav-link">
+              <div class="nav-icon">📋</div>
+              <span class="nav-text">Terms & Conditions</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <div class="nav-icon" onclick="window.location.href='privacy-policy.html'; return false;">
-                <i class="fas">&#xf023;</i>
-              </div>
+            <a href="privacy-policy.html" class="nav-link">
+              <div class="nav-icon">🔒</div>
               <span class="nav-text">Privacy Policy</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" onclick="window.location.href='#'; return false;">
-              <div class="nav-icon">
-                <i class="fas">&#xf129;</i>
-              </div>
+            <a href="contact-us.html" class="nav-link active">
+              <div class="nav-icon">📞</div>
               <span class="nav-text">Help & Support</span>
             </a>
           </li>
         </ul>
       </div>
+      
+      <!-- Logout Button in Sidebar -->
+      <button class="logout-btn" onclick="logout()">
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
     </div>
   </aside>
 
@@ -1992,28 +1528,23 @@
   <main class="main-content">
     <header class="header">
       <div class="header-left">
-        <button class="mobile-toggle" id="mobile-toggle">
-          <i class="fas">&#xf0c9;</i>
-        </button>
-        <!-- <div class="search-bar">
-          <i class="fas search-icon">&#xf002;</i>
-          <input type="text" class="search-input" placeholder="Search...">
-        </div> -->
+        <button class="mobile-toggle" id="mobile-toggle">☰</button>
       </div>
       <div class="header-right">
         <button class="header-icon" onclick="window.location.href='notifications.html';">
-          <i class="fas">&#xf0f3;</i>
+          🔔
           <span class="notification-indicator"></span>
         </button>
-        <!-- <button class="header-icon">
-          <i class="fas">&#xf086;</i>
-        </button> -->
         <div class="user-profile">
           <div class="avatar">JD</div>
           <div class="user-info">
             <div class="user-name">Light Potato</div>
           </div>
         </div>
+        <!-- Logout Button in Header -->
+        <button class="header-logout-btn" onclick="logout()">
+          Logout
+        </button>
       </div>
     </header>
 
@@ -2026,94 +1557,143 @@
       <div class="grid-container">
         <!-- Notices -->
         <div class="admin-notices" id="notifications-container">
-            <p></p>
+          <!-- Notifications will be loaded here -->
         </div>
 
-         <!-- Admin Modal for Showing Notification Details -->
-          <div id="admin-notice-overlay" class="admin-notice-overlay" style="display: none;">
-            <div class="admin-notice-modal">
-              <div class="admin-notice-header">
-                <h3 id="admin-notice-title" class="admin-notice-title">Notification Title</h3>
-                <button class="admin-notice-close" onclick="closeModal()">X</button>
+        <!-- Admin Modal for Showing Notification Details -->
+        <div id="admin-notice-overlay" class="admin-notice-overlay">
+          <div class="admin-notice-modal">
+            <div class="admin-notice-header">
+              <h3 id="admin-notice-title" class="admin-notice-title">Notification Title</h3>
+              <button class="admin-notice-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="admin-notice-body">
+              <p id="admin-notice-message" class="admin-notice-content">Notification Message</p>
+              <p id="admin-notice-date" class="admin-notice-meta">Date</p>
+              <div id="admin-notice-expandable" class="admin-notice-expandable">
+                Additional details...
               </div>
-              <div class="admin-notice-body">
-                <p id="admin-notice-message" class="admin-notice-content">Notification Message</p>
-                <p id="admin-notice-date" class="admin-notice-meta">Date</p>
-                <div id="admin-notice-expandable" class="admin-notice-expandable" style="display: none;">
-                  Additional details...
+              <button id="admin-notice-read-more" class="admin-notice-read-more" onclick="toggleExpandable()">
+                Read More
+                <span id="admin-notice-read-more-icon" class="admin-notice-read-more-icon">↓</span>
+              </button>
+            </div>
+            <div class="admin-notice-footer">
+              <button class="admin-notice-button" onclick="window.location.href='notices-page.html';">
+                Go to Notices Page
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Balance Breakdown Section -->
+        <div class="balance-breakdown">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Account Balances</h3>
+              <button class="balance-refresh-btn" id="balance-refresh-btn" onclick="refreshBalances()" title="Refresh Balances">
+                🔄
+              </button>
+            </div>
+            <div class="balance-cards">
+              <div class="balance-card">
+                <div class="balance-card-header">
+                  <h4 class="balance-card-title">Currency Balance</h4>
+                  <div class="balance-card-icon">💰</div>
                 </div>
-                <button id="admin-notice-read-more" class="admin-notice-read-more" onclick="toggleExpandable()">
-                  Read More
-                  <span id="admin-notice-read-more-icon" class="admin-notice-read-more-icon">↓</span>
-                </button>
+                <div class="balance-card-amount" id="currency-balance">$0.00</div>
+                <p class="balance-card-description">Available for trading and transfers</p>
               </div>
-              <div class="admin-notice-footer">
-                <div class="admin-notice-actions">
-                  <!-- Only one button now, which redirects to the notices page -->
-                  <button class="admin-notice-button admin-notice-button-primary" onclick="window.location.href='notices-page.html';">
-                    Go to Notices Page
-                  </button>
+
+              <div class="balance-card">
+                <div class="balance-card-header">
+                  <h4 class="balance-card-title">Trade Balance</h4>
+                  <div class="balance-card-icon">📈</div>
                 </div>
+                <div class="balance-card-amount" id="trade-balance">$0.00</div>
+                <p class="balance-card-description">Funds allocated for trading activities</p>
+              </div>
+
+              <div class="balance-card">
+                <div class="balance-card-header">
+                  <h4 class="balance-card-title">Profits</h4>
+                  <div class="balance-card-icon">🎯</div>
+                </div>
+                <div class="balance-card-amount" id="profits-balance">$0.00</div>
+                <p class="balance-card-description">Earnings from investments and trading</p>
+              </div>
+
+              <div class="balance-card">
+                <div class="balance-card-header">
+                  <h4 class="balance-card-title">USD Wallet</h4>
+                  <div class="balance-card-icon">💵</div>
+                </div>
+                <div class="balance-card-amount" id="usd-wallet-balance">$0.00</div>
+                <p class="balance-card-description">USD wallet balance</p>
               </div>
             </div>
           </div>
-
-
+        </div>
 
         <!-- Quick Actions -->
         <div class="quick-actions">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Transfer Assets</h3>
-              <div class="card-icon">
-                <i class="fas">&#xf362;</i>
-              </div>
+              <h3 class="card-title">Total Assets</h3>
+              <div class="card-icon">📊</div>
             </div>
             <div class="card-content">
-              <p>Quickly transfer your crypto assets to another wallet or exchange.</p>
+              <p>View and manage your complete portfolio including crypto assets, fiat balances, and total holdings.</p>
             </div>
             <div class="card-footer">
-              <div class="card-stats">
-                <div class="stat-value" id="grand-total-value">$0.00</div>
-                <div class="stat-label">Available Balance</div>
+              <div class="balance-header">
+                <div class="balance-info">
+                  <div class="stat-value" id="grand-total-value">$0.00</div>
+                  <div class="balance-meta">
+                    <div class="stat-label">Total Portfolio Value</div>
+                    <div class="balance-status" id="balance-status">cached</div>
+                  </div>
+                  <div class="balance-updated" id="balance-updated">Last updated: --</div>
+                </div>
+                <button class="balance-refresh-btn" id="portfolio-refresh-btn" onclick="refreshPortfolioTotal()" title="Refresh Portfolio">
+                  🔄
+                </button>
               </div>
-                <button class="card-action" onclick="window.location.href='transfer.html'">Transfer Now</button>
+              <button class="card-action" onclick="window.location.href='portfolio.html'">View Portfolio</button>
             </div>
           </div>
+          
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Convert Crypto</h3>
-              <div class="card-icon">
-                <i class="fas">&#xf0ec;</i>
-              </div>
+              <div class="card-icon">🔄</div>
             </div>
             <div class="card-content">
-              <p>Convert between different cryptocurrencies at competitive rates.</p>
+              <p>Convert between different cryptocurrencies at competitive rates with real-time market pricing.</p>
             </div>
             <div class="card-footer">
               <div class="card-stats">
                 <div class="stat-value">30+</div>
                 <div class="stat-label">Available Pairs</div>
               </div>
-                <button class="card-action" onclick="window.location.href='convert.html'">Convert Now</button>
+              <button class="card-action" onclick="window.location.href='convert.html'">Convert Now</button>
             </div>
           </div>
+          
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Earn Rewards</h3>
-              <div class="card-icon">
-                <i class="fas">&#xf3a5;</i>
-              </div>
+              <div class="card-icon">⛏️</div>
             </div>
             <div class="card-content">
-              <p>Stake your crypto assets and earn passive income with competitive APY.</p>
+              <p>Stake your crypto assets and earn passive income with competitive APY rates and flexible terms.</p>
             </div>
             <div class="card-footer">
               <div class="card-stats">
                 <div class="stat-value">12.5%</div>
                 <div class="stat-label">Avg. APY</div>
               </div>
-              <button class="card-action" onclick="window.location.href='earn.html'">Start Earning</button>
+              <button class="card-action" onclick="window.location.href='mining.html'">Start Earning</button>
             </div>
           </div>
         </div>
@@ -2125,16 +1705,13 @@
               <h3 class="card-title">Market Overview</h3>
               <div class="market-filters">
                 <button class="market-filter active" id="all-btn">
-                  <i class="fas">&#xf0b0;</i>
-                  <span>All Assets</span>
+                  📊 All Assets
                 </button>
                 <button class="market-filter" id="favorites-btn">
-                  <i class="fas">&#xf005;</i>
-                  <span>Favorites</span>
+                  ⭐ Favorites
                 </button>
                 <button class="market-filter" id="trending-btn">
-                  <i class="fas">&#xf201;</i>
-                  <span>Trending</span>
+                  🔥 Trending
                 </button>
               </div>
             </div>
@@ -2144,8 +1721,7 @@
                   <div class="market-stat-label">Global Market Cap</div>
                   <div class="market-stat-value" id="global-market-cap">$2.45T</div>
                   <div class="market-stat-change change-positive">
-                    <i class="fas">&#xf062;</i>
-                    <span>2.4%</span>
+                    ↗️ <span>2.4%</span>
                   </div>
                 </div>
                 <div class="market-stat">
@@ -2170,7 +1746,6 @@
                     </tr>
                   </thead>
                   <tbody id="crypto-table-body">
-                    <!-- Crypto data will be loaded here -->
                     <tr>
                       <td colspan="6">
                         <div class="loading-container">
@@ -2190,12 +1765,13 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Academy Updates</h3>
-              <button class="notice-btn" onclick="window.location.href='academy.html'; return false;">
-                <i class="fas">&#xf15c;</i>
-                <span>View All</span>
+              <button class="notice-btn primary" onclick="window.location.href='academy.html';">
+                📚 View All
               </button>
             </div>
-            <div class="course-grid" id="course-grid"></div>
+            <div class="course-grid" id="course-grid">
+              <!-- Courses will be loaded here -->
+            </div>
           </div>
         </div>
       </div>
@@ -2203,1038 +1779,413 @@
   </main>
 </div>
 
-<!-- Coin Detail Modal -->
-<div class="modal-overlay" id="coin-modal">
-  <div class="coin-detail-modal">
-    <div class="modal-header">
-      <div class="modal-title">
-        <div class="coin-icon" id="modal-coin-icon"></div>
-        <h3 id="modal-coin-name"></h3>
-      </div>
-      <button class="modal-close" id="modal-close">
-        <i class="fas">&#xf00d;</i>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="coin-price-info">
-        <div class="coin-current-price">
-          <div class="coin-price-value" id="modal-coin-price"></div>
-          <div class="coin-price-change" id="modal-coin-change"></div>
-        </div>
-      </div>
-      <div class="coin-stats">
-        <div class="coin-stat">
-          <div class="coin-stat-value" id="modal-market-cap"></div>
-          <div class="coin-stat-label">
-            Market Cap
-            <span class="tooltip">
-              <i class="fas info-icon">&#xf05a;</i>
-              <span class="tooltip-text">The total market value of a cryptocurrency's circulating supply.</span>
-            </span>
-          </div>
-        </div>
-        <div class="coin-stat">
-          <div class="coin-stat-value" id="modal-volume"></div>
-          <div class="coin-stat-label">
-            24h Volume
-            <span class="tooltip">
-              <i class="fas info-icon">&#xf05a;</i>
-              <span class="tooltip-text">The total trading volume for this asset in the last 24 hours.</span>
-            </span>
-          </div>
-        </div>
-        <div class="coin-stat">
-          <div class="coin-stat-value" id="modal-high"></div>
-          <div class="coin-stat-label">24h High</div>
-        </div>
-        <div class="coin-stat">
-          <div class="coin-stat-value" id="modal-low"></div>
-          <div class="coin-stat-label">24h Low</div>
-        </div>
-      </div>
-      
-      <div class="coin-detail-tabs">
-        <button class="coin-detail-tab active" data-tab="chart">Price Chart</button>
-        <button class="coin-detail-tab" data-tab="info">Information</button>
-        <button class="coin-detail-tab" data-tab="markets">Markets</button>
-        <button class="coin-detail-tab" data-tab="news">News</button>
-      </div>
-      
-      <div class="chart-controls">
-        <div class="chart-timeframes">
-          <button class="timeframe-btn" data-timeframe="1d">1D</button>
-          <button class="timeframe-btn active" data-timeframe="7d">7D</button>
-          <button class="timeframe-btn" data-timeframe="30d">30D</button>
-          <button class="timeframe-btn" data-timeframe="90d">3M</button>
-          <button class="timeframe-btn" data-timeframe="365d">1Y</button>
-          <button class="timeframe-btn" data-timeframe="max">All</button>
-        </div>
-        
-        <div class="chart-options">
-          <div class="chart-type-selector">
-            <button class="chart-type-btn active" data-type="line">
-              <i class="fas">&#xf201;</i>
-              <span>Line</span>
-            </button>
-            <button class="chart-type-btn" data-type="candle">
-              <i class="fas">&#xf0c9;</i>
-              <span>Candle</span>
-            </button>
-            <button class="chart-type-btn" data-type="area">
-              <i class="fas">&#xf1fe;</i>
-              <span>Area</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="chart-indicators">
-        <button class="indicator-btn" data-indicator="ma">
-          <i class="fas">&#xf1ec;</i>
-          <span>MA</span>
-        </button>
-        <button class="indicator-btn" data-indicator="ema">
-          <i class="fas">&#xf201;</i>
-          <span>EMA</span>
-        </button>
-        <button class="indicator-btn" data-indicator="rsi">
-          <i class="fas">&#xf1fe;</i>
-          <span>RSI</span>
-        </button>
-        <button class="indicator-btn" data-indicator="bb">
-          <i class="fas">&#xf0c9;</i>
-          <span>Bollinger</span>
-        </button>
-      </div>
-      
-      <div class="chart-container">
-        <div class="chart-loading" id="chart-loading">
-          <div class="loading-spinner"></div>
-          <div class="chart-loading-text">Loading chart data...</div>
-        </div>
-        <canvas id="price-chart" class="chart-canvas"></canvas>
-      </div>
-      
-      <div class="coin-actions-container">
-        <button class="coin-action-btn buy" onclick="window.location.href='buy.html'">
-          <i class="fas">&#xf07a;</i>
-          <span>Buy</span>
-        </button>
-        <button class="coin-action-btn sell" onclick="window.location.href='sell.html'">
-          <i class="fas">&#xf291;</i>
-          <span>Sell</span>
-        </button>
-        <button class="coin-action-btn" onclick="window.location.href='transfer.html'">
-          <i class="fas">&#xf362;</i>
-          <span>Transfer</span>
-        </button>
-        <button class="coin-action-btn" onclick="window.location.href='convert.html'">
-          <i class="fas">&#xf0ec;</i>
-          <span>Convert</span>
-        </button>
-        <button class="coin-action-btn" onclick="window.location.href='deposit-list.html'">
-          <i class="fas">&#xf4c0;</i>
-          <span>Deposit</span>
-        </button>
-        <button class="coin-action-btn" onclick="window.location.href='withdraw.html'">
-          <i class="fas">&#xf4b5;</i>
-          <span>Withdraw</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Toast container -->
 <div class="toast-container" id="toast-container"></div>
 
-<!-- Axios CDN -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <script>
-      const api = axios.create({
-        baseURL: "https://api.dainterbfx.xyz/api",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-
-      document.addEventListener("DOMContentLoaded", async () => {
-        try {
-          const response = await api.get("/users/profile/username");
-          const username = response.data.username;
-
-          // Update UI
-          document.querySelector(".user-name").textContent = username;
-          document.querySelector(".welcome-title").textContent = `Welcome back, ${username.split(" ")[0]}`;
-          const initials = username.split(' ').map(word => word[0]).join('').toUpperCase();
-          document.querySelector(".avatar").textContent = initials;
-
-        } catch (error) {
-          console.error("Failed to fetch username:", error);
-        }
-      });
-      
-      async function fetchUnreadNotifications() {
-        try {
-          const response = await api.get("/users/notifications/unread");
-          const data = response.data;
-
-          if (data.data && data.data.length > 0) {
-            renderNotifications(data.data);
-          } 
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-          document.getElementById("notifications-container").innerHTML = "<p>Failed to load notifications.</p>";
-        }
-      }
-
-      function renderNotifications(notifications) {
-        const container = document.getElementById("notifications-container");
-        container.innerHTML = "";
-
-        notifications.forEach(notification => {
-          const div = document.createElement("div");
-          div.className = "notice";
-
-          div.innerHTML = `
-            <div class="notice-icon" style="color: var(--info);">
-              <i class="fas">&#xf05a;</i>
-            </div>
-            <div class="notice-content">
-              <h4 class="notice-title">${notification.title || 'No Title'}</h4>
-              <p class="notice-message">${notification.details || 'No message available'}</p>
-              <div class="notice-actions">
-                <button class="notice-btn primary" onclick="event.stopPropagation(); learnMore(${notification.id})">Learn More</button>
-                <button class="notice-btn" onclick="event.stopPropagation(); markAsRead(${notification.id}, this)">Mark Read</button>
-              </div>
-            </div>
-            <button class="notice-close" onclick="event.stopPropagation(); this.parentElement.remove()">
-              <i class="fas">&#xf00d;</i>
-            </button>
-          `;
-          container.appendChild(div);
-        });
-      }
-
-      async function markAsRead(notificationId, button) {
-        try {
-          const response = await api.post(`/users/notifications/${notificationId}/read`);
-          const result = response.data;
-
-          if (response.status === 200) {
-            showToast(result.message || "Marked as read", "success");
-            button.closest(".notice").remove();
-          } else {
-            showToast(result.message || "Failed to mark as read", "error");
-          }
-        } catch (error) {
-          console.error("Error marking as read:", error);
-          showToast("An error occurred while marking as read", "error");
-        }
-      }
-
-      function showToast(message, type = 'info') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerText = message;
-
-        container.appendChild(toast);
-
-        // Remove the toast after 4 seconds
-        setTimeout(() => {
-          toast.remove();
-        }, 4000);
-      }
-
-    function learnMore(notificationId) {
-      // Make a GET request to fetch the notification by its ID using axios
-      api.get(`/users/notifications/${notificationId}`)
-        .then(response => {
-          const data = response.data;
-          if (data.message === "Notification fetched successfully") {
-            const notification = data.data;
-
-            // Update modal content with notification data
-            document.getElementById('admin-notice-title').innerText = notification.title;
-            document.getElementById('admin-notice-message').innerText = notification.message;
-            document.getElementById('admin-notice-date').innerText = notification.noticeDate;
-            document.getElementById('admin-notice-expandable').innerHTML = notification.details;
-
-            // Show the modal
-            document.getElementById('admin-notice-overlay').style.display = 'flex';
-          } else {
-            alert('Notification not found.');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching notification:', error);
-          alert('Something went wrong. Please try again.');
-        });
-    }
-
-    function toggleExpandable() {
-      const expandable = document.getElementById("admin-notice-expandable");
-      const readMoreButton = document.getElementById("admin-notice-read-more");
-      const icon = document.getElementById("admin-notice-read-more-icon");
-
-      // Toggle visibility of the expandable section
-      if (expandable.style.display === "none") {
-        expandable.style.display = "block"; // Show the expandable content
-        icon.textContent = "↑"; // Change to "up" when expanded
-        readMoreButton.textContent = "Read Less"; // Change button text to "Read Less"
-      } else {
-        expandable.style.display = "none"; // Hide the expandable content
-        icon.textContent = "↓"; // Change to "down" when collapsed
-        readMoreButton.textContent = "Read More"; // Change button text back to "Read More"
-      }
-    }
-
-    function closeModal() {
-      const modal = document.getElementById("admin-notice-overlay");
-      modal.style.display = "none";
-    }
-
-      // Fetch on load
-      fetchUnreadNotifications();
-
-      async function fetchGrandTotal() {
-        try {
-          const response = await api.get("/users/wallet/crypto-usd/price-sum/cached");
-          const { grand_total } = response.data;
-
-          // Format grand_total with 2 decimal places and commas
-          const formatted = parseFloat(grand_total).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          });
-
-          document.getElementById("grand-total-value").textContent = formatted;
-        } catch (error) {
-          console.error("Failed to fetch grand total:", error);
-          document.getElementById("grand-total-value").textContent = "$0.00";
-        }
-      }
-
-      fetchGrandTotal();
-
-      async function loadCourses() {
-        try {
-          const response = await api.get("/users/courses");
-          const courses = response.data.courses;
-
-          const courseGrid = document.getElementById("course-grid");
-          courseGrid.innerHTML = ""; // Clear old content
-
-          courses.forEach(course => {
-            const authorInitial = course.author_name?.charAt(0).toUpperCase() || "U";
-
-            const courseHTML = `
-              <div class="course-card">
-                <div class="course-image">
-                  <img src="https://new.api.zephyrequi.com${course.bannerImg}" alt="${course.title}">
-                  <div class="course-level">Level Hidden</div>
-                </div>
-                <div class="course-content">
-                  <h4 class="course-title">${course.title}</h4>
-                  <p class="course-description">Pay ₦${course.price} to unlock full content.</p>
-                  <div class="course-meta">
-                    <div class="course-author">
-                      <div class="author-avatar">${authorInitial}</div>
-                      <div class="author-name">${course.author_name}</div>
-                    </div>
-                    <div class="course-price">
-                      <strong>₦${course.price}</strong>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            `;
-            courseGrid.insertAdjacentHTML("beforeend", courseHTML);
-          });
-        } catch (error) {
-          console.error("Failed to load courses:", error);
-          document.getElementById("course-grid").innerHTML = "<p>Error loading courses.</p>";
-        }
-      }
-
-      loadCourses();
-
-      async function loadUnreadNotificationCount() {
-        try {
-          const response = await api.get("/users/notifications/count/unread");
-          const unreadCount = response.data.unreadCount;
-
-          const badge = document.querySelector(".nav-badge");
-          if (unreadCount > 0) {
-            badge.textContent = unreadCount;
-            badge.style.display = "inline-block";
-          } else {
-            badge.style.display = "none"; // hide if zero
-          }
-        } catch (error) {
-          console.error("Failed to load unread notification count:", error);
-        }
-      }
-
-      // Call it when the page loads
-      loadUnreadNotificationCount();
-    </script>
-
-<!-- Modal HTML -->
-<div id="kycModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); z-index: 9999; display: flex; justify-content: center; align-items: center;">
-  <div style="
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-    ">
-    <h2 style="margin-bottom: 15px;">KYC Required</h2>
-    <p style="margin-bottom: 20px;">KYC not found. Please submit your KYC to continue.</p>
-    <button onclick="window.location.href='kyc.html'" style="
-        background-color: #ffffff33;
-        border: 1px solid #ffffff55;
-        padding: 10px 20px;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.3s;
-      " onmouseover="this.style.background='#ffffff55'" onmouseout="this.style.background='#ffffff33'">
-      Go to KYC Page
-    </button>
-  </div>
-</div>
-
 <script>
-function showKycModal() {
-  const modal = document.getElementById("kycModal");
-  modal.style.display = "flex";
-  // Disable background interaction
-  document.body.style.overflow = "hidden";
-  window.addEventListener("keydown", blockEscapeKey);
-}
-
-function blockEscapeKey(e) {
-  if (e.key === "Escape") {
-    e.preventDefault();
-  }
-}
-
-function checkKycStatus() {
-  fetch("https://api.dainterbfx.xyz/api/kyc/kyc-status", {
-    method: "GET",
+  // API Configuration
+  const api = axios.create({
+    baseURL: "https://api.dainterbfx.xyz/api",
     headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
     }
-  })
-  .then(response => {
-    if (response.status === 404) {
-      showKycModal();
-    }
-    return response.json();
-  })
-  .then(data => {
-    if (data.status === "not_verified" || data.error) {
-      showKycModal();
-    } else {
-      document.getElementById("kycModal").style.display = "none";
-      document.body.style.overflow = "auto";
-      window.removeEventListener("keydown", blockEscapeKey);
-    }
-  })
-  .catch(error => {
-    console.error("Network error checking KYC:", error);
-    showKycModal(); // fallback to safe side
-  });
-}
-
-// Run on page load and periodically
-document.addEventListener("DOMContentLoaded", () => {
-  checkKycStatus();
-  setInterval(checkKycStatus, 10000); // Check every 10 seconds
-});
-</script>
-
-
-
-<script src="../js/withAuth.js"></script>
-
-<script>
-  // Toggle Sidebar
-  const sidebar = document.getElementById('sidebar');
-  const toggleSidebar = document.getElementById('toggle-sidebar');
-  const mobileToggle = document.getElementById('mobile-toggle');
-  const mainContent = document.querySelector('.main-content');
-  const sidebarOverlay = document.getElementById('sidebar-overlay');
-
-  // Function to toggle sidebar
-  function toggleSidebarVisibility() {
-    sidebar.classList.toggle('active');
-    sidebarOverlay.classList.toggle('active');
-    
-    // Only adjust margin on desktop
-    if (window.innerWidth >= 992) {
-      mainContent.style.marginLeft = sidebar.classList.contains('active') ? 'var(--sidebar-width)' : '0';
-    }
-  }
-
-  // Event listeners
-  toggleSidebar.addEventListener('click', toggleSidebarVisibility);
-  mobileToggle.addEventListener('click', toggleSidebarVisibility);
-  sidebarOverlay.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    sidebarOverlay.classList.remove('active');
   });
 
-  // Close notices with smooth animation
-  const noticeCloseButtons = document.querySelectorAll('.notice-close');
-  noticeCloseButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const notice = button.closest('.notice');
-      notice.style.opacity = '0';
-      notice.style.maxHeight = '0';
-      notice.style.margin = '0';
-      notice.style.padding = '0';
-      notice.style.overflow = 'hidden';
+  // Global variables for balance data
+  let balanceData = {
+    grand_total: 0,
+    crypto_total_usd: 0,
+    currency_balance: 0,
+    trade_balance: 0,
+    earn_balance: 0,
+    usd_wallet: 0,
+    updated_at: null,
+    is_cached: false
+  };
+
+  let accountBalances = {
+    currency_balance: 0,
+    trade_balance: 0,
+    earn_balance: 0,
+    usd_wallet: 0
+  };
+
+  // Initialize Dashboard
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      // Fetch user profile
+      const response = await api.get("/users/profile/username");
+      const username = response.data.username;
+
+      // Update UI with user info
+      document.querySelector(".user-name").textContent = username;
+      document.querySelector(".welcome-title").textContent = `Welcome back, ${username.split(" ")[0]}`;
+      const initials = username.split(' ').map(word => word[0]).join('').toUpperCase();
+      document.querySelector(".avatar").textContent = initials;
+
+    } catch (error) {
+      console.error("Failed to fetch username:", error);
+    }
+
+    // Initialize all dashboard components
+    await Promise.all([
+      fetchUnreadNotifications(),
+      fetchAccountBalances(),
+      fetchGrandTotal(),
+      loadCourses(),
+      loadUnreadNotificationCount(),
+      fetchCryptoData('all'),
+      fetchGlobalData()
+    ]);
+  });
+
+  // Logout Function
+  function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+      // Clear authentication data
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       
+      // Show logout message
+      showToast('Logged out successfully', 'success');
+      
+      // Redirect to login page after a short delay
       setTimeout(() => {
-        notice.remove();
-      }, 300);
-    });
-  });
-
-  // Responsive adjustments
-  function handleResize() {
-    if (window.innerWidth < 992) {
-      sidebar.classList.remove('active');
-      sidebarOverlay.classList.remove('active');
-      mainContent.style.marginLeft = '0';
-    } else {
-      sidebar.classList.add('active');
-      mainContent.style.marginLeft = 'var(--sidebar-width)';
+        window.location.href = 'login.html';
+      }, 1000);
     }
   }
 
-  // Initialize on page load
-  window.addEventListener('DOMContentLoaded', handleResize);
-  window.addEventListener('resize', handleResize);
+  // Account Balances Functions - Using the new /balances endpoint
+  async function fetchAccountBalances() {
+    try {
+      const response = await api.get("/users/balances");
+      const data = response.data;
 
-  // Add active class to nav links
-  const navLinks = document.querySelectorAll('.nav-link');
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      navLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-    });
-  });
+      if (data.balances) {
+        accountBalances = {
+          currency_balance: parseFloat(data.balances.currency_balance || 0),
+          trade_balance: parseFloat(data.balances.trade_balance || 0),
+          earn_balance: parseFloat(data.balances.earn_balance || 0),
+          usd_wallet: parseFloat(data.balances.usd_wallet || 0)
+        };
 
-  // Coin Detail Modal Tabs
-  const detailTabs = document.querySelectorAll('.coin-detail-tab');
-  detailTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      detailTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      // Here you would toggle visibility of different content sections
-    });
-  });
-
-  // Coin Detail Modal
-  const coinModal = document.getElementById('coin-modal');
-  const modalClose = document.getElementById('modal-close');
-  const modalCoinIcon = document.getElementById('modal-coin-icon');
-  const modalCoinName = document.getElementById('modal-coin-name');
-  const modalCoinPrice = document.getElementById('modal-coin-price');
-  const modalCoinChange = document.getElementById('modal-coin-change');
-  const modalMarketCap = document.getElementById('modal-market-cap');
-  const modalVolume = document.getElementById('modal-volume');
-  const modalHigh = document.getElementById('modal-high');
-  const modalLow = document.getElementById('modal-low');
-  const priceChart = document.getElementById('price-chart');
-  const timeframeButtons = document.querySelectorAll('.timeframe-btn');
-  const chartTypeButtons = document.querySelectorAll('.chart-type-btn');
-  const indicatorButtons = document.querySelectorAll('.indicator-btn');
-  const chartLoading = document.getElementById('chart-loading');
-
-  // Close modal
-  modalClose.addEventListener('click', () => {
-    coinModal.classList.remove('active');
-  });
-
-  // Close modal when clicking outside
-  coinModal.addEventListener('click', (e) => {
-    if (e.target === coinModal) {
-      coinModal.classList.remove('active');
-    }
-  });
-
-  // Chart data and configuration
-  let chart;
-  let currentCoin;
-  let currentTimeframe = '7d';
-  let currentChartType = 'line';
-  let activeIndicators = [];
-
-  // Function to initialize chart
-  function initChart() {
-    if (chart) {
-      chart.destroy();
-    }
-
-    const ctx = priceChart.getContext('2d');
-    
-    // Create gradient for chart area
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(99, 102, 241, 0.5)');
-    gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
-    
-    chart = new Chart(ctx, {
-      type: currentChartType === 'candle' ? 'bar' : 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: 'Price',
-          data: [],
-          borderColor: '#6366f1',
-          backgroundColor: currentChartType === 'area' ? gradient : '#6366f1',
-          borderWidth: 2,
-          pointRadius: 0,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: '#6366f1',
-          pointHoverBorderColor: '#ffffff',
-          pointHoverBorderWidth: 2,
-          tension: 0.4,
-          fill: currentChartType === 'area'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-          duration: 750,
-          easing: 'easeOutQuart'
-        },
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            backgroundColor: 'rgba(30, 30, 30, 0.9)',
-            titleColor: '#f8fafc',
-            bodyColor: '#f8fafc',
-            borderColor: 'rgba(148, 163, 184, 0.2)',
-            borderWidth: 1,
-            padding: 12,
-            displayColors: false,
-            callbacks: {
-              label: function(context) {
-                return `$${context.raw.toFixed(2)}`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            grid: {
-              display: false,
-              drawBorder: false
-            },
-            ticks: {
-              color: '#94a3b8',
-              font: {
-                size: 10
-              },
-              maxRotation: 0
-            }
-          },
-          y: {
-            grid: {
-              color: 'rgba(148, 163, 184, 0.1)',
-              drawBorder: false
-            },
-            ticks: {
-              color: '#94a3b8',
-              font: {
-                size: 10
-              },
-              callback: function(value) {
-                return '$' + value.toLocaleString();
-              }
-            }
-          }
-        }
+        updateAccountBalancesDisplay();
       }
-    });
+      
+    } catch (error) {
+      console.error("Failed to fetch account balances:", error);
+      showToast('Failed to load account balances', 'error');
+    }
   }
 
-  // Function to update chart data
-  async function updateChartData(coinId, timeframe) {
+  async function refreshBalances() {
+    const refreshBtn = document.getElementById('balance-refresh-btn');
+    
     try {
       // Show loading state
-      chartLoading.style.display = 'flex';
+      refreshBtn.disabled = true;
+      refreshBtn.classList.add('loading');
+      showToast('Refreshing account balances...', 'info');
+
+      // Fetch fresh balance data
+      await fetchAccountBalances();
       
-      // Fetch data from CoinGecko API
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${timeframe}`);
+      showToast('Account balances refreshed', 'success');
       
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Process price data
-      const prices = data.prices;
-      const labels = [];
-      const priceData = [];
-      
-      prices.forEach(price => {
-        const date = new Date(price[0]);
-        
-        // Format date based on timeframe
-        let label;
-        if (timeframe === '1d') {
-          label = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        } else if (timeframe === '7d' || timeframe === '30d') {
-          label = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
-        } else {
-          label = date.toLocaleDateString([], { month: 'short', year: '2-digit' });
-        }
-        
-        labels.push(label);
-        priceData.push(price[1]);
+    } catch (error) {
+      console.error("Failed to refresh balances:", error);
+      showToast('Failed to refresh balances', 'error');
+    } finally {
+      // Reset button state
+      refreshBtn.disabled = false;
+      refreshBtn.classList.remove('loading');
+    }
+  }
+
+  function updateAccountBalancesDisplay() {
+    // Format and display balance values
+    const formatCurrency = (value) => {
+      return value.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
       });
-      
-      // Initialize chart if not already done
-      if (!chart) {
-        initChart();
-      }
-      
-      // Update chart data
-      chart.data.labels = labels;
-      chart.data.datasets[0].data = priceData;
-      
-      // Reset datasets to only include the price data
-      chart.data.datasets = [chart.data.datasets[0]];
-      
-      // Add indicators if active
-      if (activeIndicators.includes('ma')) {
-        addMovingAverage(priceData, 20);
-      }
-      
-      if (activeIndicators.includes('ema')) {
-        addExponentialMovingAverage(priceData, 14);
-      }
-      
-      if (activeIndicators.includes('rsi')) {
-        addRSI(priceData, 14);
-      }
-      
-      if (activeIndicators.includes('bb')) {
-        addBollingerBands(priceData, 20, 2);
-      }
-      
-      chart.update();
-      
-      // Hide loading state
-      chartLoading.style.display = 'none';
-      
-    } catch (error) {
-      console.error('Error fetching chart data:', error);
-      
-      // Show error message in chart
-      chartLoading.innerHTML = `
-        <div class="error-container">
-          <i class="fas" style="font-size: 2rem; margin-bottom: 1rem;">&#xf071;</i>
-          <p>Failed to load chart data. Please try again later.</p>
-          <button class="notice-btn primary mt-3" onclick="updateChartData('${coinId}', '${timeframe}')">Retry</button>
-        </div>
-      `;
-    }
-  }
-
-  // Helper functions for indicators
-  function addMovingAverage(data, period) {
-    const maData = calculateMA(data, period);
-    
-    chart.data.datasets.push({
-      label: `MA ${period}`,
-      data: maData,
-      borderColor: '#3b82f6',
-      borderWidth: 1.5,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.4
-    });
-  }
-  
-  function addExponentialMovingAverage(data, period) {
-    const emaData = calculateEMA(data, period);
-    
-    chart.data.datasets.push({
-      label: `EMA ${period}`,
-      data: emaData,
-      borderColor: '#10b981',
-      borderWidth: 1.5,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.4
-    });
-  }
-  
-  function addRSI(data, period) {
-    const rsiData = calculateRSI(data, period);
-    
-    // Add a new y-axis for RSI
-    chart.options.scales.rsi = {
-      position: 'right',
-      grid: {
-        drawOnChartArea: false
-      },
-      min: 0,
-      max: 100,
-      ticks: {
-        color: '#94a3b8'
-      }
     };
-    
-    chart.data.datasets.push({
-      label: `RSI ${period}`,
-      data: rsiData,
-      borderColor: '#f59e0b',
-      borderWidth: 1.5,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.4,
-      yAxisID: 'rsi'
-    });
-  }
-  
-  function addBollingerBands(data, period, stdDev) {
-    const { upper, middle, lower } = calculateBollingerBands(data, period, stdDev);
-    
-    // Add middle band (SMA)
-    chart.data.datasets.push({
-      label: `BB Middle (SMA ${period})`,
-      data: middle,
-      borderColor: '#8b5cf6',
-      borderWidth: 1.5,
-      pointRadius: 0,
-      fill: false,
-      tension: 0.4
-    });
-    
-    // Add upper band
-    chart.data.datasets.push({
-      label: `BB Upper (${stdDev}σ)`,
-      data: upper,
-      borderColor: '#8b5cf6',
-      borderWidth: 1,
-      borderDash: [5, 5],
-      pointRadius: 0,
-      fill: false,
-      tension: 0.4
-    });
-    
-    // Add lower band
-    chart.data.datasets.push({
-      label: `BB Lower (${stdDev}σ)`,
-      data: lower,
-      borderColor: '#8b5cf6',
-      borderWidth: 1,
-      borderDash: [5, 5],
-      pointRadius: 0,
-      fill: '+1',
-      backgroundColor: 'rgba(139, 92, 246, 0.1)',
-      tension: 0.4
-    });
-  }
-  
-  function calculateMA(data, period) {
-    const result = [];
-    
-    // Fill with nulls for the first (period-1) points
-    for (let i = 0; i < period - 1; i++) {
-      result.push(null);
-    }
-    
-    // Calculate MA for the rest
-    for (let i = period - 1; i < data.length; i++) {
-      let sum = 0;
-      for (let j = 0; j < period; j++) {
-        sum += data[i - j];
-      }
-      result.push(sum / period);
-    }
-    
-    return result;
-  }
-  
-  function calculateEMA(data, period) {
-    const result = [];
-    const multiplier = 2 / (period + 1);
-    
-    // First EMA is SMA
-    let ema = data.slice(0, period).reduce((sum, price) => sum + price, 0) / period;
-    
-    // Fill with nulls for the first (period-1) points
-    for (let i = 0; i < period - 1; i++) {
-      result.push(null);
-    }
-    
-    result.push(ema);
-    
-    // Calculate EMA for the rest
-    for (let i = period; i < data.length; i++) {
-      ema = (data[i] - ema) * multiplier + ema;
-      result.push(ema);
-    }
-    
-    return result;
-  }
-  
-  function calculateRSI(data, period) {
-    const result = [];
-    const gains = [];
-    const losses = [];
-    
-    // Calculate price changes
-    for (let i = 1; i < data.length; i++) {
-      const change = data[i] - data[i - 1];
-      gains.push(change > 0 ? change : 0);
-      losses.push(change < 0 ? Math.abs(change) : 0);
-    }
-    
-    // Fill with nulls for the first period points
-    for (let i = 0; i < period; i++) {
-      result.push(null);
-    }
-    
-    // Calculate first average gain and loss
-    let avgGain = gains.slice(0, period).reduce((sum, gain) => sum + gain, 0) / period;
-    let avgLoss = losses.slice(0, period).reduce((sum, loss) => sum + loss, 0) / period;
-    
-    // Calculate RSI for the rest
-    for (let i = period; i < data.length - 1; i++) {
-      avgGain = ((avgGain * (period - 1)) + gains[i]) / period;
-      avgLoss = ((avgLoss * (period - 1)) + losses[i]) / period;
-      
-      const rs = avgGain / (avgLoss === 0 ? 0.001 : avgLoss); // Avoid division by zero
-      const rsi = 100 - (100 / (1 + rs));
-      
-      result.push(rsi);
-    }
-    
-    return result;
-  }
-  
-  function calculateBollingerBands(data, period, stdDev) {
-    const middle = calculateMA(data, period);
-    const upper = [];
-    const lower = [];
-    
-    // Fill with nulls for the first (period-1) points
-    for (let i = 0; i < period - 1; i++) {
-      upper.push(null);
-      lower.push(null);
-    }
-    
-    // Calculate upper and lower bands
-    for (let i = period - 1; i < data.length; i++) {
-      // Calculate standard deviation
-      let sum = 0;
-      for (let j = 0; j < period; j++) {
-        sum += Math.pow(data[i - j] - middle[i], 2);
-      }
-      const std = Math.sqrt(sum / period);
-      
-      // Calculate upper and lower bands
-      upper.push(middle[i] + (std * stdDev));
-      lower.push(middle[i] - (std * stdDev));
-    }
-    
-    return { upper, middle, lower };
+
+    document.getElementById('currency-balance').textContent = formatCurrency(accountBalances.currency_balance);
+    document.getElementById('trade-balance').textContent = formatCurrency(accountBalances.trade_balance);
+    document.getElementById('profits-balance').textContent = formatCurrency(accountBalances.earn_balance);
+    document.getElementById('usd-wallet-balance').textContent = formatCurrency(accountBalances.usd_wallet);
   }
 
-  // Function to open coin detail modal
-  async function openCoinDetail(coinId) {
+  // Portfolio Total Functions - Updated to use the new endpoint with refresh capability
+  async function fetchGrandTotal() {
     try {
-      currentCoin = coinId;
-      
-      // Show modal immediately with loading state
-      coinModal.classList.add('active');
-      
-      // Show loading state
-      modalCoinName.textContent = 'Loading...';
-      modalCoinPrice.textContent = '';
-      modalCoinChange.textContent = '';
-      modalMarketCap.textContent = '';
-      modalVolume.textContent = '';
-      modalHigh.textContent = '';
-      modalLow.textContent = '';
-      chartLoading.style.display = 'flex';
-      
-      // Fetch coin details from CoinGecko API
-      const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false`);
-      
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Update modal content
-      modalCoinIcon.innerHTML = `<img src="${data.image.small}" alt="${data.name}">`;
-      modalCoinName.textContent = `${data.name} (${data.symbol.toUpperCase()})`;
-      modalCoinPrice.textContent = `$${data.market_data.current_price.usd.toFixed(2)}`;
-      
-      const priceChange = data.market_data.price_change_percentage_24h;
-      const priceChangeClass = priceChange >= 0 ? 'change-positive' : 'change-negative';
-      const priceChangeIcon = priceChange >= 0 ? '&#xf062;' : '&#xf063;';
-      
-      modalCoinChange.className = `coin-price-change ${priceChangeClass}`;
-      modalCoinChange.innerHTML = `<i class="fas">${priceChangeIcon}</i> ${Math.abs(priceChange).toFixed(2)}% (24h)`;
-      
-      modalMarketCap.textContent = `$${(data.market_data.market_cap.usd / 1e9).toFixed(2)}B`;
-      modalVolume.textContent = `$${(data.market_data.total_volume.usd / 1e9).toFixed(2)}B`;
-      modalHigh.textContent = `$${data.market_data.high_24h.usd.toFixed(2)}`;
-      modalLow.textContent = `$${data.market_data.low_24h.usd.toFixed(2)}`;
-      
-      // Initialize chart
-      initChart();
-      
-      // Update chart data
-      await updateChartData(coinId, currentTimeframe);
+      const response = await api.get("/users/wallet/crypto-usd/price-sum");
+      const data = response.data;
+
+      // Store balance data
+      balanceData = {
+        grand_total: parseFloat(data.grand_total || 0),
+        crypto_total_usd: parseFloat(data.crypto_total_usd || 0),
+        currency_balance: parseFloat(data.currency_balance || 0),
+        trade_balance: parseFloat(data.trade_balance || 0),
+        earn_balance: parseFloat(data.earn_balance || 0),
+        updated_at: data.updated_at || new Date().toISOString(),
+        is_cached: data.message && data.message.includes('Cached')
+      };
+
+      updatePortfolioDisplay();
       
     } catch (error) {
-      console.error('Error fetching coin details:', error);
-      
-      // Show error message
-      modalCoinName.textContent = 'Error loading data';
-      chartLoading.innerHTML = `
-        <div class="error-container">
-          <i class="fas" style="font-size: 2rem; margin-bottom: 1rem;">&#xf071;</i>
-          <p>Failed to load coin data. Please try again later.</p>
-          <button class="notice-btn primary mt-3" onclick="openCoinDetail('${coinId}')">Retry</button>
-        </div>
-      `;
+      console.error("Failed to fetch grand total:", error);
+      document.getElementById("grand-total-value").textContent = "$0.00";
+      showToast('Failed to load portfolio data', 'error');
     }
   }
 
-  // Function to fetch global market data
+  async function refreshPortfolioTotal() {
+    const refreshBtn = document.getElementById('portfolio-refresh-btn');
+    
+    try {
+      // Show loading state
+      refreshBtn.disabled = true;
+      refreshBtn.classList.add('loading');
+      showToast('Refreshing portfolio total...', 'info');
+
+      // Force refresh by calling the endpoint (it will recalculate if needed)
+      const response = await api.get("/users/wallet/crypto-usd/price-sum");
+      const data = response.data;
+
+      // Update balance data
+      balanceData = {
+        grand_total: parseFloat(data.grand_total || 0),
+        crypto_total_usd: parseFloat(data.crypto_total_usd || 0),
+        currency_balance: parseFloat(data.currency_balance || 0),
+        trade_balance: parseFloat(data.trade_balance || 0),
+        earn_balance: parseFloat(data.earn_balance || 0),
+        updated_at: data.updated_at || new Date().toISOString(),
+        is_cached: data.message && data.message.includes('Cached')
+      };
+
+      updatePortfolioDisplay();
+      
+      const message = data.message.includes('Recalculated') 
+        ? 'Portfolio refreshed with latest data' 
+        : 'Portfolio is up to date';
+      
+      showToast(message, 'success');
+      
+    } catch (error) {
+      console.error("Failed to refresh portfolio:", error);
+      showToast('Failed to refresh portfolio', 'error');
+    } finally {
+      // Reset button state
+      refreshBtn.disabled = false;
+      refreshBtn.classList.remove('loading');
+    }
+  }
+
+  function updatePortfolioDisplay() {
+    // Format and display the grand total
+    const formatted = balanceData.grand_total.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+
+    document.getElementById("grand-total-value").textContent = formatted;
+
+    // Update status indicator
+    const statusElement = document.getElementById('balance-status');
+    const updatedElement = document.getElementById('balance-updated');
+    
+    if (balanceData.is_cached) {
+      statusElement.textContent = 'cached';
+      statusElement.className = 'balance-status cached';
+    } else {
+      statusElement.textContent = 'fresh';
+      statusElement.className = 'balance-status fresh';
+    }
+
+    // Format the updated time
+    if (balanceData.updated_at) {
+      const updatedDate = new Date(balanceData.updated_at);
+      const now = new Date();
+      const diffMinutes = Math.floor((now - updatedDate) / (1000 * 60));
+      
+      let timeText;
+      if (diffMinutes < 1) {
+        timeText = 'Just now';
+      } else if (diffMinutes < 60) {
+        timeText = `${diffMinutes}m ago`;
+      } else if (diffMinutes < 1440) {
+        timeText = `${Math.floor(diffMinutes / 60)}h ago`;
+      } else {
+        timeText = updatedDate.toLocaleDateString();
+      }
+      
+      updatedElement.textContent = `Last updated: ${timeText}`;
+    }
+  }
+
+  // Notification Functions
+  async function fetchUnreadNotifications() {
+    try {
+      const response = await api.get("/users/notifications/unread");
+      const data = response.data;
+
+      if (data.data && data.data.length > 0) {
+        renderNotifications(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  }
+
+  function renderNotifications(notifications) {
+    const container = document.getElementById("notifications-container");
+    container.innerHTML = "";
+
+    notifications.forEach(notification => {
+      const div = document.createElement("div");
+      div.className = "notice";
+
+      div.innerHTML = `
+        <div class="notice-icon">⚠️</div>
+        <div class="notice-content">
+          <h4 class="notice-title">${notification.title || 'No Title'}</h4>
+          <p class="notice-message">${notification.details || 'No message available'}</p>
+          <div class="notice-actions">
+            <button class="notice-btn primary" onclick="event.stopPropagation(); learnMore(${notification.id})">Learn More</button>
+            <button class="notice-btn" onclick="event.stopPropagation(); markAsRead(${notification.id}, this)">Mark Read</button>
+          </div>
+        </div>
+        <button class="notice-close" onclick="event.stopPropagation(); this.parentElement.remove()">✕</button>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  async function markAsRead(notificationId, button) {
+    try {
+      const response = await api.post(`/users/notifications/${notificationId}/read`);
+      const result = response.data;
+
+      if (response.status === 200) {
+        showToast(result.message || "Marked as read", "success");
+        button.closest(".notice").remove();
+      } else {
+        showToast(result.message || "Failed to mark as read", "error");
+      }
+    } catch (error) {
+      console.error("Error marking as read:", error);
+      showToast("An error occurred while marking as read", "error");
+    }
+  }
+
+  function learnMore(notificationId) {
+    api.get(`/users/notifications/${notificationId}`)
+      .then(response => {
+        const data = response.data;
+        if (data.message === "Notification fetched successfully") {
+          const notification = data.data;
+
+          document.getElementById('admin-notice-title').innerText = notification.title;
+          document.getElementById('admin-notice-message').innerText = notification.message;
+          document.getElementById('admin-notice-date').innerText = notification.noticeDate;
+          document.getElementById('admin-notice-expandable').innerHTML = notification.details;
+
+          document.getElementById('admin-notice-overlay').style.display = 'flex';
+        } else {
+          showToast('Notification not found.', 'error');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching notification:', error);
+        showToast('Something went wrong. Please try again.', 'error');
+      });
+  }
+
+  function toggleExpandable() {
+    const expandable = document.getElementById("admin-notice-expandable");
+    const readMoreButton = document.getElementById("admin-notice-read-more");
+    const icon = document.getElementById("admin-notice-read-more-icon");
+
+    if (expandable.style.display === "none" || expandable.style.display === "") {
+      expandable.style.display = "block";
+      icon.textContent = "↑";
+      readMoreButton.innerHTML = 'Read Less <span class="admin-notice-read-more-icon">↑</span>';
+    } else {
+      expandable.style.display = "none";
+      icon.textContent = "↓";
+      readMoreButton.innerHTML = 'Read More <span class="admin-notice-read-more-icon">↓</span>';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("admin-notice-overlay").style.display = "none";
+  }
+
+  // Course Functions
+  async function loadCourses() {
+    try {
+      const response = await api.get("/users/courses");
+      const courses = response.data.courses;
+
+      const courseGrid = document.getElementById("course-grid");
+      courseGrid.innerHTML = "";
+
+      courses.slice(0, 3).forEach(course => {
+        const authorInitial = course.author_name?.charAt(0).toUpperCase() || "U";
+
+        const courseHTML = `
+          <div class="course-card" onclick="window.location.href='academy.html'">
+            <div class="course-image">
+              <img src="https://api.dainterbfx.xyz${course.bannerImg}" alt="${course.title}">
+              <div class="course-level">Premium</div>
+            </div>
+            <div class="course-content">
+              <h4 class="course-title">${course.title}</h4>
+              <p class="course-description">Pay ₦${course.price} to unlock full content and start learning.</p>
+              <div class="course-meta">
+                <div class="course-author">
+                  <div class="author-avatar">${authorInitial}</div>
+                  <div class="author-name">${course.author_name}</div>
+                </div>
+                <div class="course-price">₦${course.price}</div>
+              </div>
+            </div>
+          </div>
+        `;
+        courseGrid.insertAdjacentHTML("beforeend", courseHTML);
+      });
+    } catch (error) {
+      console.error("Failed to load courses:", error);
+      document.getElementById("course-grid").innerHTML = "<p>Error loading courses.</p>";
+    }
+  }
+
+  async function loadUnreadNotificationCount() {
+    try {
+      const response = await api.get("/users/notifications/count/unread");
+      const unreadCount = response.data.unreadCount;
+
+      const badge = document.querySelector(".nav-badge");
+      if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+    } catch (error) {
+      console.error("Failed to load unread notification count:", error);
+    }
+  }
+
+  // Market Data Functions
   async function fetchGlobalData() {
     try {
       const response = await fetch('https://api.coingecko.com/api/v3/global');
@@ -3250,13 +2201,9 @@ document.addEventListener("DOMContentLoaded", () => {
       
     } catch (error) {
       console.error('Error fetching global data:', error);
-      document.getElementById('global-market-cap').textContent = 'N/A';
-      document.getElementById('global-volume').textContent = 'N/A';
-      document.getElementById('btc-dominance').textContent = 'N/A';
     }
   }
-  
-  // Function to fetch cryptocurrency data
+
   async function fetchCryptoData(type = 'all') {
     try {
       document.getElementById('crypto-table-body').innerHTML = `
@@ -3277,30 +2224,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       
       const response = await fetch(url);
-      
       let data;
+      
       if (type === 'trending') {
         const result = await response.json();
-        // Get the coin IDs from trending coins
         const coinIds = result.coins.map(coin => coin.item.id).join(',');
-        
-        // Fetch detailed data for these coins
         const detailResponse = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coinIds}&order=market_cap_desc&sparkline=false&price_change_percentage=24h`);
         data = await detailResponse.json();
       } else {
         data = await response.json();
         
-        // Filter for favorites if needed
         if (type === 'favorites') {
           const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
           data = data.filter(coin => favorites.includes(coin.id));
         }
       }
       
-      // Clear loading state
       document.getElementById('crypto-table-body').innerHTML = '';
       
-      // Check if we have data
       if (data.length === 0) {
         document.getElementById('crypto-table-body').innerHTML = `
           <tr>
@@ -3312,15 +2253,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       
-      // Limit to 5 coins for display
-      const displayData = data.slice(0, 5);
+      const displayData = data.slice(0, 10);
       
-      // Render the data
       displayData.forEach(coin => {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         const isFavorite = favorites.includes(coin.id);
         const priceChangeClass = coin.price_change_percentage_24h >= 0 ? 'change-positive' : 'change-negative';
-        const priceChangeIcon = coin.price_change_percentage_24h >= 0 ? '&#xf062;' : '&#xf063;';
+        const priceChangeIcon = coin.price_change_percentage_24h >= 0 ? '↗️' : '↘️';
         
         const row = document.createElement('tr');
         row.setAttribute('data-coin-id', coin.id);
@@ -3339,7 +2278,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td class="coin-price">$${coin.current_price.toFixed(2)}</td>
           <td>
             <div class="coin-change ${priceChangeClass}">
-              <i class="fas">${priceChangeIcon}</i>
+              ${priceChangeIcon}
               <span>${Math.abs(coin.price_change_percentage_24h).toFixed(2)}%</span>
             </div>
           </td>
@@ -3347,26 +2286,14 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>$${(coin.total_volume / 1e9).toFixed(2)}B</td>
           <td>
             <div class="coin-actions">
-              <button class="coin-btn">
-                <i class="fas">&#xf362;</i>
-              </button>
-              <button class="coin-btn">
-                <i class="fas">&#xf0ec;</i>
-              </button>
-              <button class="coin-btn favorite-btn" data-coin-id="${coin.id}">
-                <i class="fas">${isFavorite ? '&#xf005;' : '&#xf006;'}</i>
+              <button class="coin-btn" onclick="window.location.href='transfer.html'" title="Transfer">💸</button>
+              <button class="coin-btn" onclick="window.location.href='convert.html'" title="Convert">🔄</button>
+              <button class="coin-btn favorite-btn" data-coin-id="${coin.id}" title="Add to Favorites">
+                ${isFavorite ? '⭐' : '☆'}
               </button>
             </div>
           </td>
         `;
-        
-        // Add click event to open coin detail
-        row.addEventListener('click', (e) => {
-          // Don't open modal if clicking on action buttons
-          if (!e.target.closest('.coin-actions')) {
-            openCoinDetail(coin.id);
-          }
-        });
         
         document.getElementById('crypto-table-body').appendChild(row);
       });
@@ -3374,18 +2301,18 @@ document.addEventListener("DOMContentLoaded", () => {
       // Add event listeners to favorite buttons
       document.querySelectorAll('.favorite-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          e.stopPropagation(); // Prevent row click event
+          e.stopPropagation();
           const coinId = btn.getAttribute('data-coin-id');
           const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
           
           if (favorites.includes(coinId)) {
             const newFavorites = favorites.filter(id => id !== coinId);
             localStorage.setItem('favorites', JSON.stringify(newFavorites));
-            btn.innerHTML = '<i class="fas">&#xf006;</i>'; // Empty star
+            btn.textContent = '☆';
           } else {
             favorites.push(coinId);
             localStorage.setItem('favorites', JSON.stringify(favorites));
-            btn.innerHTML = '<i class="fas">&#xf005;</i>'; // Filled star
+            btn.textContent = '⭐';
           }
         });
       });
@@ -3402,72 +2329,134 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
   }
-  
-  // Add event listeners to filter buttons
+
+  // Event Listeners
   document.getElementById('all-btn').addEventListener('click', () => {
+    document.querySelectorAll('.market-filter').forEach(btn => btn.classList.remove('active'));
     document.getElementById('all-btn').classList.add('active');
-    document.getElementById('favorites-btn').classList.remove('active');
-    document.getElementById('trending-btn').classList.remove('active');
     fetchCryptoData('all');
   });
   
   document.getElementById('favorites-btn').addEventListener('click', () => {
-    document.getElementById('all-btn').classList.remove('active');
+    document.querySelectorAll('.market-filter').forEach(btn => btn.classList.remove('active'));
     document.getElementById('favorites-btn').classList.add('active');
-    document.getElementById('trending-btn').classList.remove('active');
     fetchCryptoData('favorites');
   });
   
   document.getElementById('trending-btn').addEventListener('click', () => {
-    document.getElementById('all-btn').classList.remove('active');
-    document.getElementById('favorites-btn').classList.remove('active');
+    document.querySelectorAll('.market-filter').forEach(btn => btn.classList.remove('active'));
     document.getElementById('trending-btn').classList.add('active');
     fetchCryptoData('trending');
   });
-  
-  // Add event listeners to timeframe buttons
-  timeframeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      timeframeButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      currentTimeframe = button.getAttribute('data-timeframe');
-      updateChartData(currentCoin, currentTimeframe);
-    });
+
+  // Utility Functions
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 100);
+
+    // Remove toast after 4 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 300);
+    }, 4000);
+  }
+
+  // Sidebar Toggle Functions
+  const sidebar = document.getElementById('sidebar');
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mainContent = document.querySelector('.main-content');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+  function toggleSidebarVisibility() {
+    sidebar.classList.toggle('active');
+    sidebarOverlay.classList.toggle('active');
+  }
+
+  mobileToggle.addEventListener('click', toggleSidebarVisibility);
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
   });
-  
-  // Add event listeners to chart type buttons
-  chartTypeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      chartTypeButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      currentChartType = button.getAttribute('data-type');
-      initChart();
-      updateChartData(currentCoin, currentTimeframe);
-    });
+
+  // Responsive handling
+  function handleResize() {
+    if (window.innerWidth < 992) {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+    } else {
+      sidebar.classList.add('active');
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', handleResize);
+  window.addEventListener('resize', handleResize);
+
+  // Close modal when clicking outside
+  document.getElementById('admin-notice-overlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('admin-notice-overlay')) {
+      closeModal();
+    }
   });
+
+  // Add active class to current nav link
+  const navLinks = document.querySelectorAll('.nav-link');
+  const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
   
-  // Add event listeners to indicator buttons
-  indicatorButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const indicator = button.getAttribute('data-indicator');
-      
-      if (activeIndicators.includes(indicator)) {
-        // Remove indicator
-        activeIndicators = activeIndicators.filter(i => i !== indicator);
-        button.classList.remove('active');
-      } else {
-        // Add indicator
-        activeIndicators.push(indicator);
-        button.classList.add('active');
-      }
-      
-      updateChartData(currentCoin, currentTimeframe);
-    });
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
   });
-  
-  // Fetch data initially
-  fetchCryptoData('all');
-  fetchGlobalData();
+
+  // Auto-refresh balances every 5 minutes
+  setInterval(() => {
+    fetchAccountBalances();
+    fetchGrandTotal();
+  }, 5 * 60 * 1000);
 </script>
+
+<!-- Authentication Script -->
+<script src="../js/withAuth.js"></script>
+   <!-- Google Translate Widget -->
+   <div id="google_translate_element"></div>
+
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+      }
+    </script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+      // Preserve translation by checking the cookie on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        const lang = getCookie("googtrans");
+        if (lang && lang !== "/en/en") {
+          document.cookie = `googtrans=${lang}; path=/`;
+        }
+      });
+
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        return match ? match[2] : null;
+      }
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Traders - dainterbfx</title>
+    <title>Bot Traders - Zephyr Equi</title>
     <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
@@ -239,10 +239,42 @@
             margin-top: 4px;
         }
 
+        /* Bot Filter */
+        .bot-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .filter-btn {
+            background: #1a202c;
+            border: 1px solid #2a3441;
+            color: #9ca3af;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            border-color: #22c55e;
+            color: #ffffff;
+        }
+
+        .filter-btn.active {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+
         /* Bot Traders Grid */
         .bot-traders-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 24px;
             margin-bottom: 32px;
         }
@@ -258,9 +290,9 @@
         }
 
         .bot-card:hover {
-            border-color: #8b5cf6;
+            border-color: #22c55e;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.15);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.15);
         }
 
         .bot-header {
@@ -280,13 +312,14 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            background: linear-gradient(135deg, #22c55e, #06b6d4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #ffffff;
+            border: 2px solid #2a3441;
         }
 
         .bot-details h3 {
@@ -309,16 +342,8 @@
             font-size: 11px;
             font-weight: 500;
             text-transform: uppercase;
-        }
-
-        .bot-status.active {
             background: rgba(34, 197, 94, 0.2);
             color: #22c55e;
-        }
-
-        .bot-status.inactive {
-            background: rgba(156, 163, 175, 0.2);
-            color: #9ca3af;
         }
 
         .bot-stats {
@@ -364,9 +389,24 @@
             margin-bottom: 20px;
         }
 
+        .bot-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .bot-tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
         .copy-btn {
             width: 100%;
-            background: #8b5cf6;
+            background: #22c55e;
             color: #ffffff;
             border: none;
             padding: 12px 16px;
@@ -378,7 +418,7 @@
         }
 
         .copy-btn:hover {
-            background: #7c3aed;
+            background: #16a34a;
             transform: translateY(-1px);
         }
 
@@ -386,6 +426,7 @@
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+            background: #6b7280;
         }
 
         /* Loading State */
@@ -475,17 +516,37 @@
             margin-bottom: 20px;
         }
 
-        .modal-icon {
-            width: 40px;
-            height: 40px;
+        .modal-bot-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .modal-bot-avatar {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: rgba(139, 92, 246, 0.2);
-            color: #8b5cf6;
+            background: linear-gradient(135deg, #22c55e, #06b6d4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            margin-right: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            border: 2px solid #2a3441;
+        }
+
+        .modal-bot-details h3 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .modal-bot-type {
+            color: #9ca3af;
+            font-size: 12px;
         }
 
         .modal-title {
@@ -523,8 +584,8 @@
 
         .form-input:focus {
             outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
         }
 
         .form-row {
@@ -555,7 +616,7 @@
         }
 
         .modal-btn.confirm {
-            background: #8b5cf6;
+            background: #22c55e;
             color: #ffffff;
         }
 
@@ -724,7 +785,7 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo">⚡ dainterbfx</div>
+            <div class="logo">⚡ Zephy</div>
             <div class="nav-links">
                 <a href="deposit.html" class="nav-link">Deposit</a>
                 <a href="deposit-history.html" class="nav-link">Deposit History</a>
@@ -733,6 +794,7 @@
                 <a href="portfolio.html" class="nav-link">Portfolio</a>
                 <a href="trade.html" class="nav-link">Trade</a>
                 <a href="bot-traders.html" class="nav-link active">Bot Traders</a>
+                <a href="human-traders.html" class="nav-link">Human Traders</a>
             </div>
             <!-- Mobile Menu Button -->
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
@@ -750,6 +812,7 @@
             <a href="portfolio.html" class="mobile-nav-link">📈 Portfolio</a>
             <a href="trade.html" class="mobile-nav-link">📊 Trade</a>
             <a href="bot-traders.html" class="mobile-nav-link active">🤖 Bot Traders</a>
+            <a href="human-traders.html" class="mobile-nav-link">👨‍💼 Human Traders</a>
         </div>
     </div>
 
@@ -757,15 +820,18 @@
         <!-- Toast Container -->
         <div id="toastContainer" class="toast-container"></div>
 
-        <!-- Copy Trader Modal -->
-        <div id="copyTraderModal" class="modal-overlay">
+        <!-- Copy Bot Modal -->
+        <div id="copyBotModal" class="modal-overlay">
             <div class="modal-container">
-                <div class="modal-header">
-                    <div class="modal-icon">🤖</div>
-                    <h3 class="modal-title">Copy Trader Strategy</h3>
+                <div class="modal-bot-info">
+                    <div class="modal-bot-avatar" id="modalBotAvatar">🤖</div>
+                    <div class="modal-bot-details">
+                        <h3 id="modalBotName">Bot Trader</h3>
+                        <div class="modal-bot-type" id="modalBotType">AI Trading Bot</div>
+                    </div>
                 </div>
                 <div class="modal-content">
-                    <form id="copyTraderForm">
+                    <form id="copyBotForm">
                         <div class="form-group">
                             <label class="form-label">Investment Amount ($)</label>
                             <input type="number" id="copyAmount" class="form-input" placeholder="0.00" step="0.01" min="1" required>
@@ -783,16 +849,16 @@
                                 <input type="number" id="copyStopLoss" class="form-input" placeholder="Optional" step="0.01" min="0.01">
                             </div>
                         </div>
-                        <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 20px;">
-                            <p style="color: #8b5cf6; font-size: 14px; margin: 0;">
-                                <strong>Note:</strong> You will copy this trader's strategy and all future trades will be automatically executed with your specified parameters.
+                        <div style="background: rgba(34, 197, 94, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+                            <p style="color: #22c55e; font-size: 14px; margin: 0;">
+                                <strong>Note:</strong> You will copy this bot's AI-powered trading strategy. All future trades will be automatically executed with your specified parameters.
                             </p>
                         </div>
                     </form>
                 </div>
                 <div class="modal-actions">
-                    <button class="modal-btn cancel" id="copyTraderCancel">Cancel</button>
-                    <button class="modal-btn confirm" id="copyTraderConfirm">Copy Trader</button>
+                    <button class="modal-btn cancel" id="copyBotCancel">Cancel</button>
+                    <button class="modal-btn confirm" id="copyBotConfirm">Copy Bot</button>
                 </div>
             </div>
         </div>
@@ -833,6 +899,25 @@
                     </div>
                 </div>
             </div>
+            <div class="balance-card">
+                <div class="balance-header">
+                    <div class="balance-icon bot">⚡</div>
+                    <div>
+                        <div class="balance-title">Available Bots</div>
+                        <div class="balance-value" id="totalBots">0</div>
+                        <div class="balance-subtitle">AI trading bots</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bot Filter -->
+        <div class="bot-filter">
+            <button class="filter-btn active" data-filter="all">All Bots</button>
+            <button class="filter-btn" data-filter="profitable">Profitable (7d+)</button>
+            <button class="filter-btn" data-filter="high-win-rate">High Win Rate (70%+)</button>
+            <button class="filter-btn" data-filter="experienced">Experienced (200+ trades)</button>
+            <button class="filter-btn" data-filter="popular">Popular (100+ copiers)</button>
         </div>
 
         <!-- Loading State -->
@@ -845,7 +930,7 @@
         <div id="emptyBots" class="empty-state hidden">
             <div class="empty-icon">🤖</div>
             <h4 class="empty-title">No Bot Traders Available</h4>
-            <p class="empty-subtitle">Check back later for new trading bots</p>
+            <p class="empty-subtitle">Check back later for new AI trading bots</p>
         </div>
 
         <!-- Bot Traders Grid -->
@@ -866,8 +951,11 @@
 
         // Global variables
         let botTraders = [];
-        let selectedTraderId = null;
+        let filteredBots = [];
+        let selectedBotId = null;
+        let selectedBot = null;
         let userTradeBalance = 0;
+        let currentFilter = 'all';
 
         // Mobile navigation functions
         function toggleMobileNav() {
@@ -893,7 +981,7 @@
             if (!token) {
                 showToast('Please login to access bot traders', 'error');
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = '../index.html';
                 }, 2000);
                 return;
             }
@@ -905,8 +993,18 @@
             document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
 
             // Modal events
-            document.getElementById('copyTraderCancel').addEventListener('click', closeCopyModal);
-            document.getElementById('copyTraderConfirm').addEventListener('click', handleCopyTrader);
+            document.getElementById('copyBotCancel').addEventListener('click', closeCopyModal);
+            document.getElementById('copyBotConfirm').addEventListener('click', handleCopyBot);
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    filterBots();
+                });
+            });
 
             // Close modal with Escape key
             document.addEventListener('keydown', function(event) {
@@ -919,7 +1017,7 @@
             });
 
             // Close modal when clicking outside
-            document.getElementById('copyTraderModal').addEventListener('click', function(event) {
+            document.getElementById('copyBotModal').addEventListener('click', function(event) {
                 if (event.target === this) {
                     closeCopyModal();
                 }
@@ -935,17 +1033,26 @@
 
         async function fetchTradeBalance() {
             try {
-                const response = await userApi.get('/balances/summary');
-                userTradeBalance = parseFloat(response.data.balances.trade_balance);
+                const balanceResponse = await userApi.get('/balances/summary');
+                userTradeBalance = parseFloat(balanceResponse.data.balances.trade_balance);
                 
                 document.getElementById('tradeBalance').textContent = `$${userTradeBalance.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 })}`;
 
+                // Fetch copied trades count for bots
+                try {
+                    const copiesResponse = await userApi.get('/copied-trades/count');
+                    const activeCopies = copiesResponse.data.totalTrades || 0;
+                    document.getElementById('activeBots').textContent = activeCopies;
+                } catch (error) {
+                    document.getElementById('activeBots').textContent = '0';
+                }
+
             } catch (error) {
-                console.error('Error fetching trade balance:', error);
-                showToast('Failed to load balance', 'error');
+                console.error('Error fetching user data:', error);
+                showToast('Failed to load user data', 'error');
             }
         }
 
@@ -959,6 +1066,11 @@
                 
                 if (response.data.data && response.data.data.length > 0) {
                     botTraders = response.data.data;
+                    filteredBots = [...botTraders];
+                    
+                    // Update total bots count
+                    document.getElementById('totalBots').textContent = botTraders.length;
+                    
                     renderBotTraders();
                 } else {
                     showEmptyState();
@@ -970,10 +1082,45 @@
                     showEmptyState();
                 } else {
                     showToast('Failed to load bot traders', 'error');
+                    showEmptyState();
                 }
             } finally {
                 document.getElementById('loadingBots').classList.add('hidden');
             }
+        }
+
+        function filterBots() {
+            if (currentFilter === 'all') {
+                filteredBots = [...botTraders];
+            } else if (currentFilter === 'profitable') {
+                filteredBots = botTraders.filter(bot => parseFloat(bot.performance_7d || 0) > 0);
+            } else if (currentFilter === 'high-win-rate') {
+                filteredBots = botTraders.filter(bot => parseFloat(bot.win_rate || 0) >= 70);
+            } else if (currentFilter === 'experienced') {
+                filteredBots = botTraders.filter(bot => parseInt(bot.total_positions || 0) >= 200);
+            } else if (currentFilter === 'popular') {
+                filteredBots = botTraders.filter(bot => parseInt(bot.total_copiers || 0) >= 100);
+            }
+
+            renderBotTraders();
+        }
+
+        function getBotInitials(name) {
+            if (!name) return '🤖';
+            const words = name.split(' ');
+            if (words.length >= 2) {
+                return (words[0][0] + words[1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         }
 
         function renderBotTraders() {
@@ -981,58 +1128,79 @@
             grid.classList.remove('hidden');
             document.getElementById('emptyBots').classList.add('hidden');
 
-            // Count active bots (this would typically come from a separate API call)
-            document.getElementById('activeBots').textContent = '0'; // Placeholder
+            if (filteredBots.length === 0) {
+                document.getElementById('emptyBots').classList.remove('hidden');
+                grid.classList.add('hidden');
+                return;
+            }
 
-            grid.innerHTML = botTraders.map(bot => {
-                const profitLoss = parseFloat(bot.profit_loss || 0);
+            grid.innerHTML = filteredBots.map(bot => {
+                const performance7d = parseFloat(bot.performance_7d || 0);
                 const winRate = parseFloat(bot.win_rate || 0);
-                const totalTrades = parseInt(bot.total_trades || 0);
+                const totalPositions = parseInt(bot.total_positions || 0);
+                const totalCopiers = parseInt(bot.total_copiers || 0);
+                const aum = parseFloat(bot.aum || 0);
+                const profitSharing = parseFloat(bot.profit_sharing || 0);
+                const botName = bot.trader_name || `Bot #${bot.id}`;
+                const botInitials = getBotInitials(botName);
+                const joinDate = formatDate(bot.join_day);
                 
                 return `
                     <div class="bot-card">
                         <div class="bot-header">
                             <div class="bot-info">
-                                <div class="bot-avatar">
-                                    ${bot.name ? bot.name.charAt(0).toUpperCase() : 'B'}
-                                </div>
+                                <div class="bot-avatar">${botInitials}</div>
                                 <div class="bot-details">
-                                    <h3>${bot.name || 'Bot Trader'}</h3>
-                                    <div class="bot-type">${bot.strategy || 'AI Trading Bot'}</div>
+                                    <h3>${botName}</h3>
+                                    <div class="bot-type">Joined ${joinDate}</div>
                                 </div>
                             </div>
-                            <div class="bot-status ${bot.status || 'active'}">
-                                ${bot.status || 'Active'}
-                            </div>
+                            <div class="bot-status">Active</div>
+                        </div>
+
+                        <div class="bot-description">
+                            ${bot.bio || 'Advanced AI-powered trading bot using machine learning algorithms to identify profitable trading opportunities across multiple cryptocurrency markets.'}
                         </div>
 
                         <div class="bot-stats">
                             <div class="stat-item">
-                                <div class="stat-value ${profitLoss >= 0 ? 'positive' : 'negative'}">
-                                    ${profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)}%
+                                <div class="stat-value ${performance7d >= 0 ? 'positive' : 'negative'}">
+                                    ${performance7d >= 0 ? '+' : ''}${performance7d.toFixed(2)}%
                                 </div>
-                                <div class="stat-label">Total Return</div>
+                                <div class="stat-label">7d Performance</div>
                             </div>
                             <div class="stat-item">
                                 <div class="stat-value">${winRate.toFixed(1)}%</div>
                                 <div class="stat-label">Win Rate</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">${totalTrades}</div>
-                                <div class="stat-label">Total Trades</div>
+                                <div class="stat-value">${totalPositions}</div>
+                                <div class="stat-label">Total Positions</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">$${parseFloat(bot.aum || 0).toLocaleString()}</div>
+                                <div class="stat-value">${totalCopiers}</div>
+                                <div class="stat-label">Copiers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">$${aum.toLocaleString()}</div>
                                 <div class="stat-label">AUM</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${profitSharing.toFixed(1)}%</div>
+                                <div class="stat-label">Profit Share</div>
                             </div>
                         </div>
 
-                        <div class="bot-description">
-                            ${bot.description || 'Advanced AI-powered trading bot using machine learning algorithms to identify profitable trading opportunities across multiple cryptocurrency markets.'}
+                        <div class="bot-tags">
+                            <span class="bot-tag">AI Bot</span>
+                            ${performance7d > 0 ? '<span class="bot-tag">Profitable</span>' : ''}
+                            ${winRate >= 70 ? '<span class="bot-tag">High Win Rate</span>' : ''}
+                            ${totalPositions >= 200 ? '<span class="bot-tag">Experienced</span>' : ''}
+                            ${totalCopiers >= 100 ? '<span class="bot-tag">Popular</span>' : ''}
                         </div>
 
-                        <button class="copy-btn" onclick="openCopyModal(${bot.id})" ${bot.status !== 'active' ? 'disabled' : ''}>
-                            ${bot.status === 'active' ? 'Copy Trader' : 'Inactive'}
+                        <button class="copy-btn" onclick="openCopyModal(${bot.id})">
+                            Copy Bot
                         </button>
                     </div>
                 `;
@@ -1044,21 +1212,42 @@
             document.getElementById('botTradersGrid').classList.add('hidden');
         }
 
-        function openCopyModal(traderId) {
-            selectedTraderId = traderId;
-            document.getElementById('availableBalance').textContent = userTradeBalance.toFixed(2);
-            document.getElementById('copyTraderModal').classList.add('active');
+        async function openCopyModal(botId) {
+            selectedBotId = botId;
             
-            // Reset form
-            document.getElementById('copyTraderForm').reset();
+            try {
+                // Find the bot in our list
+                selectedBot = botTraders.find(bot => bot.id === botId);
+                
+                if (selectedBot) {
+                    const botName = selectedBot.trader_name || `Bot #${selectedBot.id}`;
+                    const botInitials = getBotInitials(botName);
+                    
+                    // Update modal with bot info
+                    document.getElementById('modalBotName').textContent = botName;
+                    document.getElementById('modalBotType').textContent = selectedBot.bio || 'AI Trading Bot';
+                    document.getElementById('modalBotAvatar').textContent = botInitials;
+                }
+                
+                document.getElementById('availableBalance').textContent = userTradeBalance.toFixed(2);
+                document.getElementById('copyBotModal').classList.add('active');
+                
+                // Reset form
+                document.getElementById('copyBotForm').reset();
+                
+            } catch (error) {
+                console.error('Error opening copy modal:', error);
+                showToast('Failed to load bot details', 'error');
+            }
         }
 
         function closeCopyModal() {
-            document.getElementById('copyTraderModal').classList.remove('active');
-            selectedTraderId = null;
+            document.getElementById('copyBotModal').classList.remove('active');
+            selectedBotId = null;
+            selectedBot = null;
         }
 
-        async function handleCopyTrader() {
+        async function handleCopyBot() {
             const amount = parseFloat(document.getElementById('copyAmount').value);
             const takeProfit = parseFloat(document.getElementById('copyTakeProfit').value) || null;
             const stopLoss = parseFloat(document.getElementById('copyStopLoss').value) || null;
@@ -1080,31 +1269,31 @@
             }
 
             try {
-                const confirmBtn = document.getElementById('copyTraderConfirm');
+                const confirmBtn = document.getElementById('copyBotConfirm');
                 confirmBtn.disabled = true;
                 confirmBtn.textContent = 'Copying...';
 
                 const response = await userApi.post('/copy-trader', {
-                    traderId: selectedTraderId,
+                    traderId: selectedBotId,
                     amount: amount,
                     takeProfit: takeProfit,
                     stopLoss: stopLoss
                 });
 
-                showToast('Successfully copied trader strategy!', 'success');
+                showToast(response.data.message || 'Successfully copied bot strategy!', 'success');
                 closeCopyModal();
                 
                 // Refresh balance
                 fetchTradeBalance();
 
             } catch (error) {
-                console.error('Error copying trader:', error);
-                const message = error.response?.data?.message || 'Failed to copy trader';
+                console.error('Error copying bot:', error);
+                const message = error.response?.data?.message || 'Failed to copy bot';
                 showToast(message, 'error');
             } finally {
-                const confirmBtn = document.getElementById('copyTraderConfirm');
+                const confirmBtn = document.getElementById('copyBotConfirm');
                 confirmBtn.disabled = false;
-                confirmBtn.textContent = 'Copy Trader';
+                confirmBtn.textContent = 'Copy Bot';
             }
         }
 

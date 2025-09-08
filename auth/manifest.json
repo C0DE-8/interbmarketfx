@@ -1,6 +1,6 @@
 {
-  "name": "Zephyrequi",
-  "short_name": "Zephyrequi",
+  "name": "cmc trade vault",
+  "short_name": "CMC",
   "start_url": "/?source=pwa",
   "display": "fullscreen",
   "background_color": "#101820",

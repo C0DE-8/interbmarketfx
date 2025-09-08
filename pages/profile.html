@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zephyrequi | Professional Profile</title>
+<title>dainterbfx | Professional Profile</title>
 <link rel="stylesheet" href="css/profile.css">
 <link rel="stylesheet" href="css/toaster.css">
 </head>
@@ -11,8 +11,8 @@
 <!-- Header -->
 <header class="header">
   <a href="dashboard.html" class="logo" style="text-decoration: none; color: inherit;">
-    <div class="logo-icon">D</div>
-    <div class="logo-text">Dainter<span>bfx</span></div>
+    <div class="logo-icon">C</div>
+    <div class="logo-text">CMC<span>Trade Vault</span></div>
   </a>
   <div class="header-actions">
     <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Menu">
@@ -33,7 +33,7 @@
   </div>
 
   <div class="user-info">
-    <div class="user-name">Alex</div>
+    <div class="user-name">Demo</div>
     <div class="user-level">Platinum</div>
   </div>
 
@@ -753,14 +753,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // ————— 1) Axios instances —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem("token")}`
     }
   });
   const invApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/earn/investment",
+    baseURL: "https://api.dainterbfx.xyz/api/earn/investment",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -809,7 +809,7 @@ userApi.get('/profile/username')
     // —— HEADER —— 
     topNameEl.textContent = data.name;
     if (data.image) {
-      const url = `https://new.api.zephyrequi.com${data.image}`;
+      const url = `https://new.api.CMC Trade  .com${data.image}`;
       topAvatarEl.innerHTML = `
         <img src="${url}" alt="${data.name}" class="avatar-sm" />
         <div class="user-avatar-badge"></div>
@@ -889,7 +889,7 @@ userApi.get('/profile/username')
 
       // Avatar
       if (data.image) {
-        const url = `https://new.api.zephyrequi.com${data.image}`;
+        const url = `https://new.api.CMC Trade  .com${data.image}`;
         avatarWrapper.innerHTML = `
           <img src="${url}" alt="${data.name}" class="avatar-img" />
           <div class="profile-avatar-badge-large">
@@ -1009,7 +1009,7 @@ userApi.get('/all-orders/count')
 document.addEventListener("DOMContentLoaded", () => {
   // ————— Axios instance —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -1102,7 +1102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- // ————— Personal Info Tab ————— -->
 <script>
   const userUp = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -1209,7 +1209,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ————— 1) Axios instance —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
 
@@ -1307,7 +1307,7 @@ function showToast(message, type = 'success') {
 document.addEventListener("DOMContentLoaded", () => {
   // ————— 1) Axios instance —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
 
@@ -1378,7 +1378,7 @@ function showToast(message, type = 'success') {
 document.addEventListener("DOMContentLoaded", () => {
   // ————— 1) Axios instance —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
   const grid = document.getElementById("achievement-grid");
@@ -1445,7 +1445,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   // 1) Axios instance for wallet endpoints
   const walletApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
 
@@ -1518,7 +1518,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ————— 1) Axios instances —————
   const walletApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
 
@@ -1551,7 +1551,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   // ————— axios instance for notices —————
   const userApi = axios.create({
-    baseURL: "https://new.api.zephyrequi.com/api/users",
+    baseURL: "https://api.dainterbfx.xyz/api/users",
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
   });
 

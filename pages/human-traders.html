@@ -274,7 +274,7 @@
         /* Human Traders Grid */
         .human-traders-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 24px;
             margin-bottom: 32px;
         }
@@ -312,8 +312,13 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #8b5cf6, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
             border: 2px solid #2a3441;
         }
 
@@ -345,26 +350,8 @@
             font-size: 11px;
             font-weight: 500;
             text-transform: uppercase;
-        }
-
-        .trader-level.expert {
-            background: rgba(14, 165, 233, 0.2);
-            color: #0ea5e9;
-        }
-
-        .trader-level.advanced {
             background: rgba(139, 92, 246, 0.2);
             color: #8b5cf6;
-        }
-
-        .trader-level.intermediate {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .trader-level.beginner {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
         }
 
         .trader-stats {
@@ -547,8 +534,13 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #8b5cf6, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
             border: 2px solid #2a3441;
         }
 
@@ -803,7 +795,7 @@
 <body>
     <div class="header">
         <div class="header-content">
-            <div class="logo">⚡ Dainterbfx</div>
+            <div class="logo">⚡ Zephy</div>
             <div class="nav-links">
                 <a href="deposit.html" class="nav-link">Deposit</a>
                 <a href="deposit-history.html" class="nav-link">Deposit History</a>
@@ -917,16 +909,25 @@
                     </div>
                 </div>
             </div>
+            <div class="balance-card">
+                <div class="balance-header">
+                    <div class="balance-icon human">📈</div>
+                    <div>
+                        <div class="balance-title">Available Traders</div>
+                        <div class="balance-value" id="totalTraders">0</div>
+                        <div class="balance-subtitle">Professional traders</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Trader Filter -->
         <div class="trader-filter">
             <button class="filter-btn active" data-filter="all">All Traders</button>
-            <button class="filter-btn" data-filter="crypto">Crypto Specialists</button>
-            <button class="filter-btn" data-filter="forex">Forex Traders</button>
-            <button class="filter-btn" data-filter="stocks">Stock Traders</button>
-            <button class="filter-btn" data-filter="verified">Verified Only</button>
-            <button class="filter-btn" data-filter="profitable">Profitable (30d+)</button>
+            <button class="filter-btn" data-filter="profitable">Profitable (7d+)</button>
+            <button class="filter-btn" data-filter="high-win-rate">High Win Rate (70%+)</button>
+            <button class="filter-btn" data-filter="experienced">Experienced (200+ trades)</button>
+            <button class="filter-btn" data-filter="popular">Popular (100+ copiers)</button>
         </div>
 
         <!-- Loading State -->
@@ -966,16 +967,6 @@
         let userTradeBalance = 0;
         let currentFilter = 'all';
 
-        // Sample avatar URLs (in a real app, these would come from the API)
-        const avatarUrls = [
-            'https://randomuser.me/api/portraits/men/32.jpg',
-            'https://randomuser.me/api/portraits/women/44.jpg',
-            'https://randomuser.me/api/portraits/men/86.jpg',
-            'https://randomuser.me/api/portraits/women/63.jpg',
-            'https://randomuser.me/api/portraits/men/91.jpg',
-            'https://randomuser.me/api/portraits/women/26.jpg'
-        ];
-
         // Mobile navigation functions
         function toggleMobileNav() {
             document.getElementById('mobileNav').classList.add('active');
@@ -1000,7 +991,7 @@
             if (!token) {
                 showToast('Please login to access human traders', 'error');
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = '../index.html';
                 }, 2000);
                 return;
             }
@@ -1062,10 +1053,14 @@
                 })}`;
 
                 // Fetch copied trades count
-                const copiesResponse = await userApi.get('/copied-trades/count');
-                const activeCopies = copiesResponse.data.totalTrades || 0;
-        
-                document.getElementById('activeCopies').textContent = activeCopies;
+                try {
+                    const copiesResponse = await userApi.get('/copied-trades/count');
+                    const activeCopies = copiesResponse.data.totalTrades || 0;
+                    document.getElementById('activeCopies').textContent = activeCopies;
+                } catch (error) {
+                    // If endpoint doesn't exist, set to 0
+                    document.getElementById('activeCopies').textContent = '0';
+                }
 
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -1082,18 +1077,12 @@
                 const response = await userApi.get('/traders/humans');
                 
                 if (response.data.data && response.data.data.length > 0) {
-                    humanTraders = response.data.data.map((trader, index) => {
-                        // Enhance trader data with additional UI-specific properties
-                        return {
-                            ...trader,
-                            avatarUrl: avatarUrls[index % avatarUrls.length],
-                            verified: Math.random() > 0.3, // 70% chance of being verified
-                            level: getRandomLevel(),
-                            tags: getRandomTags()
-                        };
-                    });
-                    
+                    humanTraders = response.data.data;
                     filteredTraders = [...humanTraders];
+                    
+                    // Update total traders count
+                    document.getElementById('totalTraders').textContent = humanTraders.length;
+                    
                     renderHumanTraders();
                 } else {
                     showEmptyState();
@@ -1105,40 +1094,45 @@
                     showEmptyState();
                 } else {
                     showToast('Failed to load human traders', 'error');
+                    showEmptyState();
                 }
             } finally {
                 document.getElementById('loadingTraders').classList.add('hidden');
             }
         }
 
-        function getRandomLevel() {
-            const levels = ['beginner', 'intermediate', 'advanced', 'expert'];
-            return levels[Math.floor(Math.random() * levels.length)];
-        }
-
-        function getRandomTags() {
-            const allTags = ['Crypto', 'Bitcoin', 'Ethereum', 'Forex', 'Stocks', 'Day Trading', 'Swing Trading', 'Technical Analysis', 'Fundamental Analysis', 'Scalping', 'Long-term'];
-            const numTags = Math.floor(Math.random() * 3) + 2; // 2-4 tags
-            const shuffled = [...allTags].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, numTags);
-        }
-
         function filterTraders() {
             if (currentFilter === 'all') {
                 filteredTraders = [...humanTraders];
-            } else if (currentFilter === 'verified') {
-                filteredTraders = humanTraders.filter(trader => trader.verified);
             } else if (currentFilter === 'profitable') {
-                filteredTraders = humanTraders.filter(trader => parseFloat(trader.profit_loss || 0) > 0);
-            } else {
-                // Filter by specialization (crypto, forex, stocks)
-                filteredTraders = humanTraders.filter(trader => {
-                    const specialization = trader.strategy?.toLowerCase() || '';
-                    return specialization.includes(currentFilter);
-                });
+                filteredTraders = humanTraders.filter(trader => parseFloat(trader.performance_7d || 0) > 0);
+            } else if (currentFilter === 'high-win-rate') {
+                filteredTraders = humanTraders.filter(trader => parseFloat(trader.win_rate || 0) >= 70);
+            } else if (currentFilter === 'experienced') {
+                filteredTraders = humanTraders.filter(trader => parseInt(trader.total_positions || 0) >= 200);
+            } else if (currentFilter === 'popular') {
+                filteredTraders = humanTraders.filter(trader => parseInt(trader.total_copiers || 0) >= 100);
             }
 
             renderHumanTraders();
+        }
+
+        function getTraderInitials(name) {
+            if (!name) return 'T';
+            const words = name.split(' ');
+            if (words.length >= 2) {
+                return (words[0][0] + words[1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
         }
 
         function renderHumanTraders() {
@@ -1153,55 +1147,68 @@
             }
 
             grid.innerHTML = filteredTraders.map(trader => {
-                const profitLoss = parseFloat(trader.profit_loss || 0);
+                const performance7d = parseFloat(trader.performance_7d || 0);
                 const winRate = parseFloat(trader.win_rate || 0);
-                const totalTrades = parseInt(trader.total_trades || 0);
+                const totalPositions = parseInt(trader.total_positions || 0);
+                const totalCopiers = parseInt(trader.total_copiers || 0);
+                const aum = parseFloat(trader.aum || 0);
+                const profitSharing = parseFloat(trader.profit_sharing || 0);
+                const traderName = trader.trader_name || `Trader #${trader.id}`;
+                const traderInitials = getTraderInitials(traderName);
+                const joinDate = formatDate(trader.join_day);
                 
                 return `
                     <div class="trader-card">
                         <div class="trader-header">
                             <div class="trader-info">
-                                <div class="trader-avatar" style="background-image: url('${trader.avatarUrl}')"></div>
+                                <div class="trader-avatar">${traderInitials}</div>
                                 <div class="trader-details">
-                                    <h3>
-                                        ${trader.name || 'Anonymous Trader'}
-                                        ${trader.verified ? '<span class="verified-badge">✓</span>' : ''}
-                                    </h3>
-                                    <div class="trader-type">${trader.strategy || 'Professional Trader'}</div>
+                                    <h3>${traderName}</h3>
+                                    <div class="trader-type">Joined ${joinDate}</div>
                                 </div>
                             </div>
-                            <div class="trader-level ${trader.level}">
-                                ${trader.level}
-                            </div>
+                            <div class="trader-level">Active</div>
+                        </div>
+
+                        <div class="trader-description">
+                            ${trader.bio || 'Professional trader with expertise in market analysis and strategic trading approaches.'}
                         </div>
 
                         <div class="trader-stats">
                             <div class="stat-item">
-                                <div class="stat-value ${profitLoss >= 0 ? 'positive' : 'negative'}">
-                                    ${profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)}%
+                                <div class="stat-value ${performance7d >= 0 ? 'positive' : 'negative'}">
+                                    ${performance7d >= 0 ? '+' : ''}${performance7d.toFixed(2)}%
                                 </div>
-                                <div class="stat-label">30d Return</div>
+                                <div class="stat-label">7d Performance</div>
                             </div>
                             <div class="stat-item">
                                 <div class="stat-value">${winRate.toFixed(1)}%</div>
                                 <div class="stat-label">Win Rate</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">${totalTrades}</div>
-                                <div class="stat-label">Total Trades</div>
+                                <div class="stat-value">${totalPositions}</div>
+                                <div class="stat-label">Total Positions</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">$${parseFloat(trader.aum || 0).toLocaleString()}</div>
+                                <div class="stat-value">${totalCopiers}</div>
+                                <div class="stat-label">Copiers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">$${aum.toLocaleString()}</div>
                                 <div class="stat-label">AUM</div>
                             </div>
-                        </div>
-
-                        <div class="trader-description">
-                            ${trader.description || 'Experienced trader specializing in market analysis and trend identification. Focuses on risk management and consistent returns.'}
+                            <div class="stat-item">
+                                <div class="stat-value">${profitSharing.toFixed(1)}%</div>
+                                <div class="stat-label">Profit Share</div>
+                            </div>
                         </div>
 
                         <div class="trader-tags">
-                            ${trader.tags.map(tag => `<span class="trader-tag">${tag}</span>`).join('')}
+                            <span class="trader-tag">Professional</span>
+                            ${performance7d > 0 ? '<span class="trader-tag">Profitable</span>' : ''}
+                            ${winRate >= 70 ? '<span class="trader-tag">High Win Rate</span>' : ''}
+                            ${totalPositions >= 200 ? '<span class="trader-tag">Experienced</span>' : ''}
+                            ${totalCopiers >= 100 ? '<span class="trader-tag">Popular</span>' : ''}
                         </div>
 
                         <button class="copy-btn" onclick="openCopyModal(${trader.id})">
@@ -1225,17 +1232,13 @@
                 const response = await userApi.get(`/traders/human/${traderId}`);
                 selectedTrader = response.data.data;
                 
-                // Find the trader in our enhanced list to get UI properties
-                const enhancedTrader = humanTraders.find(t => t.id === traderId);
+                const traderName = selectedTrader.trader_name || `Trader #${selectedTrader.id}`;
+                const traderInitials = getTraderInitials(traderName);
                 
                 // Update modal with trader info
-                document.getElementById('modalTraderName').textContent = selectedTrader.name || 'Anonymous Trader';
-                if (enhancedTrader?.verified) {
-                    document.getElementById('modalTraderName').innerHTML += ' <span class="verified-badge">✓</span>';
-                }
-                
-                document.getElementById('modalTraderType').textContent = selectedTrader.strategy || 'Professional Trader';
-                document.getElementById('modalTraderAvatar').style.backgroundImage = `url('${enhancedTrader?.avatarUrl}')`;
+                document.getElementById('modalTraderName').textContent = traderName;
+                document.getElementById('modalTraderType').textContent = selectedTrader.bio || 'Professional Trader';
+                document.getElementById('modalTraderAvatar').textContent = traderInitials;
                 
                 document.getElementById('availableBalance').textContent = userTradeBalance.toFixed(2);
                 document.getElementById('copyTraderModal').classList.add('active');
@@ -1288,12 +1291,11 @@
                     stopLoss: stopLoss
                 });
 
-                showToast('Successfully copied trader strategy!', 'success');
+                showToast(response.data.message || 'Successfully copied trader strategy!', 'success');
                 closeCopyModal();
                 
                 // Refresh balance
                 fetchTradeBalance();
-                // This will update both the balance and active copies count
 
             } catch (error) {
                 console.error('Error copying trader:', error);
