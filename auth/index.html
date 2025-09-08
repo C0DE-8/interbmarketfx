@@ -14,23 +14,28 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- SEO Meta Tags for interbmarketfx Login Page -->
-<title>Login | interbmarketfx - Secure Access to Your Account</title>
-<meta name="description" content="Login to your interbmarketfx account to access your dashboard, trade securely, and manage your assets. Fast, safe, and user-friendly login experience.">
-<meta name="keywords" content="interbmarketfx login, secure login, interbmarketfx account access, crypto trading login, user dashboard, interbmarketfx authentication">
-<meta name="author" content="interbmarketfx Team">
+<!-- SEO Meta Tags for Cmc Trade Vault Login Page -->
+<title>Login | Cmc Trade Vault - Secure Access to Your Account</title>
+<meta name="description" content="Login to your Cmc Trade Vault account to access your dashboard, trade securely, and manage your assets. Fast, safe, and user-friendly login experience.">
+<meta name="keywords" content="Cmc Trade Vault login, secure login, Cmc Trade Vault account access, crypto trading login, user dashboard, Cmc Trade Vault authentication">
+<meta name="author" content="Cmc Trade Vault Team">
 
 <!-- Open Graph / Social Media -->
-<meta property="og:title" content="Login | interbmarketfx">
-<meta property="og:description" content="Securely log in to your interbmarketfx account and take control of your trading journey.">
+<meta property="og:title" content="Login | Cmc Trade Vault">
+<meta property="og:description" content="Securely log in to your Cmc Trade Vault account and take control of your trading journey.">
 <meta property="og:image" content="icons/icon-192x192.png">
-<meta property="og:url" content="https://app.interbmarketfx.com/auth/login.html">
+<meta property="og:url" content="https://app.cmctradevault.com/auth/login.html">
 <meta property="og:type" content="website">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<meta name="theme-color" content="#5c2db0">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Login | interbmarketfx">
-<meta name="twitter:description" content="Quick and secure login to your interbmarketfx trading dashboard.">
+<meta name="twitter:title" content="Login | Cmc Trade Vault">
+<meta name="twitter:description" content="Quick and secure login to your Cmc Trade Vault trading dashboard.">
 <meta name="twitter:image" content="icons/icon-192x192.png">
 
 <link rel="stylesheet" href="css/main.css">
@@ -53,13 +58,14 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
+        backdrop-filter: blur(5px);
     }
     .modal-overlay.visible {
         opacity: 1;
         visibility: visible;
     }
     .modal-content {
-        background-color: #2a2a2a; /* Dark background to match existing theme */
+        background-color: #2a2a2a;
         padding: 30px;
         border-radius: 12px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
@@ -68,6 +74,7 @@
         text-align: center;
         transform: translateY(-20px);
         transition: transform 0.3s ease;
+        border: 1px solid #444;
     }
     .modal-overlay.visible .modal-content {
         transform: translateY(0);
@@ -76,11 +83,13 @@
         font-size: 1.8em;
         color: #fff;
         margin-bottom: 15px;
+        font-weight: 600;
     }
     .modal-subtitle {
         font-size: 1em;
         color: #bbb;
         margin-bottom: 25px;
+        line-height: 1.5;
     }
     .otp-form .form-group {
         margin-bottom: 20px;
@@ -90,9 +99,25 @@
         font-size: 1.5em;
         letter-spacing: 0.2em;
         padding: 12px 15px;
+        background-color: #333;
+        border: 1px solid #555;
+        color: #fff;
+        border-radius: 8px;
+        width: 100%;
+    }
+    .otp-form .form-input:focus {
+        border-color: #7b3fe4;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(123, 63, 228, 0.2);
     }
     .otp-form .btn {
         margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        font-size: 1em;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
     }
     .btn-secondary {
         background-color: #444;
@@ -101,6 +126,32 @@
     }
     .btn-secondary:hover {
         background-color: #555;
+        transform: translateY(-1px);
+    }
+    .mt-2 {
+        margin-top: 10px;
+    }
+    .otp-timer {
+        font-size: 0.9em;
+        color: #888;
+        margin-top: 15px;
+    }
+    .otp-timer.expired {
+        color: #ff6b6b;
+    }
+    .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+        color: #fff;
     }
 </style>
 
@@ -112,8 +163,8 @@
 <header>
     <div class="container header-container">
         <a href="#" class="logo">
-            <img src="icons/icon-192x192.png" alt="interbmarketfx Logo" style="height:32px; vertical-align:middle; margin-right:8px; border-radius:50%; object-fit:cover;">
-            <span>interbmarketfx</span>
+            <img src="icons/icon-192x192.png" alt="Cmc Trade Vault Logo" style="height:32px; vertical-align:middle; margin-right:8px; border-radius:50%; object-fit:cover;">
+            <span>Cmc Trade Vault</span>
         </a>
         <div class="header-links">
             <a href="register.html">Sign Up</a>
@@ -127,48 +178,46 @@
         <div class="login-container">
             <div class="login-header">
                 <h1 class="login-title">Welcome Back</h1>
-                <p class="login-subtitle">Login to access your interbmarketfx account</p>
+                <p class="login-subtitle">Login to access your Cmc Trade Vault account</p>
             </div>
             
-        <!-- Updated form: id changed to loginForm to match the JS, or you can keep login-form and update the JS instead -->
-<form class="login-form" id="loginForm">
-  <div class="form-group">
-    <label for="email" class="form-label">Email Address</label>
-    <input type="email" id="email" name="email" class="form-input" placeholder="name@example.com" required>
-  </div>
-  
-  <div class="form-group">
-    <label for="password" class="form-label">
-      Password
-      <a href="forgot-password.html">Forgot Password?</a>
-    </label>
-    <div class="password-wrapper">
-      <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
-      <button type="button" class="password-toggle" id="password-toggle">
-        <!-- eye icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-          <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-      </button>
-    </div>
-  </div>
-  
-  <div class="form-group">
-    <div class="checkbox-group">
-      <input type="checkbox" id="remember" name="remember" class="checkbox-input">
-      <label for="remember" class="checkbox-label">Remember me for 30 days</label>
-    </div>
-  </div>
-  
-  <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-  
-  <p class="register-link">
-    Don't have an account? <a href="register.html">Sign up</a>
-  </p>
-</form>
-<div id="loader">Loading…</div>
-
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="identifier" class="form-label">Email or Username</label>
+                    <input type="text" id="identifier" name="identifier" class="form-input" placeholder="Enter email or username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        Password
+                        <a href="forgot-password.html">Forgot Password?</a>
+                    </label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" id="password-toggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember" name="remember" class="checkbox-input">
+                        <label for="remember" class="checkbox-label">Remember me for 30 days</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign In</button>
+                
+                <p class="register-link">
+                    Don't have an account? <a href="register.html">Sign up</a>
+                </p>
+            </form>
+            
+            <div id="loader">Loading…</div>
         </div>
     </div>
 </main>
@@ -176,17 +225,31 @@
 <!-- OTP Modal -->
 <div id="otpModal" class="modal-overlay">
     <div class="modal-content">
-        <h2 class="modal-title">Verify Your Login</h2>
-        <p class="modal-subtitle">An OTP has been sent to your email. Please enter it below to complete your login.</p>
+        <button type="button" class="modal-close" id="closeOtpModal">&times;</button>
+        <h2 class="modal-title">🔐 Verify Your Login</h2>
+        <p class="modal-subtitle">We've sent a 6-digit verification code to your email address. Please enter it below to complete your login.</p>
         <form id="otpForm" class="otp-form">
             <div class="form-group">
                 <label for="otp" class="form-label">One-Time Password (OTP)</label>
-                <input type="text" id="otp" name="otp" class="form-input" placeholder="Enter 6-digit OTP" maxlength="6" required pattern="[0-9]{6}">
+                <input type="text" id="otp" name="otp" class="form-input" placeholder="000000" maxlength="6" required pattern="[0-9]{6}" autocomplete="one-time-code">
             </div>
             <button type="submit" id="verifyOtpBtn" class="btn btn-primary btn-block">Verify OTP</button>
             <button type="button" id="resendOtpBtn" class="btn btn-secondary btn-block mt-2">Resend OTP</button>
+            <div id="otpTimer" class="otp-timer">OTP expires in <span id="timerDisplay">5:00</span></div>
         </form>
     </div>
+</div>
+
+<!-- Admin Portal Modal -->
+<div id="adminPortalModal" class="modal-overlay">
+  <div class="modal-content">
+      <h2 class="modal-title">🔐 Admin Access Required</h2>
+      <p class="modal-subtitle">You are attempting to login as an administrator. Please use the dedicated admin portal for secure access to administrative functions.</p>
+      <div style="margin: 20px 0;">
+          <button type="button" id="goToAdminPortal" class="btn btn-primary btn-block">Go to Admin Portal</button>
+          <button type="button" id="closeAdminModal" class="btn btn-secondary btn-block mt-2">Cancel</button>
+      </div>
+  </div>
 </div>
 
 <!-- Toast container -->
@@ -195,222 +258,406 @@
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>&copy; 2025 interbmarketfx. All rights reserved.</p>
+        <p>&copy; 2018-2025 Cmc Trade Vault. All rights reserved.</p>
     </div>
 </footer>
-
 
 <!-- JavaScript -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm      = document.getElementById("loginForm");
-  const otpModal       = document.getElementById("otpModal");
-  const otpForm        = document.getElementById("otpForm");
-  const verifyOtpBtn   = document.getElementById("verifyOtpBtn"); // Added ID for the button
-  const resendOtpBtn   = document.getElementById("resendOtpBtn");
-  const loader         = document.getElementById("loader");
-  const emailInput     = document.getElementById("email"); // Added ID for email input
-  const passwordInput  = document.getElementById("password");
-  const toastContainer = document.getElementById("toast-container");
-  const baseURL        = "https://api.dainterbfx.xyz/api/auth";
+    const loginForm = document.getElementById("loginForm");
+    const otpModal = document.getElementById("otpModal");
+    const otpForm = document.getElementById("otpForm");
+    const loginBtn = document.getElementById("loginBtn");
+    const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+    const resendOtpBtn = document.getElementById("resendOtpBtn");
+    const closeOtpModal = document.getElementById("closeOtpModal");
+    const loader = document.getElementById("loader");
+    const identifierInput = document.getElementById("identifier");
+    const passwordInput = document.getElementById("password");
+    const otpInput = document.getElementById("otp");
+    const toastContainer = document.getElementById("toast-container");
+    const timerDisplay = document.getElementById("timerDisplay");
+    const baseURL = "https://api.dainterbfx.xyz/api/auth";
 
-  let currentUserId = null;
-  let currentEmail = null;
-  let currentPassword = null;
+    let currentUserId = null;
+    let currentIdentifier = null;
+    let currentPassword = null;
+    let otpTimer = null;
+    let timeLeft = 300; // 5 minutes in seconds
 
-  // Ensure loader is hidden on initial load
-  loader?.classList.remove("visible");
-
-  // Show loader
-  function showLoader() {
-    loader?.classList.add("visible");
-  }
-
-  // Hide loader
-  function hideLoader() {
+    // Ensure loader is hidden on initial load
     loader?.classList.remove("visible");
-  }
 
-  // Show OTP modal
-  function showOtpModal() {
-    otpModal?.classList.add("visible");
-    document.getElementById("otp").value = ""; // Clear OTP input
-  }
-
-  // Hide OTP modal
-  function hideOtpModal() {
-    otpModal?.classList.remove("visible");
-  }
-
-  // Handle login form submission (Step 1 - Send OTP)
-  loginForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email    = emailInput?.value.trim();
-    const password = passwordInput?.value.trim();
-
-    if (!email || !password) {
-      showToast("Please enter email and password.", "", "error");
-      return;
+    // Show loader
+    function showLoader() {
+        loader?.classList.add("visible");
     }
 
-    showLoader();
-
-    try {
-      const res = await fetch(`${baseURL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      hideLoader();
-
-      if (res.ok) {
-        // OTP sent successfully, proceed to show OTP modal
-        currentUserId = data.userId;
-        currentEmail = email; // Store email for resend (if needed for re-login prompt)
-        currentPassword = password; // Store password for resend (if needed for re-login prompt)
-        showToast(data.message, "", "success"); // e.g., "OTP sent to your email..."
-        showOtpModal();
-      } else {
-        // Login failed or account not verified
-        const msg    = data.message || "Login failed";
-        const reason = data.reason ? `Reason: ${data.reason}` : "";
-        showToast(msg, reason, "error");
-      }
-
-    } catch (err) {
-      hideLoader();
-      console.error("Login error:", err);
-      showToast("Something went wrong. Please try again.", "", "error");
-    }
-  });
-
-  // Handle OTP verification form submission (Step 2 - Verify OTP)
-  otpForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const otp = document.getElementById("otp")?.value.trim();
-
-    if (!currentUserId || !otp) {
-      showToast("User ID or OTP missing. Please try logging in again.", "", "error");
-      hideOtpModal();
-      return;
+    // Hide loader
+    function hideLoader() {
+        loader?.classList.remove("visible");
     }
 
-    showLoader();
-    verifyOtpBtn.disabled = true;
-    verifyOtpBtn.textContent = 'Verifying...';
+    // Show OTP modal
+    function showOtpModal() {
+        otpModal?.classList.add("visible");
+        otpInput.value = "";
+        otpInput.focus();
+        startOtpTimer();
+    }
 
-    try {
-      const res = await fetch(`${baseURL}/verify-login-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: currentUserId, otp })
-      });
-      const data = await res.json();
-      hideLoader();
+    // Hide OTP modal
+    function hideOtpModal() {
+        otpModal?.classList.remove("visible");
+        stopOtpTimer();
+    }
 
-      if (res.ok) {
-        // OTP verification successful
-        localStorage.setItem("token", data.token);
-        showToast("Login successful!", "", "success");
+    // Show admin portal modal
+    function showAdminPortalModal() {
+        document.getElementById("adminPortalModal")?.classList.add("visible");
+    }
+
+    // Hide admin portal modal
+    function hideAdminPortalModal() {
+        document.getElementById("adminPortalModal")?.classList.remove("visible");
+    }
+
+    // Start OTP timer
+    function startOtpTimer() {
+        timeLeft = 300; // Reset to 5 minutes
+        updateTimerDisplay();
+        
+        otpTimer = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                stopOtpTimer();
+                document.getElementById("otpTimer").classList.add("expired");
+                document.getElementById("otpTimer").innerHTML = "OTP has expired. Please request a new one.";
+                verifyOtpBtn.disabled = true;
+                verifyOtpBtn.textContent = "OTP Expired";
+            }
+        }, 1000);
+    }
+
+    // Stop OTP timer
+    function stopOtpTimer() {
+        if (otpTimer) {
+            clearInterval(otpTimer);
+            otpTimer = null;
+        }
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Handle login form submission (Step 1)
+    loginForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const identifier = identifierInput?.value.trim();
+        const password = passwordInput?.value.trim();
+
+        if (!identifier || !password) {
+            showToast("Please enter your email/username and password.", "", "error");
+            return;
+        }
+
+        showLoader();
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Signing In...";
+
+        try {
+            const res = await fetch(`${baseURL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identifier, password })
+            });
+            const data = await res.json();
+            hideLoader();
+
+            if (res.ok) {
+                // Check if this is an admin login (direct login) or regular user (OTP required)
+                if (data.token) {
+                    // Admin detected - show admin portal modal instead of logging in
+                    showAdminPortalModal();
+                    showToast("Admin account detected. Please use the admin portal.", "", "warning");
+                } else if (data.userId) {
+                    // Regular user - OTP required
+                    currentUserId = data.userId;
+                    currentIdentifier = identifier;
+                    currentPassword = password;
+                    showToast(data.message, "", "success");
+                    showOtpModal();
+                }
+            } else {
+                // Login failed
+                const msg = data.message || "Login failed";
+                const reason = data.reason ? `Reason: ${data.reason}` : "";
+                showToast(msg, reason, "error");
+            }
+
+        } catch (err) {
+            hideLoader();
+            console.error("Login error:", err);
+            showToast("Something went wrong. Please try again.", "", "error");
+        } finally {
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Sign In";
+        }
+    });
+
+    // Handle OTP verification form submission (Step 2)
+    otpForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const otp = otpInput?.value.trim();
+
+        if (!currentUserId || !otp) {
+            showToast("User ID or OTP missing. Please try logging in again.", "", "error");
+            hideOtpModal();
+            return;
+        }
+
+        if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+            showToast("Please enter a valid 6-digit OTP.", "", "error");
+            return;
+        }
+
+        showLoader();
+        verifyOtpBtn.disabled = true;
+        verifyOtpBtn.textContent = 'Verifying...';
+
+        try {
+            const res = await fetch(`${baseURL}/verify-login-otp`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: currentUserId, otp })
+            });
+            const data = await res.json();
+            hideLoader();
+
+            if (res.ok) {
+                // OTP verification successful
+                localStorage.setItem("token", data.token);
+                showToast("Login successful! Redirecting...", "", "success");
+                hideOtpModal();
+
+                setTimeout(() => {
+                    window.location.href = "../pages/dashboard.html";
+                }, 1500);
+
+            } else {
+                // OTP verification failed
+                const msg = data.message || "OTP verification failed";
+                const reason = data.reason ? `Reason: ${data.reason}` : "";
+                showToast(msg, reason, "error");
+                otpInput.value = "";
+                otpInput.focus();
+            }
+
+        } catch (err) {
+            hideLoader();
+            console.error("OTP verification error:", err);
+            showToast("Something went wrong during OTP verification. Please try again.", "", "error");
+        } finally {
+            verifyOtpBtn.disabled = false;
+            verifyOtpBtn.textContent = 'Verify OTP';
+        }
+    });
+
+    // Handle Resend OTP button click
+    resendOtpBtn?.addEventListener("click", async () => {
+        if (!currentIdentifier || !currentPassword) {
+            showToast("Session expired. Please log in again.", "", "error");
+            hideOtpModal();
+            return;
+        }
+
+        showLoader();
+        resendOtpBtn.disabled = true;
+        resendOtpBtn.textContent = "Sending...";
+
+        try {
+            const res = await fetch(`${baseURL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    identifier: currentIdentifier, 
+                    password: currentPassword 
+                })
+            });
+            const data = await res.json();
+            hideLoader();
+
+            if (res.ok && data.userId) {
+                currentUserId = data.userId;
+                showToast("New OTP sent to your email!", "", "success");
+                otpInput.value = "";
+                otpInput.focus();
+                
+                // Reset timer
+                stopOtpTimer();
+                document.getElementById("otpTimer").classList.remove("expired");
+                verifyOtpBtn.disabled = false;
+                verifyOtpBtn.textContent = "Verify OTP";
+                startOtpTimer();
+            } else {
+                showToast(data.message || "Failed to resend OTP", "", "error");
+            }
+
+        } catch (err) {
+            hideLoader();
+            console.error("Resend OTP error:", err);
+            showToast("Failed to resend OTP. Please try again.", "", "error");
+        } finally {
+            resendOtpBtn.disabled = false;
+            resendOtpBtn.textContent = "Resend OTP";
+        }
+    });
+
+    // Close OTP modal
+    closeOtpModal?.addEventListener("click", () => {
         hideOtpModal();
+        currentUserId = null;
+        currentIdentifier = null;
+        currentPassword = null;
+    });
 
+    // Close modal when clicking outside
+    otpModal?.addEventListener("click", (e) => {
+        if (e.target === otpModal) {
+            hideOtpModal();
+            currentUserId = null;
+            currentIdentifier = null;
+            currentPassword = null;
+        }
+    });
+
+    // Handle admin portal modal buttons
+    document.getElementById("goToAdminPortal")?.addEventListener("click", () => {
+        window.open("https://lock.dainterbfx.xyz/", "_blank");
+        hideAdminPortalModal();
+    });
+
+    document.getElementById("closeAdminModal")?.addEventListener("click", () => {
+        hideAdminPortalModal();
+    });
+
+    // Close admin modal when clicking outside
+    document.getElementById("adminPortalModal")?.addEventListener("click", (e) => {
+        if (e.target === document.getElementById("adminPortalModal")) {
+            hideAdminPortalModal();
+        }
+    });
+
+    // Auto-format OTP input
+    otpInput?.addEventListener("input", (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        if (value.length > 6) {
+            value = value.slice(0, 6);
+        }
+        e.target.value = value;
+    });
+
+    // Auto-submit when OTP is complete
+    otpInput?.addEventListener("input", (e) => {
+        if (e.target.value.length === 6) {
+            setTimeout(() => {
+                if (verifyOtpBtn && !verifyOtpBtn.disabled) {
+                    otpForm.dispatchEvent(new Event('submit'));
+                }
+            }, 500);
+        }
+    });
+
+    /**
+     * Creates a toast with an optional reason.
+     */
+    function showToast(message, reason = "", type = "info") {
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+
+        // Main message
+        const header = document.createElement("div");
+        header.className = "toast-header";
+        header.textContent = message;
+        toast.appendChild(header);
+
+        // Optional reason
+        if (reason) {
+            const detail = document.createElement("div");
+            detail.className = "toast-reason";
+            detail.textContent = reason;
+            toast.appendChild(detail);
+        }
+
+        toastContainer.appendChild(toast);
+
+        // Auto-remove after 5s
         setTimeout(() => {
-          window.location.href = "../pages/dashboard.html";
-        }, 1500);
-
-      } else {
-        // OTP verification failed
-        const msg    = data.message || "OTP verification failed";
-        const reason = data.reason ? `Reason: ${data.reason}` : "";
-        showToast(msg, reason, "error");
-        document.getElementById("otp").value = ""; // Clear OTP input on failure
-      }
-
-    } catch (err) {
-      hideLoader();
-      console.error("OTP verification error:", err);
-      showToast("Something went wrong during OTP verification. Please try again.", "", "error");
-    } finally {
-      verifyOtpBtn.disabled = false;
-      verifyOtpBtn.textContent = 'Verify OTP';
-    }
-  });
-
-  // Handle Resend OTP button click
-  resendOtpBtn?.addEventListener("click", () => {
-    hideOtpModal();
-    currentUserId = null;
-    currentEmail = null;
-    currentPassword = null;
-    emailInput.value = ''; // Clear email field
-    passwordInput.value = ''; // Clear password field
-    showToast("Please re-enter your credentials to log in again.", "", "info");
-  });
-
-  /**
-   * Creates a toast with an optional reason.
-   * No manual close button.
-   */
-  function showToast(message, reason = "", type = "info") {
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-
-    // main message
-    const header = document.createElement("div");
-    header.className = "toast-header";
-    header.textContent = message;
-    toast.appendChild(header);
-
-    // optional reason
-    if (reason) {
-      const detail = document.createElement("div");
-      detail.className = "toast-reason";
-      detail.textContent = reason;
-      toast.appendChild(detail);
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 5000);
     }
 
-    toastContainer.appendChild(toast);
-
-    // auto-remove after 4s
-    setTimeout(() => {
-      toast.remove();
-    }, 4000);
-  }
+    // Check if user is already logged in
+    const token = localStorage.getItem("token");
+    if (token) {
+        // Verify token is still valid
+        fetch(`${baseURL.replace('/auth', '')}/users/profile/username`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                window.location.href = "../pages/dashboard.html";
+            } else {
+                localStorage.removeItem("token");
+            }
+        })
+        .catch(() => {
+            localStorage.removeItem("token");
+        });
+    }
 });
 </script>
 
 <script>
-  if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js")
-      .then(reg => console.log("Service Worker registered!", reg))
-      .catch(err => console.error("Service Worker registration failed:", err));
-  }
+        .then(reg => console.log("Service Worker registered!", reg))
+        .catch(err => console.error("Service Worker registration failed:", err));
+}
 </script>
+
 <script>
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    // You could add a custom install button here
     console.log('Install prompt available.');
-  });
+});
 </script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
     const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
 
     if (isIos && !isInStandaloneMode) {
-      // Show a custom banner, toast, or modal
-      alert("Install this app by tapping the Share button and selecting 'Add to Home Screen'.");
-      // OR display a styled element in the DOM instead of an alert
+        console.log("iOS device detected - Add to Home Screen available");
     }
-  });
+});
 </script>
 
-   <script>
+<script>
 // Animated background particles
 document.addEventListener('DOMContentLoaded', function() {
     const animatedBg = document.getElementById('animated-bg');
@@ -442,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordToggle = document.getElementById('password-toggle');
     const passwordInput = document.getElementById('password');
     
-    passwordToggle.addEventListener('click', function() {
+    passwordToggle?.addEventListener('click', function() {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
         
@@ -453,9 +700,34 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
         }
     });
-    
-   
 });
-   </script>
+</script>
+
+<!-- Google Translate Widget -->
+<div id="google_translate_element"></div>
+
+<script>
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+}
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+// Preserve translation by checking the cookie on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = getCookie("googtrans");
+    if (lang && lang !== "/en/en") {
+        document.cookie = `googtrans=${lang}; path=/`;
+    }
+});
+
+function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+</script>
+
 </body>
 </html>
